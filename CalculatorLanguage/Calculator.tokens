@@ -1,0 +1,10 @@
+DIGIT=1
+PLUS=2
+MINUS=3
+TIMES=4
+DIV=5
+WHITESPACE=6
+'+'=2
+'-'=3
+'*'=4
+'/'=5
