@@ -8,9 +8,9 @@ COM_SIGN : '--' ~[\r\n]* -> skip;
 
 program : (('\n')* instruction_without_draw ('\n')+)* canvas (('\n')+ instruction ('\n')*)* EOF;
 
-instruction : shape | type_definition | draw | transformation | group | loop | check;
+instruction : shape | type_definition | draw | transformation | group | loop | check | WS*;
 
-instruction_without_draw : shape | type_definition | transformation | group | loop | check;
+instruction_without_draw : shape | type_definition | transformation | group | loop | check | WS*;
 
 // control statements
 
@@ -113,6 +113,6 @@ NAME : [A-Z][a-zA-Z0-9_]*;
 itr : DIGIT+;
 
 // TO DO 
-// - possible flt - flt problem (e.g. for 5 - 7, it should be positive after all)
 // - deal with lack of 'and' and 'or' binary operators
 // - deal with multiplication and division
+// - problem with loop/check - possibility to draw before canvas

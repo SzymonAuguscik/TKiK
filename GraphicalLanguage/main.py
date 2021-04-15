@@ -9,95 +9,95 @@ from GraphlyParser import GraphlyParser
 class GraphlyProgram(GraphlyListener):
 
     def enterProgram(self, ctx: GraphlyParser.ProgramContext):
-        print("Parsing successful")
+        print("Program")
 
-    # # Enter a parse tree produced by GraphlyParser#instruction.
-    # def enterInstruction(self, ctx: GraphlyParser.InstructionContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#instruction_without_draw.
-    # def enterInstruction_without_draw(self, ctx: GraphlyParser.Instruction_without_drawContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#loop.
-    # def enterLoop(self, ctx: GraphlyParser.LoopContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#check.
-    # def enterCheck(self, ctx: GraphlyParser.CheckContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#shape.
-    # def enterShape(self, ctx: GraphlyParser.ShapeContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#point.
-    # def enterPoint(self, ctx: GraphlyParser.PointContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#segment.
-    # def enterSegment(self, ctx: GraphlyParser.SegmentContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#circle.
-    # def enterCircle(self, ctx: GraphlyParser.CircleContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#polygon.
-    # def enterPolygon(self, ctx: GraphlyParser.PolygonContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#group.
-    # def enterGroup(self, ctx: GraphlyParser.GroupContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#groupMember.
-    # def enterGroupMember(self, ctx: GraphlyParser.GroupMemberContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#type_definition.
-    # def enterType_definition(self, ctx: GraphlyParser.Type_definitionContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#num.
-    # def enterNum(self, ctx: GraphlyParser.NumContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#iterator.
-    # def enterIterator(self, ctx: GraphlyParser.IteratorContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#canvas.
-    # def enterCanvas(self, ctx: GraphlyParser.CanvasContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#draw.
-    # def enterDraw(self, ctx: GraphlyParser.DrawContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#transformation.
-    # def enterTransformation(self, ctx: GraphlyParser.TransformationContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#fill.
-    # def enterFill(self, ctx: GraphlyParser.FillContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#move.
-    # def enterMove(self, ctx: GraphlyParser.MoveContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#place.
-    # def enterPlace(self, ctx: GraphlyParser.PlaceContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#rotate.
-    # def enterRotate(self, ctx: GraphlyParser.RotateContext):
-    #     print(ctx.getText())
-    #
-    # # Enter a parse tree produced by GraphlyParser#scale.
-    # def enterScale(self, ctx: GraphlyParser.ScaleContext):
-    #     print(ctx.getText())
+    # Enter a parse tree produced by GraphlyParser#instruction.
+    def enterInstruction(self, ctx: GraphlyParser.InstructionContext):
+        print("Instruction: ", end="")
+
+    # Enter a parse tree produced by GraphlyParser#instruction_without_draw.
+    def enterInstruction_without_draw(self, ctx: GraphlyParser.Instruction_without_drawContext):
+        print("Instruction without draw: ", end="")
+
+    # Enter a parse tree produced by GraphlyParser#loop.
+    def enterLoop(self, ctx: GraphlyParser.LoopContext):
+        print("Loop")
+
+    # Enter a parse tree produced by GraphlyParser#check.
+    def enterCheck(self, ctx: GraphlyParser.CheckContext):
+        print("Check")
+
+    # Enter a parse tree produced by GraphlyParser#shape.
+    def enterShape(self, ctx: GraphlyParser.ShapeContext):
+        print("Shape: ", end="")
+
+    # Enter a parse tree produced by GraphlyParser#point.
+    def enterPoint(self, ctx: GraphlyParser.PointContext):
+        print("Point")
+
+    # Enter a parse tree produced by GraphlyParser#segment.
+    def enterSegment(self, ctx: GraphlyParser.SegmentContext):
+        print("Segment")
+
+    # Enter a parse tree produced by GraphlyParser#circle.
+    def enterCircle(self, ctx: GraphlyParser.CircleContext):
+        print("Circle")
+
+    # Enter a parse tree produced by GraphlyParser#polygon.
+    def enterPolygon(self, ctx: GraphlyParser.PolygonContext):
+        print("Polygon")
+
+    # Enter a parse tree produced by GraphlyParser#group.
+    def enterGroup(self, ctx: GraphlyParser.GroupContext):
+        print("Group")
+
+    # Enter a parse tree produced by GraphlyParser#groupMember.
+    def enterGroupMember(self, ctx: GraphlyParser.GroupMemberContext):
+        print("GroupMember")
+
+    # Enter a parse tree produced by GraphlyParser#type_definition.
+    def enterType_definition(self, ctx: GraphlyParser.Type_definitionContext):
+        print("TypeDefinition: ", end="")
+
+    # Enter a parse tree produced by GraphlyParser#num.
+    def enterNum(self, ctx: GraphlyParser.NumContext):
+        print(ctx.getText())
+
+    # Enter a parse tree produced by GraphlyParser#iterator.
+    def enterIterator(self, ctx: GraphlyParser.IteratorContext):
+        print(ctx.getText())
+
+    # Enter a parse tree produced by GraphlyParser#canvas.
+    def enterCanvas(self, ctx: GraphlyParser.CanvasContext):
+        print("Canvas")
+
+    # Enter a parse tree produced by GraphlyParser#draw.
+    def enterDraw(self, ctx: GraphlyParser.DrawContext):
+        print("Draw")
+
+    # Enter a parse tree produced by GraphlyParser#transformation.
+    def enterTransformation(self, ctx: GraphlyParser.TransformationContext):
+        print("Transformation: ", end="")
+
+    # Enter a parse tree produced by GraphlyParser#fill.
+    def enterFill(self, ctx: GraphlyParser.FillContext):
+        print("Fill")
+
+    # Enter a parse tree produced by GraphlyParser#move.
+    def enterMove(self, ctx: GraphlyParser.MoveContext):
+        print("Move")
+
+    # Enter a parse tree produced by GraphlyParser#place.
+    def enterPlace(self, ctx: GraphlyParser.PlaceContext):
+        print("Place")
+
+    # Enter a parse tree produced by GraphlyParser#rotate.
+    def enterRotate(self, ctx: GraphlyParser.RotateContext):
+        print("Rotate")
+
+    # Enter a parse tree produced by GraphlyParser#scale.
+    def enterScale(self, ctx: GraphlyParser.ScaleContext):
+        print("Scale")
 
 
 def main(argv):

@@ -1,5 +1,10 @@
 -- main program to draw chess board
 num X: 100
+
+check I+1=2 then
+  --  canvas: X, X, #red
+end
+
 canvas: X, X, #white
 
 
@@ -13,7 +18,6 @@ group Points: P0, P1, P2, P3
 
 
 polygon Sqr: Points
-
 
 fill Sqr: #black
 
