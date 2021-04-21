@@ -1,5 +1,6 @@
 import antlr4
 import sys
+import pygame
 
 from GraphlyLexer import GraphlyLexer
 from GraphlyListener import GraphlyListener
@@ -9,7 +10,12 @@ from GraphlyParser import GraphlyParser
 class GraphlyProgram(GraphlyListener):
 
     def enterProgram(self, ctx: GraphlyParser.ProgramContext):
+        pygame.init()
         print("Program")
+
+    # Exit a parse tree produced by GraphlyParser#program.
+    def exitProgram(self, ctx:GraphlyParser.ProgramContext):
+        pygame.display.update()
 
     # Enter a parse tree produced by GraphlyParser#instruction.
     def enterInstruction(self, ctx: GraphlyParser.InstructionContext):
@@ -69,10 +75,14 @@ class GraphlyProgram(GraphlyListener):
 
     # Enter a parse tree produced by GraphlyParser#canvas.
     def enterCanvas(self, ctx: GraphlyParser.CanvasContext):
+        self.screen = pygame.display.set_mode((640,480))
+        self.screen.fill((255,255,255))
+        print(ctx.getTokens())
         print("Canvas")
 
     # Enter a parse tree produced by GraphlyParser#draw.
     def enterDraw(self, ctx: GraphlyParser.DrawContext):
+        pygame.draw.rect(self.screen, (0,0,0), (100,100,100,100), 1)
         print("Draw")
 
     # Enter a parse tree produced by GraphlyParser#transformation.
@@ -112,6 +122,14 @@ def main(argv):
 
     tree_walker = antlr4.ParseTreeWalker()
     tree_walker.walk(graph, tree)
+
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run =False
+
+    pygame.quit()
 
 
 if __name__ == '__main__':
