@@ -1,0 +1,17 @@
+num X: 1000
+
+canvas: X, X, #white
+
+point P1: 150, 150
+point P2: 650, 400
+point P3: 250, 700
+
+segment Seg: P1, P2
+circle Circle: P2, 15.5
+group Group: P1, P2, P3
+polygon Triangle: Group
+
+draw P1
+draw Seg
+draw Circle
+draw Triangle

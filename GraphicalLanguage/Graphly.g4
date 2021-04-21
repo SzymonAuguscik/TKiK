@@ -38,13 +38,13 @@ groupMember : WS* NAME WS* '[' WS* (itr|NAME) WS* ']' WS+;
 
 type_definition : num | iterator;
 
-num : WS* 'num' WS+ NAME WS* ':' WS* (signed_flt|NAME);
+num : WS* 'num' WS+ NAME WS* ':' WS* (operation_flt|NAME);
 
 iterator : WS* 'iterator' WS+ NAME WS* ':' WS* (itr|NAME);
 
 // methods
 
-canvas : WS* 'canvas' WS* ':' WS* (signed_flt|NAME) WS* ',' WS* (signed_flt|NAME) WS* ',' WS* color;
+canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* color;
 
 draw : WS* 'draw' WS+ NAME;
 
@@ -54,11 +54,11 @@ transformation : fill | move | place | rotate | scale;
 
 fill : WS* 'fill' WS+ NAME WS* ':' WS* color;
 
-move : WS* 'move' WS+ NAME WS* ':' WS* (signed_flt|NAME) WS* ',' WS* (signed_flt|NAME);
+move : WS* 'move' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME);
 
 place : WS* 'place' WS+ NAME WS* ':' WS* NAME;
 
-rotate : WS* 'rotate' WS+ NAME WS* ':' WS* (signed_flt|NAME) WS* ',' WS* NAME;
+rotate : WS* 'rotate' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* NAME;
 
 scale : WS* 'scale' WS+ NAME WS* ':' WS* operation_flt;
 
@@ -92,13 +92,13 @@ GT : '>=';
 
 LT : '<=';
 
-cond : WS* ((signed_flt | NAME) WS* logic WS* (signed_flt | NAME)) | ((itr | NAME) WS* logic WS* (itr | NAME));
+cond : WS* ((operation_flt | NAME) WS* logic WS* (operation_flt | NAME)) | ((itr | NAME) WS* logic WS* (itr | NAME));
 
 // nonterminal
 
 signed_flt : '-'? (flt|NAME) (arithmetic (signed_flt|NAME))*;
 
-color : '#'('red' | 'green' | 'yellow' | 'transparent' | 'black' | 'blue' | 'white' | 'orange' | 'pink');
+color : '#'('red' | 'green' | 'yellow' | 'black' | 'blue' | 'white' | 'orange' | 'pink');
 
 flt : (DIGIT*DOT)?DIGIT+;
 
@@ -116,3 +116,4 @@ itr : DIGIT+;
 // - deal with lack of 'and' and 'or' binary operators
 // - deal with multiplication and division
 // - problem with loop/check - possibility to draw before canvas
+// - think about transparent color

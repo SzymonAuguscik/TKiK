@@ -277,7 +277,6 @@ class GraphlyListener(ParseTreeListener):
     def exitFlt(self, ctx:GraphlyParser.FltContext):
         pass
 
-
     # Enter a parse tree produced by GraphlyParser#operation_flt.
     def enterOperation_flt(self, ctx:GraphlyParser.Operation_fltContext):
         pass
