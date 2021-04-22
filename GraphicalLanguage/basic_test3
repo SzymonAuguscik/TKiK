@@ -1,0 +1,36 @@
+--mouse face
+
+num X: 1000
+
+canvas: X, X, #white
+
+point HeadPoint: 500, 500
+point LeftEarPoint: 300, 250
+point RightEarPoint: 700, 250
+point LeftEyePoint: 400, 400
+point RightEyePoint: 600, 400
+point LeftMouthPoint: 400, 600
+point RightMouthPoint: 600, 600
+point CentralMouthPoint: 500, 700
+
+group MouthPoints: CentralMouthPoint, RightMouthPoint, LeftMouthPoint
+polygon Mouth: MouthPoints
+
+circle Head: HeadPoint, 250
+circle LeftEar: LeftEarPoint, 100
+circle RightEar: RightEarPoint, 100
+circle LeftEye: LeftEyePoint, 20
+circle RightEye: RightEyePoint, 20
+
+fill LeftEye: #white
+fill RightEye: #white
+fill LeftLip: #white
+fill RightLip: #white
+fill Mouth: #red
+
+draw Head
+draw LeftEar
+draw RightEar
+draw LeftEye
+draw RightEye
+draw Mouth

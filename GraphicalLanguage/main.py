@@ -41,7 +41,7 @@ class GraphlyProgram(GraphlyListener):
             self.width = self.CIRCLE_WIDTH
 
     class Polygon:
-        POLYGON_WIDTH = 1
+        POLYGON_WIDTH = 0
 
         def __init__(self, name, points):
             self.name = name
@@ -64,33 +64,16 @@ class GraphlyProgram(GraphlyListener):
 
     def enterProgram(self, ctx: GraphlyParser.ProgramContext):
         pygame.init()
-        print("Program")
 
-    # Exit a parse tree produced by GraphlyParser#program.
     def exitProgram(self, ctx: GraphlyParser.ProgramContext):
         pygame.display.update()
 
-    # Enter a parse tree produced by GraphlyParser#instruction.
-    def enterInstruction(self, ctx: GraphlyParser.InstructionContext):
-        print("Instruction: ", end="")
+    # def enterLoop(self, ctx: GraphlyParser.LoopContext):
+    #     print("Loop")
+    #
+    # def enterCheck(self, ctx: GraphlyParser.CheckContext):
+    #     print("Check")
 
-    # Enter a parse tree produced by GraphlyParser#instruction_without_draw.
-    def enterInstruction_without_draw(self, ctx: GraphlyParser.Instruction_without_drawContext):
-        print("Instruction without draw: ", end="")
-
-    # Enter a parse tree produced by GraphlyParser#loop.
-    def enterLoop(self, ctx: GraphlyParser.LoopContext):
-        print("Loop")
-
-    # Enter a parse tree produced by GraphlyParser#check.
-    def enterCheck(self, ctx: GraphlyParser.CheckContext):
-        print("Check")
-
-    # Enter a parse tree produced by GraphlyParser#shape.
-    def enterShape(self, ctx: GraphlyParser.ShapeContext):
-        print("Shape: ", end="")
-
-    # Enter a parse tree produced by GraphlyParser#point.
     def enterPoint(self, ctx: GraphlyParser.PointContext):
         name = ctx.NAME().getText()
 
@@ -104,7 +87,6 @@ class GraphlyProgram(GraphlyListener):
         else:
             print_already_declared_variable_error(name)
 
-    # Enter a parse tree produced by GraphlyParser#segment.
     def enterSegment(self, ctx: GraphlyParser.SegmentContext):
         name = ctx.NAME(0).getText()
 
@@ -130,7 +112,6 @@ class GraphlyProgram(GraphlyListener):
         else:
             print_already_declared_variable_error(name)
 
-    # Enter a parse tree produced by GraphlyParser#circle.
     def enterCircle(self, ctx: GraphlyParser.CircleContext):
         name = ctx.NAME(0).getText()
 
@@ -156,7 +137,6 @@ class GraphlyProgram(GraphlyListener):
         else:
             print_already_declared_variable_error(name)
 
-    # Enter a parse tree produced by GraphlyParser#polygon.
     def enterPolygon(self, ctx: GraphlyParser.PolygonContext):
         name = ctx.NAME(0).getText()
 
@@ -213,15 +193,12 @@ class GraphlyProgram(GraphlyListener):
         else:
             print_already_declared_variable_error(name)
 
-    # Enter a parse tree produced by GraphlyParser#groupMember.
     def enterGroupMember(self, ctx: GraphlyParser.GroupMemberContext):
         print("GroupMember")
 
-    # Enter a parse tree produced by GraphlyParser#type_definition.
     def enterType_definition(self, ctx: GraphlyParser.Type_definitionContext):
         print("TypeDefinition: ", end="")
 
-    # Enter a parse tree produced by GraphlyParser#num.
     def enterNum(self, ctx: GraphlyParser.NumContext):
         name = ctx.NAME(0).getText()
 
@@ -231,35 +208,30 @@ class GraphlyProgram(GraphlyListener):
         else:
             print_already_declared_variable_error(name)
 
-    # Enter a parse tree produced by GraphlyParser#iterator.
-    def enterIterator(self, ctx: GraphlyParser.IteratorContext):
-        print(ctx.getText())
+    # def enterIterator(self, ctx: GraphlyParser.IteratorContext):
+    #     print(ctx.getText())
 
-    # Enter a parse tree produced by GraphlyParser#canvas.
     def enterCanvas(self, ctx: GraphlyParser.CanvasContext):
         color = ctx.color().getText()
 
-        nameX = str(ctx.operation_flt(0).getText())
-        nameY = str(ctx.operation_flt(1).getText())
+        name_x = str(ctx.operation_flt(0).getText())
+        name_y = str(ctx.operation_flt(1).getText())
+        size_x, size_y = 640, 480
 
-        # TODO
-        # change it later; maybe throw an exception
-        sizeX, sizeY = 640, 480
+        if name_x in self.variables and name_y in self.variables:
+            size_x = int(self.variables[name_x])
+            size_y = int(self.variables[name_y])
 
-        if nameX in self.variables and nameY in self.variables:
-            sizeX = int(self.variables[nameX])
-            sizeY = int(self.variables[nameY])
-
-        self.screen = pygame.display.set_mode((sizeX, sizeY))
+        self.screen = pygame.display.set_mode((size_x, size_y))
 
         if color in self.colors:
             self.screen.fill(self.colors[color])
         else:
+            # TODO
+            # change it later; maybe throw an exception
             print(f"Error! Unknown color {color}")
 
-    # Enter a parse tree produced by GraphlyParser#draw.
     def enterDraw(self, ctx: GraphlyParser.DrawContext):
-        # pygame.draw.rect(self.screen, (0,0,0), (100,100,100,100), 1)
         name = ctx.NAME().getText()
 
         if name in self.variables:
@@ -281,27 +253,39 @@ class GraphlyProgram(GraphlyListener):
             #change it later to exception
             print("Unknown variable")
 
-    # Enter a parse tree produced by GraphlyParser#transformation.
-    def enterTransformation(self, ctx: GraphlyParser.TransformationContext):
-        print("Transformation: ", end="")
-
-    # Enter a parse tree produced by GraphlyParser#fill.
     def enterFill(self, ctx: GraphlyParser.FillContext):
-        print("Fill")
+        name = ctx.NAME().getText()
 
-    # Enter a parse tree produced by GraphlyParser#move.
+        if name in self.variables:
+            variable = self.variables[name]
+
+            if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
+                color = ctx.color().getText()
+
+                if color in self.colors:
+                    variable.color = self.colors[color]
+                else:
+                    #TODO
+                    # exception
+                    print("Error! Bad color")
+            else:
+                #TODO
+                # exception
+                print("Error! Bad argument")
+        else:
+            #TODO
+            # exception
+            print("Error in fill")
+
     def enterMove(self, ctx: GraphlyParser.MoveContext):
         print("Move")
 
-    # Enter a parse tree produced by GraphlyParser#place.
     def enterPlace(self, ctx: GraphlyParser.PlaceContext):
         print("Place")
 
-    # Enter a parse tree produced by GraphlyParser#rotate.
     def enterRotate(self, ctx: GraphlyParser.RotateContext):
         print("Rotate")
 
-    # Enter a parse tree produced by GraphlyParser#scale.
     def enterScale(self, ctx: GraphlyParser.ScaleContext):
         print("Scale")
 
@@ -324,6 +308,7 @@ def main(argv):
     tree_walker.walk(graph, tree)
 
     run = True
+
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

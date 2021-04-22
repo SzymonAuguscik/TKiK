@@ -1,0 +1,54 @@
+--pikachu face
+
+num X: 1000
+
+canvas: X, X, #green
+
+point P1: 300, 1000
+point P2: 400, 900
+point P3: 250, 600
+point P4: 300, 400
+point P5: 150, 100
+point P6: 550, 300
+point P7: 650, 300
+point P8: 1000, 150
+point P9: 900, 400
+point P10: 950, 1000
+
+point E1: 500, 450
+point Pu1: 480, 430
+point E2: 700, 450
+point Pu2: 680, 430
+point N: 600, 550
+point C1: 350, 600
+point C2: 850, 600
+point M: 600, 650
+
+circle Eye1: E1, 40
+circle Eye2: E2, 40
+circle Pupil1: Pu1, 10
+circle Pupil2: Pu2, 10
+circle Nose: N, 10
+circle Cheek1: C1, 30
+circle Cheek2: C2, 30
+circle Mouth: M, 60
+
+group G: P1, P2, P3, P4, P5, P6, P7, P8, P9, P10
+polygon Face: G
+
+fill Face: #yellow
+fill Pupil1: #white
+fill Pupil2: #white
+fill Cheek1: #red
+fill Cheek2: #red
+fill Mouth: #pink
+
+draw Face
+draw Eye1
+draw Pupil1
+draw Eye2
+draw Pupil2
+draw Nose
+draw Cheek1
+draw Cheek2
+draw Mouth
