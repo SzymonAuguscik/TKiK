@@ -6,11 +6,9 @@ COM_SIGN : '--' ~[\r\n]* -> skip;
 
 // body of a program
 
-program : (('\n')* instruction_without_draw ('\n')+)* canvas (('\n')+ instruction ('\n')*)* EOF;
+program : (('\n')* instruction ('\n')+)* canvas (('\n')+ instruction ('\n')*)* EOF;
 
 instruction : shape | type_definition | draw | transformation | group | loop | check | WS*;
-
-instruction_without_draw : shape | type_definition | transformation | group | loop | check | WS*;
 
 // control statements
 

@@ -1,3 +1,5 @@
+--more different examples
+
 num X: 1000
 
 canvas: X, X, #blue

@@ -24,8 +24,6 @@ circle RightEye: RightEyePoint, 20
 
 fill LeftEye: #white
 fill RightEye: #white
-fill LeftLip: #white
-fill RightLip: #white
 fill Mouth: #red
 
 draw Head

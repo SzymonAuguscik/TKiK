@@ -1,3 +1,5 @@
+--several basic instructions
+
 num X: 1000
 
 canvas: X, X, #white
@@ -12,9 +14,10 @@ circle Circle: P2, 15.5
 group Group: P1, P2, P3
 polygon Triangle: Group
 
-fill Triangle: #red
+fill Triangle: #blue
 
 draw P1
+draw P3
 draw P4
 draw Seg
 draw Circle
