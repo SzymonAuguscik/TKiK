@@ -9,31 +9,21 @@ from GraphlyCanvasChecker import GraphlyCanvasChecker, DrawBeforeCanvasException
 
 
 def check_canvas(argv):  # first run of program
-    is_all_right = False
-
     print("Checking canvas...", end=" ")
 
-    try:
-        input_stream = antlr4.FileStream(argv[1])
+    input_stream = antlr4.FileStream(argv[1])
 
-        lexer = GraphlyLexer(input_stream)
-        stream = antlr4.CommonTokenStream(lexer)
-        parser = GraphlyParser(stream)
+    lexer = GraphlyLexer(input_stream)
+    stream = antlr4.CommonTokenStream(lexer)
+    parser = GraphlyParser(stream)
 
-        tree = parser.program()
-        graph = GraphlyCanvasChecker()
+    tree = parser.program()
+    graph = GraphlyCanvasChecker()
 
-        tree_walker = antlr4.ParseTreeWalker()
-        tree_walker.walk(graph, tree)
+    tree_walker = antlr4.ParseTreeWalker()
+    tree_walker.walk(graph, tree)
 
-        print("All is ok!")
-        is_all_right = True
-    except DrawBeforeCanvasException as e:
-        print(e.message)
-    except:
-        print("Undefined exception occurred!")
-    finally:
-        return is_all_right
+    print("All is ok!")
 
 
 def execute_graphly_script(argv):  # second run of program
@@ -60,10 +50,8 @@ def execute_graphly_script(argv):  # second run of program
 
 
 def main(argv):
-    is_first_run_ok = check_canvas(argv)
-
-    if is_first_run_ok:
-        execute_graphly_script(argv)
+    check_canvas(argv)
+    execute_graphly_script(argv)
 
 
 if __name__ == '__main__':

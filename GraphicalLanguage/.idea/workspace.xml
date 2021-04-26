@@ -1,63 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Refactor main logic functions in GraphlyProgram class. Add several test files">
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphly (kopia).g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly (kopia).g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphly.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphly.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphly.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyBaseListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyBaseListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyLexer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyLexer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyLexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyListener.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$ArithmeticContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$CanvasContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$CheckContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$CircleContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$ColorContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$CondContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$DrawContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$FillContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$FltContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$GroupContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$GroupMemberContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$InstructionContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$Instruction_without_drawContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$IteratorContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$ItrContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$LogicContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$LoopContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$MoveContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$NeqContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$NumContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$Operation_fltContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$PlaceContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$PointContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$PolygonContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$ProgramContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$RotateContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$ScaleContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$SegmentContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$ShapeContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$Signed_fltContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$TransformationContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser$Type_definitionContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyParser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/basic_test1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/basic_test2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/basic_test3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/basic_test4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +48,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619087312846</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files">
+      <created>1619108821734</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619108821734</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -120,6 +72,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor main logic functions in GraphlyProgram class. Add several test files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor main logic functions in GraphlyProgram class. Add several test files" />
+    <MESSAGE value="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files" />
   </component>
 </project>
