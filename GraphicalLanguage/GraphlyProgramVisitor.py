@@ -126,9 +126,17 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
     def visitCheck(self, ctx: GraphlyParser.CheckContext):
         self.scopes.append({})
-        # TODO
-        # add conditional functionality
-        self.visitChildren(ctx)
+        
+        do_else = True
+        for cb in ctx.condition_block():
+            if self.visit(cb.cond()):
+                self.visit(cb.block())
+                do_else = False
+                break
+        
+        if do_else:
+            self.visit(ctx.block())
+
         self.scopes.pop()
 
     # TODO
@@ -331,3 +339,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             raise UnknownVariableException(name)
 
         return self.visitChildren(ctx)
+
+    def visitCond(self, ctx:GraphlyParser.CondContext):
+        # TODO
+        # return true value of condition
+        return len(ctx.logic().getText()) == 2

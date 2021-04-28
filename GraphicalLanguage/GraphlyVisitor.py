@@ -34,6 +34,11 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by GraphlyParser#condition_block.
+    def visitCondition_block(self, ctx:GraphlyParser.Condition_blockContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by GraphlyParser#shape.
     def visitShape(self, ctx:GraphlyParser.ShapeContext):
         return self.visitChildren(ctx)

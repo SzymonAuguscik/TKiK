@@ -53,6 +53,15 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GraphlyParser#condition_block.
+    def enterCondition_block(self, ctx:GraphlyParser.Condition_blockContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#condition_block.
+    def exitCondition_block(self, ctx:GraphlyParser.Condition_blockContext):
+        pass
+
+
     # Enter a parse tree produced by GraphlyParser#shape.
     def enterShape(self, ctx:GraphlyParser.ShapeContext):
         pass
