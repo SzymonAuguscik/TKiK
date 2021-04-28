@@ -148,7 +148,7 @@ class GraphlyProgramListener(GraphlyListener):
                         raise BadArgumentException("segment", point1_name, type(p1))
                     raise BadArgumentException("segment", point2_name, type(p2))
             else:
-                if point1_name not in self.variables:
+                if not self.variable_exists(point1_name):
                     raise UnknownVariableException(point1_name)
                 raise UnknownVariableException(point2_name)
         else:
