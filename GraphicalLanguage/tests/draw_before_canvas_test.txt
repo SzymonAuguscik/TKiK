@@ -1,0 +1,8 @@
+-- incorrect use of draw and canvas
+
+point P: 10, 20
+num X: 100
+
+draw P
+canvas: X, X, #red
+draw P

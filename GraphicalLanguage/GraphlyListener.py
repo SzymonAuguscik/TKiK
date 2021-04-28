@@ -26,15 +26,6 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GraphlyParser#instruction_without_draw.
-    def enterInstruction_without_draw(self, ctx:GraphlyParser.Instruction_without_drawContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#instruction_without_draw.
-    def exitInstruction_without_draw(self, ctx:GraphlyParser.Instruction_without_drawContext):
-        pass
-
-
     # Enter a parse tree produced by GraphlyParser#loop.
     def enterLoop(self, ctx:GraphlyParser.LoopContext):
         pass
@@ -260,15 +251,6 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GraphlyParser#color.
-    def enterColor(self, ctx:GraphlyParser.ColorContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#color.
-    def exitColor(self, ctx:GraphlyParser.ColorContext):
-        pass
-
-
     # Enter a parse tree produced by GraphlyParser#flt.
     def enterFlt(self, ctx:GraphlyParser.FltContext):
         pass
@@ -276,6 +258,7 @@ class GraphlyListener(ParseTreeListener):
     # Exit a parse tree produced by GraphlyParser#flt.
     def exitFlt(self, ctx:GraphlyParser.FltContext):
         pass
+
 
     # Enter a parse tree produced by GraphlyParser#operation_flt.
     def enterOperation_flt(self, ctx:GraphlyParser.Operation_fltContext):

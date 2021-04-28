@@ -1,0 +1,7 @@
+-- bad color
+
+num X: 200
+
+canvas: X, X, #blues
+
+point P1: 20, 30

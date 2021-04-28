@@ -6,11 +6,9 @@ COM_SIGN : '--' ~[\r\n]* -> skip;
 
 // body of a program
 
-program : (('\n')* instruction_without_draw ('\n')+)* canvas (('\n')+ instruction ('\n')*)* EOF;
+program : (('\n')* instruction ('\n')+)* canvas (('\n')+ instruction ('\n')*)* EOF;
 
 instruction : shape | type_definition | draw | transformation | group | loop | check | WS*;
-
-instruction_without_draw : shape | type_definition | transformation | group | loop | check | WS*;
 
 // control statements
 
@@ -44,7 +42,7 @@ iterator : WS* 'iterator' WS+ NAME WS* ':' WS* (itr|NAME);
 
 // methods
 
-canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* color;
+canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* COLOR;
 
 draw : WS* 'draw' WS+ NAME;
 
@@ -52,7 +50,7 @@ draw : WS* 'draw' WS+ NAME;
 
 transformation : fill | move | place | rotate | scale;
 
-fill : WS* 'fill' WS+ NAME WS* ':' WS* color;
+fill : WS* 'fill' WS+ NAME WS* ':' WS* COLOR;
 
 move : WS* 'move' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME);
 
@@ -98,7 +96,7 @@ cond : WS* ((operation_flt | NAME) WS* logic WS* (operation_flt | NAME)) | ((itr
 
 signed_flt : '-'? (flt|NAME) (arithmetic (signed_flt|NAME))*;
 
-color : '#'('red' | 'green' | 'yellow' | 'black' | 'blue' | 'white' | 'orange' | 'pink');
+COLOR : '#'[a-z]+;
 
 flt : (DIGIT*DOT)?DIGIT+;
 

@@ -1,0 +1,36 @@
+--more different examples
+
+num X: 1000
+
+canvas: X, X, #blue
+
+point P1: 200, 800
+point P2: 200, 200
+point P3: 500, 500
+point P4: 800, 200
+point P5: 800, 800
+point P6: 500, 150
+
+segment S1: P1, P2
+segment S2: P2, P3
+segment S3: P3, P4
+segment S4: P4, P5
+
+circle C: P6, 100
+
+fill P1: #red
+fill S4: #yellow
+fill C: #white
+
+draw P1
+draw P2
+draw P3
+draw P4
+draw P5
+
+draw S1
+draw S2
+draw S3
+draw S4
+
+draw C
