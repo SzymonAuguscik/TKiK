@@ -1,0 +1,7 @@
+-- exception when one tries to reinitialize variable
+
+num X: 100
+
+canvas: X, X, #red
+
+num X: 25

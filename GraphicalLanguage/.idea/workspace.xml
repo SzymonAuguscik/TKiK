@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files">
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Refactor main function">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyCanvasChecker.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyCanvasChecker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyListener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyParser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyProgramListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramListener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -55,7 +73,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619108821734</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactor main function">
+      <created>1619460619299</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1619460619299</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -73,6 +98,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor main logic functions in GraphlyProgram class. Add several test files" />
     <MESSAGE value="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files" />
+    <MESSAGE value="Refactor main function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor main function" />
   </component>
 </project>

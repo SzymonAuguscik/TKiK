@@ -251,15 +251,6 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GraphlyParser#color.
-    def enterColor(self, ctx:GraphlyParser.ColorContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#color.
-    def exitColor(self, ctx:GraphlyParser.ColorContext):
-        pass
-
-
     # Enter a parse tree produced by GraphlyParser#flt.
     def enterFlt(self, ctx:GraphlyParser.FltContext):
         pass

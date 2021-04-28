@@ -1,0 +1,10 @@
+-- draw in loop
+
+loop I start 0 until 10 step 2 then
+    draw P
+end
+
+canvas: 100, 100, #red
+
+num X: 25
+point P: 1, 3

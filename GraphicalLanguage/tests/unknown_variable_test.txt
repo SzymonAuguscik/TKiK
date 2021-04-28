@@ -1,0 +1,10 @@
+-- unknown variable
+
+num X: 200
+canvas: X, X, #red
+
+point P1: 10, 20
+
+segment S: P1, P2
+
+draw S

@@ -1,0 +1,13 @@
+-- more sophisticated example
+
+loop I start 1 until 10 step 2 then
+    check 2 > Imp then
+        num X1: 2
+    else then
+        draw S
+    end
+end
+
+canvas: X, Y, #yellow
+
+num R: 15.5
