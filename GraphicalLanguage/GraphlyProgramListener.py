@@ -55,7 +55,7 @@ class GraphlyProgramListener(GraphlyListener):
             self.width = self.POLYGON_WIDTH
 
     def __init__(self):
-        self.variables = {}
+        self.scopes = []
         self.colors = {
             "#red": (255, 0, 0),
             "#green": (0, 255, 0),
@@ -68,17 +68,50 @@ class GraphlyProgramListener(GraphlyListener):
         }
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
 
+    def variable_exists(self, variable):
+        # Checks if variable exists in any scope
+        # TODO
+        # Alternatively, we can check if variable exists only in the current 
+        # scope, allowing to create variables of the same name as in higher
+        # scopes. Also, functionality of this function could be implemented by
+        # get_variable. 
+        for scope in reversed(self.scopes):
+            if variable in scope:
+                return True
+        return False
+
+    def get_variable(self, variable):
+        # Returns variable if found in any scope, or None
+        # TODO
+        # This function could throw an error, so that we don't need to perform
+        # all those checks all over the code.
+        for scope in reversed(self.scopes):
+            if variable in scope:
+                return scope[variable]
+        return None
+
+    def create_variable(self, name, value):
+        # Creates variable in the current scope
+        self.scopes[-1][name] = value
+
     def enterProgram(self, ctx: GraphlyParser.ProgramContext):
         pygame.init()
+        self.scopes.append({})
 
     def exitProgram(self, ctx: GraphlyParser.ProgramContext):
         pygame.display.update()
 
-    # def enterLoop(self, ctx: GraphlyParser.LoopContext):
-    #     print("Loop")
-    #
-    # def enterCheck(self, ctx: GraphlyParser.CheckContext):
-    #     print("Check")
+    def enterLoop(self, ctx: GraphlyParser.LoopContext):
+        self.scopes.append({})
+
+    def exitLoop(self, ctx:GraphlyParser.LoopContext):
+        self.scopes.pop()
+    
+    def enterCheck(self, ctx: GraphlyParser.CheckContext):
+        self.scopes.append({})
+
+    def exitCheck(self, ctx:GraphlyParser.CheckContext):
+        self.scopes.pop()
 
     # TODO
     # add exceptions after providing full variables service
@@ -86,30 +119,30 @@ class GraphlyProgramListener(GraphlyListener):
     def enterPoint(self, ctx: GraphlyParser.PointContext):
         name = ctx.NAME().getText()
 
-        if name not in self.variables:
+        if not self.variable_exists(name):
             x_cord = float(ctx.operation_flt(0).getText())
             y_cord = float(ctx.operation_flt(1).getText())
 
             point = self.Point(name, x_cord, y_cord)
 
-            self.variables[name] = point
+            self.create_variable(name, point)
         else:
             raise VariableAlreadyDeclaredException(name)
 
     def enterSegment(self, ctx: GraphlyParser.SegmentContext):
         name = ctx.NAME(0).getText()
 
-        if name not in self.variables:
+        if not self.variable_exists(name):
             point1_name = ctx.NAME(1).getText()
             point2_name = ctx.NAME(2).getText()
 
-            if point1_name in self.variables and point2_name in self.variables:
-                p1 = self.variables[point1_name]
-                p2 = self.variables[point2_name]
+            if self.variable_exists(point1_name) and self.variable_exists(point2_name):
+                p1 = self.get_variable(point1_name)
+                p2 = self.get_variable(point2_name)
 
                 if type(p1) == self.Point and type(p2) == self.Point:
                     segment = self.Segment(name, p1, p2)
-                    self.variables[name] = segment
+                    self.create_variable(name, segment)
                 else:
                     if type(p1) != self.Point:
                         raise BadArgumentException("segment", point1_name, type(p1))
@@ -124,17 +157,17 @@ class GraphlyProgramListener(GraphlyListener):
     def enterCircle(self, ctx: GraphlyParser.CircleContext):
         name = ctx.NAME(0).getText()
 
-        if name not in self.variables:
+        if not self.variable_exists(name):
             point_name = ctx.NAME(1).getText()
 
-            if point_name in self.variables:
-                point = self.variables[point_name]
+            if self.variable_exists(point_name):
+                point = self.get_variable(point_name)
 
                 if type(point) == self.Point:
                     value = float(ctx.operation_flt().getText())
                     circle = self.Circle(name, point, value)
 
-                    self.variables[name] = circle
+                    self.create_variable(name, circle)
                 else:
                     raise BadArgumentException("circle", point_name, type(point))
             else:
@@ -145,11 +178,11 @@ class GraphlyProgramListener(GraphlyListener):
     def enterPolygon(self, ctx: GraphlyParser.PolygonContext):
         name = ctx.NAME(0).getText()
 
-        if name not in self.variables:
+        if not self.variable_exists(name):
             group_name = ctx.NAME(1).getText()
 
-            if group_name in self.variables:
-                group = self.variables[group_name]
+            if self.variable_exists(group_name):
+                group = self.get_variable(group_name)
 
                 if type(group) == list:
                     for member in group:
@@ -158,7 +191,7 @@ class GraphlyProgramListener(GraphlyListener):
 
                     polygon = self.Polygon(name, group)
 
-                    self.variables[name] = polygon
+                    self.create_variable(name, polygon)
                 else:
                     raise BadArgumentException("polygon", group_name, type(group))
             else:
@@ -176,17 +209,17 @@ class GraphlyProgramListener(GraphlyListener):
         arguments = name_tokens[1:]
         group_members = []
 
-        if name not in self.variables:
+        if not self.variable_exists(name):
             for arg in arguments:
                 arg_name = arg.getText()
 
-                if arg_name in self.variables:
-                    member = self.variables[arg_name]
+                if self.variable_exists(arg_name):
+                    member = self.get_variable(arg_name)
                     group_members.append(member)
                 else:
                     raise UnknownVariableException(arg_name)
 
-            self.variables[name] = group_members
+            self.create_variable(name, group_members)
         else:
             raise VariableAlreadyDeclaredException(name)
 
@@ -196,9 +229,9 @@ class GraphlyProgramListener(GraphlyListener):
     def enterNum(self, ctx: GraphlyParser.NumContext):
         name = ctx.NAME(0).getText()
 
-        if name not in self.variables:
+        if not self.variable_exists(name):
             value = float(ctx.operation_flt().getText())
-            self.variables[name] = value
+            self.create_variable(name, value)
         else:
             raise VariableAlreadyDeclaredException(name)
 
@@ -211,9 +244,9 @@ class GraphlyProgramListener(GraphlyListener):
         name_x = str(ctx.operation_flt(0).getText())
         name_y = str(ctx.operation_flt(1).getText())
 
-        if name_x in self.variables and name_y in self.variables:
-            size_x = int(self.variables[name_x])
-            size_y = int(self.variables[name_y])
+        if self.variable_exists(name_x) and self.variable_exists(name_y):
+            size_x = int(self.get_variable(name_x))
+            size_y = int(self.get_variable(name_y))
             self.screen = pygame.display.set_mode((size_x, size_y))
 
         if color in self.colors:
@@ -224,8 +257,8 @@ class GraphlyProgramListener(GraphlyListener):
     def enterDraw(self, ctx: GraphlyParser.DrawContext):
         name = ctx.NAME().getText()
 
-        if name in self.variables:
-            variable = self.variables[name]
+        if self.variable_exists(name):
+            variable = self.get_variable(name)
             if type(variable) == self.Point:
                 pygame.draw.circle(self.screen, variable.color, (variable.x, variable.y), self.POINT_RADIUS)
             elif type(variable) == self.Segment:
@@ -244,8 +277,8 @@ class GraphlyProgramListener(GraphlyListener):
     def enterFill(self, ctx: GraphlyParser.FillContext):
         name = ctx.NAME().getText()
 
-        if name in self.variables:
-            variable = self.variables[name]
+        if self.variable_exists(name):
+            variable = self.get_variable(name)
 
             if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
                 color = ctx.COLOR().getText()
