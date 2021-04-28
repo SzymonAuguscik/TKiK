@@ -1,0 +1,13 @@
+-- usage of incorrect points group
+
+num X: 500
+canvas: X, X, #red
+
+point P1: 10, 20
+point P2: 30, 50
+circle C: P1, 15.5
+
+group Points: P1, P2, C
+polygon Triangle: Points
+
+draw Triangle

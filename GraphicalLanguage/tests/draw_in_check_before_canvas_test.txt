@@ -1,0 +1,9 @@
+-- draw in check
+
+check J = 1 then
+    draw N
+end
+
+num X: 20
+
+canvas: X, X, #white

@@ -1,0 +1,6 @@
+-- bad argument
+
+num X: 100
+canvas: X, X, #white
+
+fill X: #red

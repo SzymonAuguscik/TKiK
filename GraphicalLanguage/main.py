@@ -5,7 +5,7 @@ import pygame
 from GraphlyLexer import GraphlyLexer
 from GraphlyParser import GraphlyParser
 from GraphlyProgramListener import GraphlyProgramListener
-from GraphlyCanvasChecker import GraphlyCanvasChecker, DrawBeforeCanvasException
+from GraphlyCanvasChecker import GraphlyCanvasChecker
 
 
 def check_canvas(argv):  # first run of program

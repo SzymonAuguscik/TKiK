@@ -3,6 +3,12 @@ import pygame
 from GraphlyListener import GraphlyListener
 from GraphlyParser import GraphlyParser
 
+from exceptions.VariableAlreadyDeclaredException import VariableAlreadyDeclaredException
+from exceptions.UnknownVariableException import UnknownVariableException
+from exceptions.BadArgumentException import BadArgumentException
+from exceptions.BadColorException import BadColorException
+from exceptions.IncorrectPolygonCreationException import IncorrectPolygonCreationException
+
 
 class GraphlyProgramListener(GraphlyListener):
     POINT_RADIUS = 3
@@ -74,6 +80,9 @@ class GraphlyProgramListener(GraphlyListener):
     # def enterCheck(self, ctx: GraphlyParser.CheckContext):
     #     print("Check")
 
+    # TODO
+    # add exceptions after providing full variables service
+
     def enterPoint(self, ctx: GraphlyParser.PointContext):
         name = ctx.NAME().getText()
 
@@ -85,7 +94,7 @@ class GraphlyProgramListener(GraphlyListener):
 
             self.variables[name] = point
         else:
-            print_already_declared_variable_error(name)
+            raise VariableAlreadyDeclaredException(name)
 
     def enterSegment(self, ctx: GraphlyParser.SegmentContext):
         name = ctx.NAME(0).getText()
@@ -102,15 +111,15 @@ class GraphlyProgramListener(GraphlyListener):
                     segment = self.Segment(name, p1, p2)
                     self.variables[name] = segment
                 else:
-                    # TODO
-                    # exception
-                    print("Bad type")
+                    if type(p1) != self.Point:
+                        raise BadArgumentException("segment", point1_name, type(p1))
+                    raise BadArgumentException("segment", point2_name, type(p2))
             else:
-                # TODO
-                # change it later with throwing exception
-                print(f"Error! Uknown variable")
+                if point1_name not in self.variables:
+                    raise UnknownVariableException(point1_name)
+                raise UnknownVariableException(point2_name)
         else:
-            print_already_declared_variable_error(name)
+            raise VariableAlreadyDeclaredException(name)
 
     def enterCircle(self, ctx: GraphlyParser.CircleContext):
         name = ctx.NAME(0).getText()
@@ -127,15 +136,11 @@ class GraphlyProgramListener(GraphlyListener):
 
                     self.variables[name] = circle
                 else:
-                    # TODO
-                    # exception
-                    print("Bad type")
+                    raise BadArgumentException("circle", point_name, type(point))
             else:
-                # TODO
-                # exception
-                print("Error!")
+                raise UnknownVariableException(point_name)
         else:
-            print_already_declared_variable_error(name)
+            raise VariableAlreadyDeclaredException(name)
 
     def enterPolygon(self, ctx: GraphlyParser.PolygonContext):
         name = ctx.NAME(0).getText()
@@ -149,23 +154,17 @@ class GraphlyProgramListener(GraphlyListener):
                 if type(group) == list:
                     for member in group:
                         if type(member) != self.Point:
-                            # TODO
-                            # exception
-                            print("Bad group member")
+                            raise IncorrectPolygonCreationException(group_name, type(member))
 
                     polygon = self.Polygon(name, group)
 
                     self.variables[name] = polygon
                 else:
-                    # TODO
-                    # exception
-                    print("Bad argument of polygon")
+                    raise BadArgumentException("polygon", group_name, type(group))
             else:
-                # TODO
-                # exception
-                print("Error in polygon")
+                raise UnknownVariableException(group_name)
         else:
-            print_already_declared_variable_error(name)
+            raise VariableAlreadyDeclaredException(name)
 
     # TODO
     # Possible problem with no args
@@ -185,13 +184,11 @@ class GraphlyProgramListener(GraphlyListener):
                     member = self.variables[arg_name]
                     group_members.append(member)
                 else:
-                    # TODO
-                    # exception
-                    print("Error in group")
+                    raise UnknownVariableException(arg_name)
 
             self.variables[name] = group_members
         else:
-            print_already_declared_variable_error(name)
+            raise VariableAlreadyDeclaredException(name)
 
     def enterGroupMember(self, ctx: GraphlyParser.GroupMemberContext):
         print("GroupMember")
@@ -203,13 +200,13 @@ class GraphlyProgramListener(GraphlyListener):
             value = float(ctx.operation_flt().getText())
             self.variables[name] = value
         else:
-            print_already_declared_variable_error(name)
+            raise VariableAlreadyDeclaredException(name)
 
     # def enterIterator(self, ctx: GraphlyParser.IteratorContext):
     #     print(ctx.getText())
 
     def enterCanvas(self, ctx: GraphlyParser.CanvasContext):
-        color = ctx.color().getText()
+        color = ctx.COLOR().getText()
 
         name_x = str(ctx.operation_flt(0).getText())
         name_y = str(ctx.operation_flt(1).getText())
@@ -222,9 +219,7 @@ class GraphlyProgramListener(GraphlyListener):
         if color in self.colors:
             self.screen.fill(self.colors[color])
         else:
-            # TODO
-            # exception
-            print(f"Error! Unknown color {color}")
+            raise BadColorException(color)
 
     def enterDraw(self, ctx: GraphlyParser.DrawContext):
         name = ctx.NAME().getText()
@@ -244,9 +239,7 @@ class GraphlyProgramListener(GraphlyListener):
                 coordination_tuples_list = [point.get_coordination_tuple() for point in variable.points]
                 pygame.draw.polygon(self.screen, variable.color, coordination_tuples_list, variable.width)
         else:
-            # TODO
-            # exception
-            print("Unknown variable")
+            raise UnknownVariableException(name)
 
     def enterFill(self, ctx: GraphlyParser.FillContext):
         name = ctx.NAME().getText()
@@ -255,22 +248,16 @@ class GraphlyProgramListener(GraphlyListener):
             variable = self.variables[name]
 
             if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
-                color = ctx.color().getText()
+                color = ctx.COLOR().getText()
 
                 if color in self.colors:
                     variable.color = self.colors[color]
                 else:
-                    # TODO
-                    # exception
-                    print("Error! Bad color")
+                    raise BadColorException(color)
             else:
-                # TODO
-                # exception
-                print("Error! Bad argument")
+                raise BadArgumentException("fill", name, type(variable))
         else:
-            # TODO
-            # exception
-            print("Error in fill")
+            raise UnknownVariableException(name)
 
     def enterMove(self, ctx: GraphlyParser.MoveContext):
         print("Move")
@@ -283,7 +270,3 @@ class GraphlyProgramListener(GraphlyListener):
 
     def enterScale(self, ctx: GraphlyParser.ScaleContext):
         print("Scale")
-
-
-def print_already_declared_variable_error(name):
-    print(f"Error! Variable {name} already declared!")
