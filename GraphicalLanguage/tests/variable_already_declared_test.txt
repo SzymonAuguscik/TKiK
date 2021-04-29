@@ -1,7 +1,7 @@
 -- exception when one tries to reinitialize variable
 
-num X: 100
+num Y: 100
 
-canvas: X, X, #red
+canvas: Y, Y, #red
 
-num X: 25
+num Y: 25

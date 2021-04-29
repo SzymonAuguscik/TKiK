@@ -4,7 +4,6 @@ import pygame
 
 from GraphlyLexer import GraphlyLexer
 from GraphlyParser import GraphlyParser
-# from GraphlyProgramListener import GraphlyProgramListener
 from GraphlyCanvasChecker import GraphlyCanvasChecker
 from GraphlyProgramVisitor import GraphlyProgramVisitor
 

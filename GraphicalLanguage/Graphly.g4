@@ -15,7 +15,7 @@ block : (WS* instruction '\n')*;
 
 loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+ 'step' WS+ (itr|NAME) WS+ 'then' '\n' block WS* 'end';
 
-check : WS* 'check' WS+ condition_block ('else' WS+ 'check' WS+ condition_block)* ('else then' '\n' block)? WS* 'end';
+check : WS* 'check' WS+ condition_block ('else' WS+ 'check' WS+ condition_block)* WS* ('else' WS+ 'then' '\n' block)? WS* 'end';
 
 condition_block : cond WS+ 'then' '\n' WS* block;
 
@@ -103,7 +103,7 @@ COLOR : '#'[a-z]+;
 
 flt : (DIGIT*DOT)?DIGIT+;
 
-operation_flt : (flt|NAME) (arithmetic (flt|NAME))*;
+operation_flt : (flt|NAME) WS* (arithmetic WS* (flt|NAME) WS*)*;
 
 DOT : '.';
 

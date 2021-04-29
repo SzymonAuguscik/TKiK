@@ -6,14 +6,16 @@
       <change beforePath="$PROJECT_DIR$/Graphly.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Graphly.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.interp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Graphly.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyCanvasChecker.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyCanvasChecker.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphlyLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.interp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphlyLexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphlyLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyListener.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphlyParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyParser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyProgramListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramListener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyProgramVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramVisitor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/draw_in_check_before_canvas_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/draw_in_check_before_canvas_test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/nested_draw_before_canvas_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/nested_draw_before_canvas_test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/variable_already_declared_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/variable_already_declared_test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/variable_as_names_or_nums.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

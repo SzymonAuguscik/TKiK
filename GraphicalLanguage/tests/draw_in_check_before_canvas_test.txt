@@ -1,6 +1,6 @@
 -- draw in check
 
-check J = 1 then
+check J + 2  = 1 then
     draw N
 end
 

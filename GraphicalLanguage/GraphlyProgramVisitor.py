@@ -1,4 +1,5 @@
 import pygame
+from re import split, sub
 
 from GraphlyVisitor import GraphlyVisitor
 from GraphlyParser import GraphlyParser
@@ -102,16 +103,14 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         #TODO
         #Check if variable are named or given properly
 
-
         values = []
+
         for variable_text in variables_text:
             if variable_text[0].isupper() and not self.cointains_op(variable_text):
-                if (self.variable_exists(variable_text)):
+                if self.variable_exists(variable_text):
                     values.append(self.get_variable(variable_text))
                 else:
-                    pass
-                    #TODO
-                    #Error
+                    raise UnknownVariableException(variable_text)
             else:
                 variable_text = self.operation_to_eval(variable_text)
                 values.append(eval(variable_text))
@@ -148,9 +147,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
                 if (self.variable_exists(var)):
                     operation_text = sub(r'\b{}\b'.format(var), str(self.get_variable(var)), operation_text)
                 else:
-                    pass
-                    #TODO
-                    #Error
+                    raise UnknownVariableException(var)
         
         print(operation_text)
         return operation_text
@@ -355,7 +352,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         name_y = str(ctx.operation_flt(1).getText())
 
         if self.variable_exists(name_x) and self.variable_exists(name_y):
-            sizes =  self.check_if_variables([name_x, name_y])
+            sizes = self.check_if_variables([name_x, name_y])
             self.screen = pygame.display.set_mode((int(sizes[0]), int(sizes[1])))
 
         if color in self.colors:
