@@ -9,6 +9,8 @@ from exceptions.BadArgumentException import BadArgumentException
 from exceptions.BadColorException import BadColorException
 from exceptions.IncorrectPolygonCreationException import IncorrectPolygonCreationException
 
+from re import split, sub
+
 
 class GraphlyProgramVisitor(GraphlyVisitor):
     POINT_RADIUS = 3
@@ -212,7 +214,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
             point = self.Point(name, values[0], values[1])
 
-            self.create_variable(name, point)
+            self.set_variable(name, point)
         else:
             raise VariableAlreadyDeclaredException(name)
 
@@ -340,7 +342,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
         if not self.variable_exists(name):
             value = self.check_if_variables([ctx.operation_flt().getText()])
-            self.create_variable(name, value[0])
+            self.set_variable(name, value[0])
         else:
             raise VariableAlreadyDeclaredException(name)
 
