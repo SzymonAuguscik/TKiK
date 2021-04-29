@@ -1,0 +1,12 @@
+num X: 300
+canvas: X, X, #white
+
+point P1: 100, 100
+point P2: 200, 200
+
+loop I start 0 until 3 step 1 then
+    loop J start 0 until 10 step 2 then
+        draw P1
+	end
+    draw P2
+end

@@ -11,10 +11,13 @@ program : (('\n')* instruction ('\n')+)* canvas (('\n')+ instruction ('\n')*)* E
 instruction : shape | type_definition | draw | transformation | group | loop | check | WS*;
 
 // control statements
+block : (WS* instruction '\n')*;
 
-loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+ 'step' WS+ (itr|NAME) WS+ 'then' '\n' (WS* instruction '\n')* WS* 'end';
+loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+ 'step' WS+ (itr|NAME) WS+ 'then' '\n' block WS* 'end';
 
-check : WS* 'check' WS+ cond WS+ 'then' '\n' WS* (WS* instruction '\n')* ('else' WS+ 'check' WS+ cond WS+ 'then' '\n' WS* (WS* instruction '\n')*)* ('else then' '\n' (WS* instruction '\n')*)? WS* 'end';
+check : WS* 'check' WS+ condition_block ('else' WS+ 'check' WS+ condition_block)* ('else then' '\n' block)? WS* 'end';
+
+condition_block : cond WS+ 'then' '\n' WS* block;
 
 // shapes
 

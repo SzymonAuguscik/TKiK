@@ -4,8 +4,9 @@ import pygame
 
 from GraphlyLexer import GraphlyLexer
 from GraphlyParser import GraphlyParser
-from GraphlyProgramListener import GraphlyProgramListener
+# from GraphlyProgramListener import GraphlyProgramListener
 from GraphlyCanvasChecker import GraphlyCanvasChecker
+from GraphlyProgramVisitor import GraphlyProgramVisitor
 
 
 def check_canvas(argv):  # first run of program
@@ -23,6 +24,7 @@ def check_canvas(argv):  # first run of program
     tree_walker = antlr4.ParseTreeWalker()
     tree_walker.walk(graph, tree)
 
+
     print("All is ok!")
 
 
@@ -34,10 +36,12 @@ def execute_graphly_script(argv):  # second run of program
     parser = GraphlyParser(stream)
 
     tree = parser.program()
-    graph = GraphlyProgramListener()
+    # graph = GraphlyProgramListener()
 
-    tree_walker = antlr4.ParseTreeWalker()
-    tree_walker.walk(graph, tree)
+    # tree_walker = antlr4.ParseTreeWalker()
+    # tree_walker.walk(graph, tree)
+
+    GraphlyProgramVisitor().visit(tree)
 
     run = True
 
