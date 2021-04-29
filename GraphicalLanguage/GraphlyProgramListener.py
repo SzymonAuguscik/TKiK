@@ -9,6 +9,8 @@ from exceptions.BadArgumentException import BadArgumentException
 from exceptions.BadColorException import BadColorException
 from exceptions.IncorrectPolygonCreationException import IncorrectPolygonCreationException
 
+from re import split, sub
+
 
 class GraphlyProgramListener(GraphlyListener):
     POINT_RADIUS = 3
@@ -90,6 +92,74 @@ class GraphlyProgramListener(GraphlyListener):
                 return scope[variable]
         return None
 
+    
+    def check_if_variables(self, variables_text):
+        #Returns value of all given variables if given correctly
+        #TODO
+        #Check if variable are named or given properly
+
+
+        values = []
+        for variable_text in variables_text:
+            if variable_text[0].isupper() and not self.cointains_op(variable_text):
+                if (self.variable_exists(variable_text)):
+                    values.append(self.get_variable(variable_text))
+                else:
+                    pass
+                    #TODO
+                    #Error
+            else:
+                variable_text = self.operation_to_eval(variable_text)
+                values.append(eval(variable_text))
+
+        return values
+
+
+    def cointains_op(self, variables_text):
+        #checks if there is a string in operation text
+        operations = "+-*/%"
+        for op in operations:
+            if op in variables_text:
+                return True
+
+        return False
+
+
+
+    def operation_to_eval(self, operation_text):
+        #Takes operation string and checks if there is variable 
+        #if there is variable search for its value
+
+        operations = "+-*/%"
+
+        operation_text = operation_text.replace(" ", "")
+        operation_arr = split('\+|\-|\*|\/|\%', operation_text)
+
+        for op in operations:
+            operation_text = operation_text.replace(op, " " + op + " ")
+
+        
+        for var in operation_arr:
+            if var[0].isupper():
+                if (self.variable_exists(var)):
+                    operation_text = sub(r'\b{}\b'.format(var), str(self.get_variable(var)), operation_text)
+                else:
+                    pass
+                    #TODO
+                    #Error
+        
+        print(operation_text)
+        return operation_text
+                
+
+    
+
+        
+
+
+
+
+
     def create_variable(self, name, value):
         # Creates variable in the current scope
         self.scopes[-1][name] = value
@@ -118,12 +188,17 @@ class GraphlyProgramListener(GraphlyListener):
 
     def enterPoint(self, ctx: GraphlyParser.PointContext):
         name = ctx.NAME().getText()
+        #TODO
+        #check if name starts with upper Case letter
 
         if not self.variable_exists(name):
-            x_cord = float(ctx.operation_flt(0).getText())
-            y_cord = float(ctx.operation_flt(1).getText())
+    
+            
+            x_cord = ctx.operation_flt(0).getText()
+            y_cord = ctx.operation_flt(1).getText()
+            values = self.check_if_variables([x_cord, y_cord])
 
-            point = self.Point(name, x_cord, y_cord)
+            point = self.Point(name, values[0], values[1])
 
             self.create_variable(name, point)
         else:
@@ -164,8 +239,8 @@ class GraphlyProgramListener(GraphlyListener):
                 point = self.get_variable(point_name)
 
                 if type(point) == self.Point:
-                    value = float(ctx.operation_flt().getText())
-                    circle = self.Circle(name, point, value)
+                    value = self.check_if_variables([ctx.operation_flt().getText()])
+                    circle = self.Circle(name, point, value[0])
 
                     self.create_variable(name, circle)
                 else:
@@ -230,8 +305,8 @@ class GraphlyProgramListener(GraphlyListener):
         name = ctx.NAME(0).getText()
 
         if not self.variable_exists(name):
-            value = float(ctx.operation_flt().getText())
-            self.create_variable(name, value)
+            value = self.check_if_variables([ctx.operation_flt().getText()])
+            self.create_variable(name, value[0])
         else:
             raise VariableAlreadyDeclaredException(name)
 
@@ -245,9 +320,8 @@ class GraphlyProgramListener(GraphlyListener):
         name_y = str(ctx.operation_flt(1).getText())
 
         if self.variable_exists(name_x) and self.variable_exists(name_y):
-            size_x = int(self.get_variable(name_x))
-            size_y = int(self.get_variable(name_y))
-            self.screen = pygame.display.set_mode((size_x, size_y))
+            sizes =  self.check_if_variables([name_x, name_y])
+            self.screen = pygame.display.set_mode((int(sizes[0]), int(sizes[1])))
 
         if color in self.colors:
             self.screen.fill(self.colors[color])
