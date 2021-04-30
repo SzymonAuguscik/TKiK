@@ -7,7 +7,7 @@ loop I start 0 until 7 step 1 then
     point P2: 200, 200
     loop J start 0 until 7 step 1 then
         point P3: 300, 300
-		check I+J%2 = 1 then
+		check I + J % 2 = 1 then
 			point P4: 400, 400
 			point P5: 500, 500
             draw P1

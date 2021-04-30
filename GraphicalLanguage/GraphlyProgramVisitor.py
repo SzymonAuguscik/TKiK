@@ -193,7 +193,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
                 do_else = False
                 break
         
-        if do_else:
+        if do_else and not ctx.block() is None:
             self.visit(ctx.block())
 
         self.scopes.pop()
@@ -351,9 +351,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         name_x = str(ctx.operation_flt(0).getText())
         name_y = str(ctx.operation_flt(1).getText())
 
-        if self.variable_exists(name_x) and self.variable_exists(name_y):
-            sizes = self.check_if_variables([name_x, name_y])
-            self.screen = pygame.display.set_mode((int(sizes[0]), int(sizes[1])))
+        sizes = self.check_if_variables([name_x, name_y])
+        self.screen = pygame.display.set_mode((int(sizes[0]), int(sizes[1])))
 
         if color in self.colors:
             self.screen.fill(self.colors[color])

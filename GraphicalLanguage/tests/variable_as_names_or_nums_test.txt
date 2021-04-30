@@ -2,8 +2,8 @@ num X: 500
 num Y: 250
 num Z: Y - 50
 
-
-canvas: 300, X, #white
+-- fix
+canvas: 300*3, X+0, #white
 
 point P1: 125.1284 - 10.5543, Y
 

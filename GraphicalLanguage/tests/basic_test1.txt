@@ -1,6 +1,6 @@
 --several basic instructions
 
-num X: 1000
+num X: 900
 
 canvas: X, X, #white
 

@@ -3,11 +3,13 @@
 num X: 500
 canvas: X, X, #red
 
-point P1: 10, 20
-point P2: 30, 50
-circle C: P1, 15.5
+point P1: 210, 250
+point P2: 130, 480
+point P3: 40, 390
+circle C: P1, 90
 
 group Points: P1, P2, C
 polygon Triangle: Points
 
 draw Triangle
+draw C

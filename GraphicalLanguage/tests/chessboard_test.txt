@@ -1,12 +1,7 @@
 -- main program to draw chess board
 num X: 100
 
-check I+1=2 then
-  --  canvas: X, X, #red
-end
-
 canvas: X, X, #white
-
 
 num SqrLen: 12
 point P0: 0, 0
@@ -23,40 +18,10 @@ fill Sqr: #black
 
 loop I start 0 until 7 step 1 then
     loop J start 0 until 7 step 1 then
-		check I+J%2 = 1 then
-			point P: I*SqrLen, J*SqrLen
+		check I + J % 2 = 1 then
+			point P: I * SqrLen, J * SqrLen
 			place Sqr: P
 			draw Sqr
 		end
 	end
-end
-
--- check tests
-
--- first
-check 2 = 1 then
-    draw P1
-else check 3 = 1 then
-    draw P3
-else then
-    fill SGQ: #red
-end
-
--- second
-
-check 2 > Imp then
-    num X1: 2
-else then
-    fill SGQ : #white
-end
-
--- third
-check 2 = 1 then
-    draw P1
-else check 3 = 1 then
-    draw P3
-else check 4 = 1 then
-    draw P61
-else then
-    move SGQ:  I, 31
 end

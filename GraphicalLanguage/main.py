@@ -36,7 +36,7 @@ def execute_graphly_script(argv):  # second run of program
 
     tree = parser.program()
     # graph = GraphlyProgramListener()
-
+    #
     # tree_walker = antlr4.ParseTreeWalker()
     # tree_walker.walk(graph, tree)
 
