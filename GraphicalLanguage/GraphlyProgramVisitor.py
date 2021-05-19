@@ -159,9 +159,12 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         self.visitChildren(ctx)
         pygame.display.update()
 
-    def visitLoop(self, ctx: GraphlyParser.LoopContext):
+    def visitBlock(self, ctx:GraphlyParser.BlockContext):
         self.scopes.append({})
-        
+        self.visitChildren(ctx)
+        self.scopes.pop()
+
+    def visitLoop(self, ctx: GraphlyParser.LoopContext):
         name = ctx.NAME(0).getText()
 
         iterator = int(ctx.itr(0).getText())
@@ -181,11 +184,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             iterator += step
             self.set_variable(name, iterator)
 
-        self.scopes.pop()
 
     def visitCheck(self, ctx: GraphlyParser.CheckContext):
-        self.scopes.append({})
-        
         do_else = True
         for cb in ctx.condition_block():
             if self.visit(cb.cond()):
@@ -195,8 +195,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         
         if do_else and not ctx.block() is None:
             self.visit(ctx.block())
-
-        self.scopes.pop()
 
     # TODO
     # add exceptions after providing full variables service
