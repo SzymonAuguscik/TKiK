@@ -4,7 +4,11 @@ canvas: X, X, #white
 loop I start 1 until 6 step 1 then
     loop J start 1 until 6 step 1 then
         point P3: I*100, J*100
-        fill P3: #blue
+        check (I+J)%2 = 0 then
+            fill P3: #red
+        else then
+            fill P3: #blue
+        end
         draw P3
 	end
 end
