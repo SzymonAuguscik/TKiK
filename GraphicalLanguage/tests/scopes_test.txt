@@ -1,5 +1,5 @@
 num X: 600
-canvas: 2*3*100, X, #white
+canvas: 500+10*10, X, #white
 
 loop I start 1 until 6 step 1 then
     loop J start 1 until 6 step 1 then

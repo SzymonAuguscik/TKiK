@@ -69,10 +69,12 @@ scale : WS* 'scale' WS+ NAME WS* ':' WS* operation_flt;
 
 expr  : '(' WS* expr WS* ')'                                         #parenExpr
       | '-' WS* expr                                                 #minusOpExpr
-      | left=expr WS* op=('*'|'/'|'%'|'+'|'-') WS* right=expr        #arithmeticOpExpr
+      | left=expr WS* op=('*'|'/'|'%') WS* right=expr                #arithmeticOpExpr
+      | left=expr WS* op=('+'|'-') WS* right=expr                    #arithmeticOpExpr
       | left=expr WS* op=('<='|'>'|'>='|'<'|'='|'!=') WS* right=expr #booleanOpExpr
       | '!' WS* expr                                                 #negationOpExpr
-      | left=expr WS* op=('&'|'|') WS* right=expr                    #booleanOpExpr
+      | left=expr WS* op='&' WS* right=expr                          #booleanOpExpr
+      | left=expr WS* op='|' WS* right=expr                          #booleanOpExpr
       | atom                                                         #atomExpr
       ;
 
