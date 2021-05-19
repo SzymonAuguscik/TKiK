@@ -85,14 +85,12 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         return False
 
     def get_variable(self, variable):
-        # Returns variable if found in any scope, or None
-        # TODO
-        # This function could throw an error, so that we don't need to perform
-        # all those checks all over the code.
+        # Returns variable if found in any scope
+        # Raises UnknownVariableException
         for scope in reversed(self.scopes):
             if variable in scope:
                 return scope[variable]
-        return None
+        raise UnknownVariableException(variable)
 
     def set_variable(self, name, value):
         # Sets/creates variable in the current scope
@@ -108,10 +106,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
         for variable_text in variables_text:
             if variable_text[0].isupper() and not self.cointains_op(variable_text):
-                if self.variable_exists(variable_text):
-                    values.append(self.get_variable(variable_text))
-                else:
-                    raise UnknownVariableException(variable_text)
+                values.append(self.get_variable(variable_text))
             else:
                 variable_text = self.operation_to_eval(variable_text)
                 values.append(eval(variable_text))
@@ -145,10 +140,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         
         for var in operation_arr:
             if var[0].isupper():
-                if (self.variable_exists(var)):
-                    operation_text = sub(r'\b{}\b'.format(var), str(self.get_variable(var)), operation_text)
-                else:
-                    raise UnknownVariableException(var)
+                operation_text = sub(r'\b{}\b'.format(var), str(self.get_variable(var)), operation_text)
         
         print(operation_text)
         return operation_text
@@ -223,23 +215,18 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             point1_name = ctx.NAME(1).getText()
             point2_name = ctx.NAME(2).getText()
 
-            if self.variable_exists(point1_name) and self.variable_exists(point2_name):
-                p1 = self.get_variable(point1_name)
-                p2 = self.get_variable(point2_name)
+            p1 = self.get_variable(point1_name)
+            p2 = self.get_variable(point2_name)
 
-                if type(p1) == self.Point and type(p2) == self.Point:
-                    segment = self.Segment(name, p1, p2)
-                    self.set_variable(name, segment)
-                else:
-                    if type(p1) != self.Point:
-                        raise BadArgumentException(
-                            "segment", point1_name, type(p1))
-                    raise BadArgumentException(
-                        "segment", point2_name, type(p2))
+            if type(p1) == self.Point and type(p2) == self.Point:
+                segment = self.Segment(name, p1, p2)
+                self.set_variable(name, segment)
             else:
-                if not self.variable_exists(point1_name):
-                    raise UnknownVariableException(point1_name)
-                raise UnknownVariableException(point2_name)
+                if type(p1) != self.Point:
+                    raise BadArgumentException(
+                        "segment", point1_name, type(p1))
+                raise BadArgumentException(
+                    "segment", point2_name, type(p2))
         else:
             raise VariableAlreadyDeclaredException(name)
 
@@ -251,19 +238,16 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         if not self.variable_exists(name):
             point_name = ctx.NAME(1).getText()
 
-            if self.variable_exists(point_name):
-                point = self.get_variable(point_name)
+            point = self.get_variable(point_name)
 
-                if type(point) == self.Point:
-                    value = self.check_if_variables([ctx.operation_flt().getText()])
-                    circle = self.Circle(name, point, value[0])
+            if type(point) == self.Point:
+                value = self.check_if_variables([ctx.operation_flt().getText()])
+                circle = self.Circle(name, point, value[0])
 
-                    self.set_variable(name, circle)
-                else:
-                    raise BadArgumentException(
-                        "circle", point_name, type(point))
+                self.set_variable(name, circle)
             else:
-                raise UnknownVariableException(point_name)
+                raise BadArgumentException(
+                    "circle", point_name, type(point))
         else:
             raise VariableAlreadyDeclaredException(name)
 
@@ -275,23 +259,20 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         if not self.variable_exists(name):
             group_name = ctx.NAME(1).getText()
 
-            if self.variable_exists(group_name):
-                group = self.get_variable(group_name)
+            group = self.get_variable(group_name)
 
-                if type(group) == list:
-                    for member in group:
-                        if type(member) != self.Point:
-                            raise IncorrectPolygonCreationException(
-                                group_name, type(member))
+            if type(group) == list:
+                for member in group:
+                    if type(member) != self.Point:
+                        raise IncorrectPolygonCreationException(
+                            group_name, type(member))
 
-                    polygon = self.Polygon(name, group)
+                polygon = self.Polygon(name, group)
 
-                    self.set_variable(name, polygon)
-                else:
-                    raise BadArgumentException(
-                        "polygon", group_name, type(group))
+                self.set_variable(name, polygon)
             else:
-                raise UnknownVariableException(group_name)
+                raise BadArgumentException(
+                    "polygon", group_name, type(group))
         else:
             raise VariableAlreadyDeclaredException(name)
 
@@ -316,11 +297,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             for arg in arguments:
                 arg_name = arg.getText()
 
-                if self.variable_exists(arg_name):
-                    member = self.get_variable(arg_name)
-                    group_members.append(member)
-                else:
-                    raise UnknownVariableException(arg_name)
+                member = self.get_variable(arg_name)
+                group_members.append(member)
 
             self.set_variable(name, group_members)
         else:
@@ -363,42 +341,36 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def visitDraw(self, ctx: GraphlyParser.DrawContext):
         name = ctx.NAME().getText()
 
-        if self.variable_exists(name):
-            variable = self.get_variable(name)
-            if type(variable) == self.Point:
-                pygame.draw.circle(self.screen, variable.color, (variable.x, variable.y), self.POINT_RADIUS)
-            elif type(variable) == self.Segment:
-                start_point = variable.start_point.get_coordination_tuple()
-                end_point = variable.end_point.get_coordination_tuple()
-                pygame.draw.line(self.screen, variable.color, start_point, end_point, variable.width)
-            elif type(variable) == self.Circle:
-                center_point = variable.center_point.get_coordination_tuple()
-                pygame.draw.circle(self.screen, variable.color, center_point, variable.radius)
-            elif type(variable) == self.Polygon:
-                coordination_tuples_list = [point.get_coordination_tuple() for point in variable.points]
-                pygame.draw.polygon(self.screen, variable.color, coordination_tuples_list, variable.width)
-        else:
-            raise UnknownVariableException(name)
+        variable = self.get_variable(name)
+        if type(variable) == self.Point:
+            pygame.draw.circle(self.screen, variable.color, (variable.x, variable.y), self.POINT_RADIUS)
+        elif type(variable) == self.Segment:
+            start_point = variable.start_point.get_coordination_tuple()
+            end_point = variable.end_point.get_coordination_tuple()
+            pygame.draw.line(self.screen, variable.color, start_point, end_point, variable.width)
+        elif type(variable) == self.Circle:
+            center_point = variable.center_point.get_coordination_tuple()
+            pygame.draw.circle(self.screen, variable.color, center_point, variable.radius)
+        elif type(variable) == self.Polygon:
+            coordination_tuples_list = [point.get_coordination_tuple() for point in variable.points]
+            pygame.draw.polygon(self.screen, variable.color, coordination_tuples_list, variable.width)
 
         return self.visitChildren(ctx)
 
     def visitFill(self, ctx: GraphlyParser.FillContext):
         name = ctx.NAME().getText()
 
-        if self.variable_exists(name):
-            variable = self.get_variable(name)
+        variable = self.get_variable(name)
 
-            if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
-                color = ctx.COLOR().getText()
+        if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
+            color = ctx.COLOR().getText()
 
-                if color in self.colors:
-                    variable.color = self.colors[color]
-                else:
-                    raise BadColorException(color)
+            if color in self.colors:
+                variable.color = self.colors[color]
             else:
-                raise BadArgumentException("fill", name, type(variable))
+                raise BadColorException(color)
         else:
-            raise UnknownVariableException(name)
+            raise BadArgumentException("fill", name, type(variable))
 
         return self.visitChildren(ctx)
 
@@ -454,6 +426,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             return left * right
         elif op == '/':
             return left / right
+        elif op == '%':
+            return left % right
         else:
             raise UnknownOperationException(op)
 
