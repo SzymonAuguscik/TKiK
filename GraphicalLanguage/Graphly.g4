@@ -1,6 +1,8 @@
 grammar Graphly;
 
-WS : '\n' | ' ' | '\r' | '\t';
+WS : '\n' | ' ' | '\t';
+
+CR : '\r' -> skip;
 
 COM_SIGN : '--' ~[\r\n]* -> skip;
 
