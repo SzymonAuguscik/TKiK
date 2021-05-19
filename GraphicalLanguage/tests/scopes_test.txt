@@ -1,5 +1,5 @@
 num X: 600
-canvas: X, X, #white
+canvas: 2*3*100, X, #white
 
 loop I start 1 until 6 step 1 then
     loop J start 1 until 6 step 1 then
@@ -9,6 +9,9 @@ loop I start 1 until 6 step 1 then
         else then
             fill P3: #blue
         end
+        circle C: P3, 5*(I+J)
+        fill C: #green
+        draw C
         draw P3
 	end
 end

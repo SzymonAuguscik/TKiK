@@ -15,7 +15,7 @@ instruction : shape | type_definition | draw | transformation | group | loop | c
 // control statements
 block : (WS* instruction '\n')*;
 
-loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+ 'step' WS+ (itr|NAME) WS+ 'then' '\n' block WS* 'end';
+loop : 'loop' WS+ name=NAME WS+ 'start' WS+ start=expr WS+ 'until' WS+ until=expr WS+ 'step' WS+ step=expr WS+ 'then' '\n' block WS* 'end';
 
 check : WS* 'check' WS+ condition_block ('else' WS+ 'check' WS+ condition_block)* WS* ('else' WS+ 'then' '\n' block)? WS* 'end';
 
@@ -25,11 +25,11 @@ condition_block : expr WS+ 'then' '\n' WS* block;
 
 shape : point | segment | circle | polygon;
 
-point : WS* 'point' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* operation_flt;
+point : WS* 'point' WS+ NAME WS* ':' WS* x=expr WS* ',' WS* y=expr;
 
 segment : WS* 'segment' WS+ NAME WS* ':' WS* NAME WS* ',' WS+ NAME; 
 
-circle : WS*'circle' WS+ NAME WS* ':' WS* NAME WS* ',' WS* operation_flt;
+circle : WS*'circle' WS+ NAME WS* ':' WS* NAME WS* ',' WS* expr;
 
 polygon : WS* 'polygon' WS+ NAME WS* ':' WS* NAME;
 
@@ -41,13 +41,13 @@ groupMember : WS* NAME WS* '[' WS* (itr|NAME) WS* ']' WS+;
 
 type_definition : num | iterator;
 
-num : WS* 'num' WS+ NAME WS* ':' WS* (operation_flt|NAME);
+num : WS* 'num' WS+ NAME WS* ':' WS* expr;
 
 iterator : WS* 'iterator' WS+ NAME WS* ':' WS* (itr|NAME);
 
 // methods
 
-canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* COLOR;
+canvas : WS* 'canvas' WS* ':' WS* x=expr WS* ',' WS* y=expr WS* ',' WS* COLOR;
 
 draw : WS* 'draw' WS+ NAME;
 

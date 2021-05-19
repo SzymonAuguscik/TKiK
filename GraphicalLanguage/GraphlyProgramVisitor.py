@@ -12,6 +12,7 @@ from exceptions.IncorrectPolygonCreationException import IncorrectPolygonCreatio
 from exceptions.UnknownOperationException import UnknownOperationException
 
 from re import split, sub
+from math import floor, ceil
 
 
 class GraphlyProgramVisitor(GraphlyVisitor):
@@ -158,11 +159,11 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         self.scopes.pop()
 
     def visitLoop(self, ctx: GraphlyParser.LoopContext):
-        name = ctx.NAME(0).getText()
+        name = ctx.name.text
 
-        iterator = int(ctx.itr(0).getText())
-        until = int(ctx.itr(1).getText())
-        step = int(ctx.itr(2).getText())
+        iterator = int(self.visit(ctx.start))
+        until = int(self.visit(ctx.until))
+        step = int(self.visit(ctx.step))
         block = ctx.block()
 
         if not self.variable_exists(name):
@@ -171,7 +172,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             raise VariableAlreadyDeclaredException(name)
         
         while iterator < until:
-            print(f'{name}: {self.get_variable(name)}')
             self.visit(block)
             
             iterator += step
@@ -196,17 +196,14 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         name = ctx.NAME().getText()
 
         if not self.variable_exists(name):
-            x_cord = ctx.operation_flt(0).getText()
-            y_cord = ctx.operation_flt(1).getText()
-            values = self.check_if_variables([x_cord, y_cord])
+            x_cord = self.visit(ctx.x)
+            y_cord = self.visit(ctx.y)
 
-            point = self.Point(name, values[0], values[1])
+            point = self.Point(name, x_cord, y_cord)
 
             self.set_variable(name, point)
         else:
             raise VariableAlreadyDeclaredException(name)
-
-        return self.visitChildren(ctx)
 
     def visitSegment(self, ctx: GraphlyParser.SegmentContext):
         name = ctx.NAME(0).getText()
@@ -230,7 +227,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise VariableAlreadyDeclaredException(name)
 
-        return self.visitChildren(ctx)
 
     def visitCircle(self, ctx: GraphlyParser.CircleContext):
         name = ctx.NAME(0).getText()
@@ -241,8 +237,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             point = self.get_variable(point_name)
 
             if type(point) == self.Point:
-                value = self.check_if_variables([ctx.operation_flt().getText()])
-                circle = self.Circle(name, point, value[0])
+                radius = self.visit(ctx.expr())
+                circle = self.Circle(name, point, radius)
 
                 self.set_variable(name, circle)
             else:
@@ -251,7 +247,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise VariableAlreadyDeclaredException(name)
 
-        return self.visitChildren(ctx)
 
     def visitPolygon(self, ctx: GraphlyParser.PolygonContext):
         name = ctx.NAME(0).getText()
@@ -276,12 +271,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise VariableAlreadyDeclaredException(name)
 
-        return self.visitChildren(ctx)
 
-
-
-
-    
 
     # TODO
     # Possible problem with no args
@@ -304,39 +294,34 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise VariableAlreadyDeclaredException(name)
 
-        return self.visitChildren(ctx)
 
     def visitGroupMember(self, ctx: GraphlyParser.GroupMemberContext):
         print("GroupMember")
 
-        return self.visitChildren(ctx)
 
     def visitNum(self, ctx: GraphlyParser.NumContext):
-        name = ctx.NAME(0).getText()
+        name = ctx.NAME().getText()
 
         if not self.variable_exists(name):
-            value = self.check_if_variables([ctx.operation_flt().getText()])
-            self.set_variable(name, value[0])
+            value = self.visit(ctx.expr())
+            self.set_variable(name, value)
         else:
             raise VariableAlreadyDeclaredException(name)
 
-        return self.visitChildren(ctx)
 
     def visitCanvas(self, ctx: GraphlyParser.CanvasContext):
         color = ctx.COLOR().getText()
 
-        name_x = str(ctx.operation_flt(0).getText())
-        name_y = str(ctx.operation_flt(1).getText())
+        x = int(self.visit(ctx.x))
+        y = int(self.visit(ctx.y))
 
-        sizes = self.check_if_variables([name_x, name_y])
-        self.screen = pygame.display.set_mode((int(sizes[0]), int(sizes[1])))
+        self.screen = pygame.display.set_mode((x, y))
 
         if color in self.colors:
             self.screen.fill(self.colors[color])
         else:
             raise BadColorException(color)
 
-        return self.visitChildren(ctx)
 
     def visitDraw(self, ctx: GraphlyParser.DrawContext):
         name = ctx.NAME().getText()
@@ -355,7 +340,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             coordination_tuples_list = [point.get_coordination_tuple() for point in variable.points]
             pygame.draw.polygon(self.screen, variable.color, coordination_tuples_list, variable.width)
 
-        return self.visitChildren(ctx)
 
     def visitFill(self, ctx: GraphlyParser.FillContext):
         name = ctx.NAME().getText()
@@ -372,7 +356,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise BadArgumentException("fill", name, type(variable))
 
-        return self.visitChildren(ctx)
 
     def visitCond(self, ctx:GraphlyParser.CondContext):
         # TODO
@@ -388,8 +371,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         op = ctx.op.text
-
-        print(f'{left} {op} {right}')
 
         if op == '<=':
             return left <= right
@@ -416,8 +397,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         right = self.visit(ctx.right)
         op = ctx.op.text
 
-        print(f'{left} {op} {right}')
-
         if op == '+':
             return left + right
         elif op == '-':
@@ -435,21 +414,17 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         return not self.visit(ctx.expr())
 
 
-    # Visit a parse tree produced by GraphlyParser#parenExpr.
     def visitParenExpr(self, ctx:GraphlyParser.ParenExprContext):
         return self.visit(ctx.expr())
 
 
-    # Visit a parse tree produced by GraphlyParser#fltAtom.
     def visitFltAtom(self, ctx:GraphlyParser.FltAtomContext):
         return float(ctx.getText())
 
 
-    # Visit a parse tree produced by GraphlyParser#intAtom.
     def visitIntAtom(self, ctx:GraphlyParser.IntAtomContext):
         return int(ctx.getText())
 
 
-    # Visit a parse tree produced by GraphlyParser#varAtom.
     def visitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
         return self.get_variable(ctx.getText())
