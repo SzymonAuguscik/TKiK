@@ -224,6 +224,87 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GraphlyParser#minusOpExpr.
+    def enterMinusOpExpr(self, ctx:GraphlyParser.MinusOpExprContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#minusOpExpr.
+    def exitMinusOpExpr(self, ctx:GraphlyParser.MinusOpExprContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#booleanOpExpr.
+    def enterBooleanOpExpr(self, ctx:GraphlyParser.BooleanOpExprContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#booleanOpExpr.
+    def exitBooleanOpExpr(self, ctx:GraphlyParser.BooleanOpExprContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#arithmeticOpExpr.
+    def enterArithmeticOpExpr(self, ctx:GraphlyParser.ArithmeticOpExprContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#arithmeticOpExpr.
+    def exitArithmeticOpExpr(self, ctx:GraphlyParser.ArithmeticOpExprContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#negationOpExpr.
+    def enterNegationOpExpr(self, ctx:GraphlyParser.NegationOpExprContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#negationOpExpr.
+    def exitNegationOpExpr(self, ctx:GraphlyParser.NegationOpExprContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#atomExpr.
+    def enterAtomExpr(self, ctx:GraphlyParser.AtomExprContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#atomExpr.
+    def exitAtomExpr(self, ctx:GraphlyParser.AtomExprContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#parenExpr.
+    def enterParenExpr(self, ctx:GraphlyParser.ParenExprContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#parenExpr.
+    def exitParenExpr(self, ctx:GraphlyParser.ParenExprContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#intAtom.
+    def enterIntAtom(self, ctx:GraphlyParser.IntAtomContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#intAtom.
+    def exitIntAtom(self, ctx:GraphlyParser.IntAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#fltAtom.
+    def enterFltAtom(self, ctx:GraphlyParser.FltAtomContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#fltAtom.
+    def exitFltAtom(self, ctx:GraphlyParser.FltAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#varAtom.
+    def enterVarAtom(self, ctx:GraphlyParser.VarAtomContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#varAtom.
+    def exitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
+        pass
+
+
     # Enter a parse tree produced by GraphlyParser#arithmetic.
     def enterArithmetic(self, ctx:GraphlyParser.ArithmeticContext):
         pass

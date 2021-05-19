@@ -19,7 +19,7 @@ loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+
 
 check : WS* 'check' WS+ condition_block ('else' WS+ 'check' WS+ condition_block)* WS* ('else' WS+ 'then' '\n' block)? WS* 'end';
 
-condition_block : cond WS+ 'then' '\n' WS* block;
+condition_block : expr WS+ 'then' '\n' WS* block;
 
 // shapes
 
@@ -64,6 +64,22 @@ place : WS* 'place' WS+ NAME WS* ':' WS* NAME;
 rotate : WS* 'rotate' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* NAME;
 
 scale : WS* 'scale' WS+ NAME WS* ':' WS* operation_flt;
+
+// expresion
+
+expr  : '(' WS* expr WS* ')'                                         #parenExpr
+      | '-' WS* expr                                                 #minusOpExpr
+      | left=expr WS* op=('*'|'/'|'%'|'+'|'-') WS* right=expr        #arithmeticOpExpr
+      | left=expr WS* op=('<='|'>'|'>='|'<'|'='|'!=') WS* right=expr #booleanOpExpr
+      | '!' WS* expr                                                 #negationOpExpr
+      | left=expr WS* op=('&'|'|') WS* right=expr                    #booleanOpExpr
+      | atom                                                         #atomExpr
+      ;
+
+atom : itr #intAtom
+     | flt #fltAtom
+     | NAME     #varAtom
+     ;
 
 // operators
 

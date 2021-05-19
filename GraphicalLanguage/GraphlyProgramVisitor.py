@@ -9,6 +9,7 @@ from exceptions.UnknownVariableException import UnknownVariableException
 from exceptions.BadArgumentException import BadArgumentException
 from exceptions.BadColorException import BadColorException
 from exceptions.IncorrectPolygonCreationException import IncorrectPolygonCreationException
+from exceptions.UnknownOperationException import UnknownOperationException
 
 from re import split, sub
 
@@ -188,7 +189,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def visitCheck(self, ctx: GraphlyParser.CheckContext):
         do_else = True
         for cb in ctx.condition_block():
-            if self.visit(cb.cond()):
+            if self.visit(cb.expr()):
                 self.visit(cb.block())
                 do_else = False
                 break
@@ -405,3 +406,76 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         # TODO
         # return true value of condition
         return len(ctx.logic().getText()) == 2
+        
+
+    def visitMinusOpExpr(self, ctx:GraphlyParser.MinusOpExprContext):
+        return -self.visit(ctx.expr())
+
+
+    def visitBooleanOpExpr(self, ctx:GraphlyParser.BooleanOpExprContext):
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        op = ctx.op.text
+
+        print(f'{left} {op} {right}')
+
+        if op == '<=':
+            return left <= right
+        elif op == '>':
+            return left > right
+        elif op == '>=':
+            return left >= right
+        elif op == '<':
+            return left < right
+        elif op == '=':
+            return left == right
+        elif op == '!=':
+            return left != right
+        elif op == '&':
+            return left and right
+        elif op == '|':
+            return left or right
+        else:
+            raise UnknownOperationException(op)
+
+
+    def visitArithmeticOpExpr(self, ctx:GraphlyParser.ArithmeticOpExprContext):
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        op = ctx.op.text
+
+        print(f'{left} {op} {right}')
+
+        if op == '+':
+            return left + right
+        elif op == '-':
+            return left - right
+        elif op == '*':
+            return left * right
+        elif op == '/':
+            return left / right
+        else:
+            raise UnknownOperationException(op)
+
+    def visitNegationOpExpr(self, ctx:GraphlyParser.NegationOpExprContext):
+        return not self.visit(ctx.expr())
+
+
+    # Visit a parse tree produced by GraphlyParser#parenExpr.
+    def visitParenExpr(self, ctx:GraphlyParser.ParenExprContext):
+        return self.visit(ctx.expr())
+
+
+    # Visit a parse tree produced by GraphlyParser#fltAtom.
+    def visitFltAtom(self, ctx:GraphlyParser.FltAtomContext):
+        return float(ctx.getText())
+
+
+    # Visit a parse tree produced by GraphlyParser#intAtom.
+    def visitIntAtom(self, ctx:GraphlyParser.IntAtomContext):
+        return int(ctx.getText())
+
+
+    # Visit a parse tree produced by GraphlyParser#varAtom.
+    def visitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
+        return self.get_variable(ctx.getText())
