@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Add exception service to visitor">
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)">
+      <change afterPath="$PROJECT_DIR$/tests/move_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/place_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/rotate_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/scale_test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly (kopia).g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly (kopia).g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyParser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphlyProgramVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramVisitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/basic_test1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/basic_test1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/chessboard_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/chessboard_test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/incorrect_polygon_creation_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/incorrect_polygon_creation_test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/scopes_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/scopes_test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/basic_test1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/basic_test2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/basic_test3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/basic_test4.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +42,9 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1qqZU6nqCRLlDeBHEitQScARPF6" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -90,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619699294252</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)">
+      <created>1619775726622</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1619775726622</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -110,6 +126,7 @@
     <MESSAGE value="Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files" />
     <MESSAGE value="Refactor main function" />
     <MESSAGE value="Add exception service to visitor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add exception service to visitor" />
+    <MESSAGE value="Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)" />
   </component>
 </project>

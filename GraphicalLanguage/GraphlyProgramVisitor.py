@@ -13,6 +13,7 @@ from exceptions.UnknownOperationException import UnknownOperationException
 
 from re import split, sub
 from math import floor, ceil
+from math import sin, cos, radians
 
 
 class GraphlyProgramVisitor(GraphlyVisitor):
@@ -133,11 +134,14 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         operations = "+-*/%"
 
         operation_text = operation_text.replace(" ", "")
+
+        if operation_text[0] == '-':
+            operation_text = "0" + operation_text
+
         operation_arr = split('\+|\-|\*|\/|\%', operation_text)
 
         for op in operations:
             operation_text = operation_text.replace(op, " " + op + " ")
-
         
         for var in operation_arr:
             if var[0].isupper():
@@ -239,8 +243,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             if type(point) == self.Point:
                 radius = self.visit(ctx.expr())
                 circle = self.Circle(name, point, radius)
-
                 self.set_variable(name, circle)
+
             else:
                 raise BadArgumentException(
                     "circle", point_name, type(point))
@@ -357,7 +361,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             raise BadArgumentException("fill", name, type(variable))
 
 
-    def visitCond(self, ctx:GraphlyParser.CondContext):
+    def visitCond(self, ctx: GraphlyParser.CondContext):
         # TODO
         # return true value of condition
         return len(ctx.logic().getText()) == 2
@@ -428,3 +432,175 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
     def visitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
         return self.get_variable(ctx.getText())
+
+
+    def visitMove(self, ctx: GraphlyParser.MoveContext):
+        name = ctx.NAME().getText()
+
+        variable = self.get_variable(name)
+        name_x = str(ctx.operation_flt(0).getText())
+        name_y = str(ctx.operation_flt(1).getText())
+
+        x, y = self.check_if_variables([name_x, name_y])
+
+        if type(variable) == self.Point:
+            variable.x += x
+            variable.y += y
+        elif type(variable) == self.Segment:
+            variable.start_point.x += x
+            variable.start_point.y += y
+            variable.end_point.x += x
+            variable.end_point.y += y
+        elif type(variable) == self.Circle:
+            variable.center_point.x += x
+            variable.center_point.y += y
+        elif type(variable) == self.Polygon:
+            for i in range(len(variable.points)):
+                variable.points[i].x += x
+                variable.points[i].y += y
+        else:
+            raise BadArgumentException("move", name, type(variable))
+
+        return self.visitChildren(ctx)
+
+    def visitPlace(self, ctx: GraphlyParser.PlaceContext):
+        shape_name = ctx.NAME(0).getText()
+        place_point_name = ctx.NAME(1).getText()
+
+        shape = self.get_variable(shape_name)
+        place_point = self.get_variable(place_point_name)
+
+        if type(place_point) == self.Point:
+            if type(shape) == self.Point:
+                x = place_point.x - shape.x
+                y = place_point.y - shape.y
+
+                shape.x += x
+                shape.y += y
+            elif type(shape) == self.Segment:
+                x = place_point.x - shape.start_point.x
+                y = place_point.y - shape.start_point.y
+
+                shape.start_point.x += x
+                shape.start_point.y += y
+
+                shape.end_point.x += x
+                shape.end_point.y += y
+            elif type(shape) == self.Circle:
+                x = place_point.x - shape.center_point.x
+                y = place_point.y - shape.center_point.y
+
+                shape.center_point.x += x
+                shape.center_point.y += y
+            elif type(shape) == self.Polygon:
+                x = place_point.x - shape.points[0].x
+                y = place_point.y - shape.points[0].y
+
+                for i in range(len(shape.points)):
+                    shape.points[i].x += x
+                    shape.points[i].y += y
+            else:
+                raise BadArgumentException("place", shape_name, type(shape))
+        else:
+            raise BadArgumentException("place", place_point_name, type(place_point))
+
+        return self.visitChildren(ctx)
+
+    def rotate_single_point(self, point, pivot, angle):
+        s = sin(radians(angle))
+        c = cos(radians(angle))
+
+        origin_x = point.x - pivot.x
+        origin_y = point.y - pivot.y
+
+        new_x = origin_x * c - origin_y * s
+        new_y = origin_x * s + origin_y * c
+
+        return new_x + pivot.x, new_y + pivot.y
+
+    def visitRotate(self, ctx: GraphlyParser.RotateContext):
+        shape_name = ctx.NAME(0).getText()
+        pivot_point_name = ctx.NAME(1).getText()
+
+        shape = self.get_variable(shape_name)
+        pivot_point = self.get_variable(pivot_point_name)
+
+        angle_name = ctx.operation_flt().getText()
+        [angle] = self.check_if_variables([angle_name])
+        angle *= -1  # counterclockwise
+
+        if type(shape) == self.Point:
+            x, y = self.rotate_single_point(shape, pivot_point, angle)
+
+            shape.x = x
+            shape.y = y
+        elif type(shape) == self.Segment:
+            start_x, start_y = self.rotate_single_point(shape.start_point, pivot_point, angle)
+            end_x, end_y = self.rotate_single_point(shape.end_point, pivot_point, angle)
+
+            shape.start_point.x = start_x
+            shape.start_point.y = start_y
+            shape.end_point.x = end_x
+            shape.end_point.y = end_y
+        elif type(shape) == self.Circle:
+            x, y = self.rotate_single_point(shape.center_point, pivot_point, angle)
+
+            shape.center_point.x = x
+            shape.center_point.y = y
+        elif type(shape) == self.Polygon:
+            for i in range(len(shape.points)):
+                x, y = self.rotate_single_point(shape.points[i], pivot_point, angle)
+
+                shape.points[i].x = x
+                shape.points[i].y = y
+        else:
+            raise BadArgumentException("rotate", shape_name, type(shape))
+
+        return self.visitChildren(ctx)
+
+    def scale_single_point(self, point, pivot, factor):
+        vector_x = factor * (point.x - pivot.x)
+        vector_y = factor * (point.y - pivot.y)
+
+        return pivot.x + vector_x, pivot.y + vector_y
+
+    def visitScale(self, ctx: GraphlyParser.ScaleContext):
+        shape_name = ctx.NAME(0).getText()
+        pivot_point_name = ctx.NAME(1).getText()
+
+        shape = self.get_variable(shape_name)
+        pivot_point = self.get_variable(pivot_point_name)
+
+        factor_name = ctx.operation_flt().getText()
+        [factor] = self.check_if_variables([factor_name])
+
+        if type(shape) == self.Point:
+            x, y = self.scale_single_point(shape, pivot_point, factor)
+
+            shape.x = x
+            shape.y = y
+        elif type(shape) == self.Segment:
+            start_x, start_y = self.scale_single_point(shape.start_point, pivot_point, factor)
+            end_x, end_y = self.scale_single_point(shape.end_point, pivot_point, factor)
+
+            shape.start_point.x = start_x
+            shape.start_point.y = start_y
+            shape.end_point.x = end_x
+            shape.end_point.y = end_y
+        elif type(shape) == self.Circle:
+            x, y = self.scale_single_point(shape.center_point, pivot_point, factor)
+
+            shape.center_point.x = x
+            shape.center_point.y = y
+            shape.radius *= abs(factor)
+        elif type(shape) == self.Polygon:
+            for i in range(len(shape.points)):
+                x, y = self.scale_single_point(shape.points[i], pivot_point, factor)
+
+                shape.points[i].x = x
+                shape.points[i].y = y
+        else:
+            raise BadArgumentException("scale", shape_name, type(shape))
+
+        return self.visitChildren(ctx)
+

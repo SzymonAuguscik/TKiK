@@ -584,6 +584,7 @@ def serializedATN():
         buf.write("\u03a8\u03ae\u03b8\u03c0\u03c5\u03ca\u03d1\u03d6\u03da")
         buf.write("\u03df\u03e6\u03eb\u03ed\u03f0\u03f4\u03f9\u03fd\u0403")
         buf.write("\u0407\u040c\u0410\u0415\u041c\u0421\u0426\u042b\u0431")
+
         return buf.getvalue()
 
 
@@ -2557,6 +2558,7 @@ class GraphlyParser ( Parser ):
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
+
             self.state = 542
             self.expr(0)
         except RecognitionException as re:
@@ -2637,10 +2639,12 @@ class GraphlyParser ( Parser ):
                 self.state = 551
                 self.match(GraphlyParser.WS)
                 self.state = 554 
+
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not (_la==GraphlyParser.WS):
                     break
+
 
             self.state = 556
             self.match(GraphlyParser.NAME)
@@ -2675,6 +2679,7 @@ class GraphlyParser ( Parser ):
                 pass
             elif token in [GraphlyParser.NAME]:
                 self.state = 571
+
                 self.match(GraphlyParser.NAME)
                 pass
             else:
@@ -2698,6 +2703,7 @@ class GraphlyParser ( Parser ):
             self.x = None # ExprContext
             self.y = None # ExprContext
 
+
         def COLOR(self):
             return self.getToken(GraphlyParser.COLOR, 0)
 
@@ -2706,7 +2712,6 @@ class GraphlyParser ( Parser ):
                 return self.getTypedRuleContexts(GraphlyParser.ExprContext)
             else:
                 return self.getTypedRuleContext(GraphlyParser.ExprContext,i)
-
 
         def WS(self, i:int=None):
             if i is None:
@@ -2741,6 +2746,7 @@ class GraphlyParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+
             self.state = 577
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -2757,11 +2763,12 @@ class GraphlyParser ( Parser ):
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==GraphlyParser.WS:
-                self.state = 581
+                self.state = 579
                 self.match(GraphlyParser.WS)
-                self.state = 586
+                self.state = 584
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
+
 
             self.state = 587
             self.match(GraphlyParser.T__10)
@@ -2769,11 +2776,12 @@ class GraphlyParser ( Parser ):
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==GraphlyParser.WS:
-                self.state = 588
+                self.state = 586
                 self.match(GraphlyParser.WS)
-                self.state = 593
+                self.state = 591
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
+
 
             self.state = 594
             localctx.x = self.expr(0)
@@ -2781,11 +2789,12 @@ class GraphlyParser ( Parser ):
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==GraphlyParser.WS:
-                self.state = 595
+                self.state = 593
                 self.match(GraphlyParser.WS)
-                self.state = 600
+                self.state = 598
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
+
 
             self.state = 601
             self.match(GraphlyParser.T__11)
@@ -2877,6 +2886,7 @@ class GraphlyParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+
             self.state = 627
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -2900,6 +2910,7 @@ class GraphlyParser ( Parser ):
                 _la = self._input.LA(1)
                 if not (_la==GraphlyParser.WS):
                     break
+
 
             self.state = 636
             self.match(GraphlyParser.NAME)
@@ -2981,6 +2992,7 @@ class GraphlyParser ( Parser ):
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
+
                 self.state = 640
                 self.place()
                 pass
@@ -3119,11 +3131,8 @@ class GraphlyParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def NAME(self, i:int=None):
-            if i is None:
-                return self.getTokens(GraphlyParser.NAME)
-            else:
-                return self.getToken(GraphlyParser.NAME, i)
+        def NAME(self):
+            return self.getToken(GraphlyParser.NAME, 0)
 
         def operation_flt(self, i:int=None):
             if i is None:
@@ -3188,7 +3197,6 @@ class GraphlyParser ( Parser ):
                 _la = self._input.LA(1)
                 if not (_la==GraphlyParser.WS):
                     break
-
             self.state = 685
             self.match(GraphlyParser.NAME)
             self.state = 689
@@ -3261,8 +3269,6 @@ class GraphlyParser ( Parser ):
                 self.state = 717
                 self.match(GraphlyParser.NAME)
                 pass
-
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3529,8 +3535,11 @@ class GraphlyParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def NAME(self):
-            return self.getToken(GraphlyParser.NAME, 0)
+        def NAME(self, i:int=None):
+            if i is None:
+                return self.getTokens(GraphlyParser.NAME)
+            else:
+                return self.getToken(GraphlyParser.NAME, i)
 
         def operation_flt(self):
             return self.getTypedRuleContext(GraphlyParser.Operation_fltContext,0)
@@ -3619,6 +3628,30 @@ class GraphlyParser ( Parser ):
 
             self.state = 819
             self.operation_flt()
+            self.state = 820
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==GraphlyParser.WS:
+                self.state = 817
+                self.match(GraphlyParser.WS)
+                self.state = 822
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+            self.state = 823
+            self.match(GraphlyParser.T__11)
+            self.state = 827
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==GraphlyParser.WS:
+                self.state = 824
+                self.match(GraphlyParser.WS)
+                self.state = 829
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+            self.state = 830
+            self.match(GraphlyParser.NAME)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -4514,6 +4547,13 @@ class GraphlyParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def operation_flt(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(GraphlyParser.Operation_fltContext)
+            else:
+                return self.getTypedRuleContext(GraphlyParser.Operation_fltContext,i)
+
+
         def logic(self):
             return self.getTypedRuleContext(GraphlyParser.LogicContext,0)
 
@@ -4524,11 +4564,11 @@ class GraphlyParser ( Parser ):
             else:
                 return self.getToken(GraphlyParser.WS, i)
 
-        def operation_flt(self, i:int=None):
+        def itr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(GraphlyParser.Operation_fltContext)
+                return self.getTypedRuleContexts(GraphlyParser.ItrContext)
             else:
-                return self.getTypedRuleContext(GraphlyParser.Operation_fltContext,i)
+                return self.getTypedRuleContext(GraphlyParser.ItrContext,i)
 
 
         def NAME(self, i:int=None):
@@ -4536,13 +4576,6 @@ class GraphlyParser ( Parser ):
                 return self.getTokens(GraphlyParser.NAME)
             else:
                 return self.getToken(GraphlyParser.NAME, i)
-
-        def itr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(GraphlyParser.ItrContext)
-            else:
-                return self.getTypedRuleContext(GraphlyParser.ItrContext,i)
-
 
         def getRuleIndex(self):
             return GraphlyParser.RULE_cond
@@ -4633,8 +4666,6 @@ class GraphlyParser ( Parser ):
                     self.state = 979
                     self.match(GraphlyParser.NAME)
                     pass
-
-
                 pass
 
             elif la_ == 2:
@@ -4909,11 +4940,11 @@ class GraphlyParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def flt(self, i:int=None):
+        def signed_flt(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(GraphlyParser.FltContext)
+                return self.getTypedRuleContexts(GraphlyParser.Signed_fltContext)
             else:
-                return self.getTypedRuleContext(GraphlyParser.FltContext,i)
+                return self.getTypedRuleContext(GraphlyParser.Signed_fltContext,i)
 
 
         def NAME(self, i:int=None):
@@ -4973,8 +5004,6 @@ class GraphlyParser ( Parser ):
                 self.state = 1037
                 self.match(GraphlyParser.NAME)
                 pass
-            else:
-                raise NoViableAltException(self)
 
             self.state = 1043
             self._errHandler.sync(self)
@@ -5014,8 +5043,6 @@ class GraphlyParser ( Parser ):
                     self.state = 1054
                     self.match(GraphlyParser.NAME)
                     pass
-                else:
-                    raise NoViableAltException(self)
 
                 self.state = 1060
                 self._errHandler.sync(self)
