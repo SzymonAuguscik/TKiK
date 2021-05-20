@@ -39,13 +39,13 @@ groupMember : WS* NAME WS* '[' WS* (itr|NAME) WS* ']' WS+;
 
 type_definition : num | iterator;
 
-num : WS* 'num' WS+ NAME WS* ':' WS* (operation_flt|NAME);
+num : WS* 'num' WS+ NAME WS* ':' WS* operation_flt;
 
 iterator : WS* 'iterator' WS+ NAME WS* ':' WS* (itr|NAME);
 
 // methods
 
-canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* COLOR;
+canvas : WS* 'canvas' WS* ':' WS* operation_flt WS* ',' WS* operation_flt WS* ',' WS* COLOR;
 
 draw : WS* 'draw' WS+ NAME;
 
@@ -55,13 +55,13 @@ transformation : fill | move | place | rotate | scale;
 
 fill : WS* 'fill' WS+ NAME WS* ':' WS* COLOR;
 
-move : WS* 'move' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME);
+move : WS* 'move' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* operation_flt;
 
 place : WS* 'place' WS+ NAME WS* ':' WS* NAME;
 
-rotate : WS* 'rotate' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* NAME;
+rotate : WS* 'rotate' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* NAME;
 
-scale : WS* 'scale' WS+ NAME WS* ':' WS* operation_flt;
+scale : WS* 'scale' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* NAME;
 
 // operators
 
@@ -93,7 +93,7 @@ GT : '>=';
 
 LT : '<=';
 
-cond : WS* ((operation_flt | NAME) WS* logic WS* (operation_flt | NAME)) | ((itr | NAME) WS* logic WS* (itr | NAME));
+cond : WS* (operation_flt WS* logic WS* operation_flt) | ((itr | NAME) WS* logic WS* (itr | NAME));
 
 // nonterminal
 
@@ -103,7 +103,7 @@ COLOR : '#'[a-z]+;
 
 flt : (DIGIT*DOT)?DIGIT+;
 
-operation_flt : (flt|NAME) WS* (arithmetic WS* (flt|NAME) WS*)*;
+operation_flt : (signed_flt|NAME) WS* (arithmetic WS* (signed_flt|NAME) WS*)*;
 
 DOT : '.';
 
