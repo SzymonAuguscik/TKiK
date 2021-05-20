@@ -35,7 +35,7 @@ polygon : WS* 'polygon' WS+ NAME WS* ':' WS* NAME;
 
 group : WS* 'group' WS+ NAME WS* ':' WS* NAME WS* (',' WS* NAME WS*)*;
 
-groupMember : WS* NAME WS* '[' WS* (itr|NAME) WS* ']' WS+;
+groupMember : WS* NAME WS* '[' WS* expr WS* ']' WS+;
 
 // numerical types
 
@@ -43,7 +43,7 @@ type_definition : num | iterator;
 
 num : WS* 'num' WS+ NAME WS* ':' WS* expr;
 
-iterator : WS* 'iterator' WS+ NAME WS* ':' WS* (itr|NAME);
+iterator : WS* 'iterator' WS+ NAME WS* ':' WS* expr;
 
 // methods
 
@@ -57,13 +57,13 @@ transformation : fill | move | place | rotate | scale;
 
 fill : WS* 'fill' WS+ NAME WS* ':' WS* COLOR;
 
-move : WS* 'move' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* operation_flt;
+move : WS* 'move' WS+ NAME WS* ':' WS* dx=expr WS* ',' WS* dy=expr;
 
 place : WS* 'place' WS+ NAME WS* ':' WS* NAME;
 
-rotate : WS* 'rotate' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* NAME;
+rotate : WS* 'rotate' WS+ NAME WS* ':' WS* angle=expr WS* ',' WS* NAME;
 
-scale : WS* 'scale' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* NAME;
+scale : WS* 'scale' WS+ NAME WS* ':' WS* k=expr WS* ',' WS* NAME;
 
 // expresion
 
@@ -78,9 +78,9 @@ expr  : '(' WS* expr WS* ')'                                         #parenExpr
       | atom                                                         #atomExpr
       ;
 
-atom : itr #intAtom
-     | flt #fltAtom
-     | NAME     #varAtom
+atom : itr  #intAtom
+     | flt  #fltAtom
+     | NAME #varAtom
      ;
 
 // operators
@@ -113,17 +113,11 @@ GT : '>=';
 
 LT : '<=';
 
-cond : WS* (operation_flt WS* logic WS* operation_flt) | ((itr | NAME) WS* logic WS* (itr | NAME));
-
 // nonterminal
-
-signed_flt : '-'? (flt|NAME) (arithmetic (signed_flt|NAME))*;
 
 COLOR : '#'[a-z]+;
 
 flt : (DIGIT*DOT)?DIGIT+;
-
-operation_flt : (signed_flt|NAME) WS* (arithmetic WS* (signed_flt|NAME) WS*)*;
 
 DOT : '.';
 

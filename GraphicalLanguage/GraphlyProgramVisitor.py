@@ -97,58 +97,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def set_variable(self, name, value):
         # Sets/creates variable in the current scope
         self.scopes[-1][name] = value
-
-
-    def check_if_variables(self, variables_text):
-        #Returns value of all given variables if given correctly
-        #TODO
-        #Check if variable are named or given properly
-
-        values = []
-
-        for variable_text in variables_text:
-            if variable_text[0].isupper() and not self.cointains_op(variable_text):
-                values.append(self.get_variable(variable_text))
-            else:
-                variable_text = self.operation_to_eval(variable_text)
-                values.append(eval(variable_text))
-
-        return values
-
-
-    def cointains_op(self, variables_text):
-        #checks if there is a string in operation text
-        operations = "+-*/%"
-        for op in operations:
-            if op in variables_text:
-                return True
-
-        return False
-
-
-
-    def operation_to_eval(self, operation_text):
-        #Takes operation string and checks if there is variable 
-        #if there is variable search for its value
-
-        operations = "+-*/%"
-
-        operation_text = operation_text.replace(" ", "")
-
-        if operation_text[0] == '-':
-            operation_text = "0" + operation_text
-
-        operation_arr = split('\+|\-|\*|\/|\%', operation_text)
-
-        for op in operations:
-            operation_text = operation_text.replace(op, " " + op + " ")
-        
-        for var in operation_arr:
-            if var[0].isupper():
-                operation_text = sub(r'\b{}\b'.format(var), str(self.get_variable(var)), operation_text)
-        
-        print(operation_text)
-        return operation_text
     
 
     def visitProgram(self, ctx: GraphlyParser.ProgramContext):
@@ -359,12 +307,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
                 raise BadColorException(color)
         else:
             raise BadArgumentException("fill", name, type(variable))
-
-
-    def visitCond(self, ctx: GraphlyParser.CondContext):
-        # TODO
-        # return true value of condition
-        return len(ctx.logic().getText()) == 2
         
 
     def visitMinusOpExpr(self, ctx:GraphlyParser.MinusOpExprContext):
@@ -438,10 +380,9 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         name = ctx.NAME().getText()
 
         variable = self.get_variable(name)
-        name_x = str(ctx.operation_flt(0).getText())
-        name_y = str(ctx.operation_flt(1).getText())
 
-        x, y = self.check_if_variables([name_x, name_y])
+        x = self.visit(ctx.dx)
+        y = self.visit(ctx.dy)
 
         if type(variable) == self.Point:
             variable.x += x
@@ -525,8 +466,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         shape = self.get_variable(shape_name)
         pivot_point = self.get_variable(pivot_point_name)
 
-        angle_name = ctx.operation_flt().getText()
-        [angle] = self.check_if_variables([angle_name])
+        angle = self.visit(ctx.angle)
         angle *= -1  # counterclockwise
 
         if type(shape) == self.Point:
@@ -571,8 +511,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         shape = self.get_variable(shape_name)
         pivot_point = self.get_variable(pivot_point_name)
 
-        factor_name = ctx.operation_flt().getText()
-        [factor] = self.check_if_variables([factor_name])
+        factor = self.visit(ctx.k)
 
         if type(shape) == self.Point:
             x, y = self.scale_single_point(shape, pivot_point, factor)

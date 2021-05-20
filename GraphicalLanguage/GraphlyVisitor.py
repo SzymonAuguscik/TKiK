@@ -189,23 +189,8 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GraphlyParser#cond.
-    def visitCond(self, ctx:GraphlyParser.CondContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#signed_flt.
-    def visitSigned_flt(self, ctx:GraphlyParser.Signed_fltContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by GraphlyParser#flt.
     def visitFlt(self, ctx:GraphlyParser.FltContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#operation_flt.
-    def visitOperation_flt(self, ctx:GraphlyParser.Operation_fltContext):
         return self.visitChildren(ctx)
 
 

@@ -332,39 +332,12 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GraphlyParser#cond.
-    def enterCond(self, ctx:GraphlyParser.CondContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#cond.
-    def exitCond(self, ctx:GraphlyParser.CondContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#signed_flt.
-    def enterSigned_flt(self, ctx:GraphlyParser.Signed_fltContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#signed_flt.
-    def exitSigned_flt(self, ctx:GraphlyParser.Signed_fltContext):
-        pass
-
-
     # Enter a parse tree produced by GraphlyParser#flt.
     def enterFlt(self, ctx:GraphlyParser.FltContext):
         pass
 
     # Exit a parse tree produced by GraphlyParser#flt.
     def exitFlt(self, ctx:GraphlyParser.FltContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#operation_flt.
-    def enterOperation_flt(self, ctx:GraphlyParser.Operation_fltContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#operation_flt.
-    def exitOperation_flt(self, ctx:GraphlyParser.Operation_fltContext):
         pass
 
 
