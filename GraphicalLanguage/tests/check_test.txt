@@ -5,9 +5,9 @@ point P1: 100, 100
 point P2: 200, 200
 point P3: 300, 300
 
-check 2 = 1 then
+check 400*(1/2) = X+100-300 & 2 < 1 then
     draw P1
-else check 3 = 1 then
+else check !(1 + 10 = -X) then
     draw P2
 else then
     draw P3

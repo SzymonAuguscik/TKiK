@@ -129,6 +129,51 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by GraphlyParser#minusOpExpr.
+    def visitMinusOpExpr(self, ctx:GraphlyParser.MinusOpExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#booleanOpExpr.
+    def visitBooleanOpExpr(self, ctx:GraphlyParser.BooleanOpExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#arithmeticOpExpr.
+    def visitArithmeticOpExpr(self, ctx:GraphlyParser.ArithmeticOpExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#negationOpExpr.
+    def visitNegationOpExpr(self, ctx:GraphlyParser.NegationOpExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#atomExpr.
+    def visitAtomExpr(self, ctx:GraphlyParser.AtomExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#parenExpr.
+    def visitParenExpr(self, ctx:GraphlyParser.ParenExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#intAtom.
+    def visitIntAtom(self, ctx:GraphlyParser.IntAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#fltAtom.
+    def visitFltAtom(self, ctx:GraphlyParser.FltAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#varAtom.
+    def visitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by GraphlyParser#arithmetic.
     def visitArithmetic(self, ctx:GraphlyParser.ArithmeticContext):
         return self.visitChildren(ctx)
