@@ -1,0 +1,30 @@
+-- illusion that pretends to create dots on intersections
+
+num X: 600
+
+canvas: X, X, #white
+
+num Offset: 5
+num Side: 30
+
+loop I start Side until X step Side then
+    point F1L: 0, I - Offset
+    point F1R: 0, I + Offset
+    point F2L: X, I - Offset
+    point F2R: X, I + Offset
+
+    group<points> VerGroup: F1L, F1R, F2R, F2L
+    polygon Vertical: VerGroup
+    draw Vertical
+end
+
+loop J start Side until X step Side then
+    point F3U: J - Offset, 0
+    point F3D: J + Offset, 0
+    point F4U: J - Offset, X
+    point F4D: J + Offset, X
+
+    group<points> HorGroup: F3U, F4U, F4D, F3D
+    polygon Horizontal: HorGroup
+    draw Horizontal
+end

@@ -1,5 +1,5 @@
 -- main program to draw chess board
-num X: 100
+num X: 800
 
 canvas: X, X, #white
 
@@ -10,8 +10,7 @@ point P1: SqrLen, 0
 point P2: SqrLen, SqrLen
 point P3: 0, SqrLen
 
-group Points: P0, P1, P2, P3
-
+group<points> Points: P0, P1, P2, P3
 
 polygon Sqr: Points
 

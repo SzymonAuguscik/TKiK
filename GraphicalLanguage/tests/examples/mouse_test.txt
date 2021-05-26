@@ -13,7 +13,7 @@ point LeftMouthPoint: 400, 600
 point RightMouthPoint: 600, 600
 point CentralMouthPoint: 500, 700
 
-group MouthPoints: CentralMouthPoint, RightMouthPoint, LeftMouthPoint
+group<points> MouthPoints: CentralMouthPoint, RightMouthPoint, LeftMouthPoint
 polygon Mouth: MouthPoints
 
 circle Head: HeadPoint, 250
@@ -26,9 +26,5 @@ fill LeftEye: #white
 fill RightEye: #white
 fill Mouth: #red
 
-draw Head
-draw LeftEar
-draw RightEar
-draw LeftEye
-draw RightEye
-draw Mouth
+group<shapes> Mouse: Head, LeftEar, RightEar, LeftEye, RightEye, Mouth
+draw Mouse

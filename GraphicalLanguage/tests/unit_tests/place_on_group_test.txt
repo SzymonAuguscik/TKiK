@@ -1,0 +1,30 @@
+-- expected behaviour - placing all members of group
+
+num X: 600
+
+canvas: X, X, #white
+
+point P1: 50, 20
+point P2: 250, 20
+point P3: 50, 100
+point P4: 150, 240
+point P5: 250, 300
+point P6: 200, 200
+point P7: 200, 50
+point P8: 400, 450
+
+circle C: P4, 50
+segment S: P5, P6
+
+group<points> Points: P3, P2, P1
+polygon Triangle: Points
+
+fill P7: #green
+fill C: #red
+fill S: #blue
+
+group<shapes> Shapes: Triangle, C, S, P7
+
+draw Shapes
+place Shapes: P8
+draw Shapes

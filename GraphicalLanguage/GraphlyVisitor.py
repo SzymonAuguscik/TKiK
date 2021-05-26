@@ -64,13 +64,18 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GraphlyParser#group.
-    def visitGroup(self, ctx:GraphlyParser.GroupContext):
+    # Visit a parse tree produced by GraphlyParser#groupMember.
+    def visitGroupMember(self, ctx:GraphlyParser.GroupMemberContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GraphlyParser#groupMember.
-    def visitGroupMember(self, ctx:GraphlyParser.GroupMemberContext):
+    # Visit a parse tree produced by GraphlyParser#transformable.
+    def visitTransformable(self, ctx:GraphlyParser.TransformableContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#group.
+    def visitGroup(self, ctx:GraphlyParser.GroupContext):
         return self.visitChildren(ctx)
 
 

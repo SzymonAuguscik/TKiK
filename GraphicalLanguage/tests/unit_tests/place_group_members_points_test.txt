@@ -1,0 +1,30 @@
+-- expected behaviour - placing members in loop as points
+
+num X: 600
+
+canvas: X, X, #white
+
+point Center: 300, 300
+circle C: Center, 60
+
+point P1: 100, 150
+point P2: 200, 250
+point P3: 450, 100
+point P4: 400, 450
+point P5: 100, 500
+
+group<points> Points: P1, P2, P3, P4, P5
+
+draw C
+
+loop I start 0 until 5 step 1 then
+    place C: Points[I]
+
+    check I % 2 = 0 then
+        fill C: #orange
+    else then
+        fill C: #blue
+    end
+
+    draw C
+end

@@ -1,0 +1,41 @@
+-- draw clock
+
+num X: 600
+
+canvas: X, X, #black
+
+num Angle: 30
+
+point Center: X/2, X/2
+point P1: X/2, X/5
+point P2: X/2, X/3
+segment SmallInd: P1, Center
+segment BigInd: P2, Center
+circle Clock: Center, X/3
+
+fill Clock: #white
+rotate SmallInd: 7 * Angle, Center
+rotate BigInd: 3 * Angle, Center
+
+draw Clock
+draw Center
+
+loop I start 0 until (360 / Angle) step 1 then
+    point P3: X/2, X/6
+    check (I % 3) = 0 then
+        point P4: X/2, X/4
+        segment S: P3, P4
+        rotate S: I * Angle, Center
+        fill S: #red
+        draw S
+    else then
+        point P4: X/2, X/5
+        segment S: P3, P4
+        rotate S: I * Angle, Center
+        fill S: #red
+        draw S
+    end
+end
+
+draw SmallInd
+draw BigInd

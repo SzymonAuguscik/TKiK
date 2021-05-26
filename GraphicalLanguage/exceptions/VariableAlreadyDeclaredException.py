@@ -1,4 +1,4 @@
 class VariableAlreadyDeclaredException(Exception):
-    def __init__(self, name):
-        self.message = f"Variable {name} already declared!"
+    def __init__(self, line, name):
+        self.message = f"Line no. {line}: variable {name} already declared!"
         super().__init__(self.message)
