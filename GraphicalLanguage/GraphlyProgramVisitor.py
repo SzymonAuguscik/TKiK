@@ -1,5 +1,4 @@
 import pygame
-from re import split, sub
 
 from GraphlyVisitor import GraphlyVisitor
 from GraphlyParser import GraphlyParser
@@ -11,7 +10,6 @@ from exceptions.BadColorException import BadColorException
 from exceptions.IncorrectPolygonCreationException import IncorrectPolygonCreationException
 from exceptions.UnknownOperationException import UnknownOperationException
 
-from re import split, sub
 from math import floor, ceil
 from math import sin, cos, radians
 
@@ -362,6 +360,19 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
     def visitParenExpr(self, ctx:GraphlyParser.ParenExprContext):
         return self.visit(ctx.expr())
+
+
+    def visitRoundingOpExpr(self, ctx:GraphlyParser.RoundingOpExprContext):
+        op = ctx.op.text
+
+        if op == '^':
+            return ceil(self.visit(ctx.expr()))
+        elif op == '_':
+            return floor(self.visit(ctx.expr()))
+        elif op == '~':
+            return round(self.visit(ctx.expr()))
+        else:
+            raise UnknownOperationException(op)
 
 
     def visitFltAtom(self, ctx:GraphlyParser.FltAtomContext):

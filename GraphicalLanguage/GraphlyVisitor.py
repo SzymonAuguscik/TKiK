@@ -134,6 +134,11 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by GraphlyParser#roundingOpExpr.
+    def visitRoundingOpExpr(self, ctx:GraphlyParser.RoundingOpExprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by GraphlyParser#booleanOpExpr.
     def visitBooleanOpExpr(self, ctx:GraphlyParser.BooleanOpExprContext):
         return self.visitChildren(ctx)

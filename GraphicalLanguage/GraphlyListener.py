@@ -233,6 +233,15 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GraphlyParser#roundingOpExpr.
+    def enterRoundingOpExpr(self, ctx:GraphlyParser.RoundingOpExprContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#roundingOpExpr.
+    def exitRoundingOpExpr(self, ctx:GraphlyParser.RoundingOpExprContext):
+        pass
+
+
     # Enter a parse tree produced by GraphlyParser#booleanOpExpr.
     def enterBooleanOpExpr(self, ctx:GraphlyParser.BooleanOpExprContext):
         pass
