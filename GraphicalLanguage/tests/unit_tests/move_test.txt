@@ -39,7 +39,7 @@ point PP1: 20, 100
 point PP2: 150, 150
 point PP3: 180, 130
 point PP4: 10, 70
-group Points: PP1, PP2, PP3, PP4
+group<points> Points: PP1, PP2, PP3, PP4
 polygon S4: Points
 fill S4: #blue
 

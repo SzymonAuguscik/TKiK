@@ -1,0 +1,34 @@
+-- expected behaviour - scaling members in loop as points
+
+num X: 600
+
+canvas: X, X, #white
+
+point P1: 100, 150
+point P2: 250, 250
+point P3: 450, 100
+point P4: 400, 450
+point P5: 100, 500
+
+group<points> Points: P1, P2, P3, P4, P5
+
+fill Points: #red
+draw Points
+
+loop I start 0 until 5 step 1 then
+    point S1: 300, 300
+    point S2: 350, 320
+    point S3: 330, 350
+    group<points> Pts: S1, S2, S3
+    polygon T: Pts
+    draw T
+    scale T: 1.75, Points[I]
+
+    check I % 2 = 0 then
+        fill T: #orange
+    else then
+        fill T: #blue
+    end
+
+    draw T
+end

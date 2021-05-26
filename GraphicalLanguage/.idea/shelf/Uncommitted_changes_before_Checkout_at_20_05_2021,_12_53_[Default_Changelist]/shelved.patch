@@ -1,0 +1,60 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"819dd511-2bdf-42e1-8d9e-96f8f70afd7c\" name=\"Default Changelist\" comment=\"Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)\">\n      <change afterPath=\"$PROJECT_DIR$/tests/move_test.txt\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/tests/place_test.txt\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/tests/rotate_test.txt\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/tests/scale_test.txt\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Graphly (kopia).g4\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Graphly (kopia).g4\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Graphly.g4\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Graphly.g4\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Graphly.interp\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Graphly.interp\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/GraphlyParser.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/GraphlyParser.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/GraphlyProgramVisitor.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/GraphlyProgramVisitor.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/tests/basic_test1.txt\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/tests/basic_test2.txt\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/tests/basic_test3.txt\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/tests/basic_test4.txt\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\n  </component>\n  <component name=\"GitSEFilterConfiguration\">\n    <file-type-list>\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\n      <filtered-out-file-type name=\"TAG\" />\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\n    </file-type-list>\n  </component>\n  <component name=\"ProjectId\" id=\"1qqZU6nqCRLlDeBHEitQScARPF6\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"819dd511-2bdf-42e1-8d9e-96f8f70afd7c\" name=\"Default Changelist\" comment=\"\" />\n      <created>1617809093386</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1617809093386</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Refactor main logic functions in GraphlyProgram class. Add several test files\">\n      <created>1619087312846</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1619087312846</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files\">\n      <created>1619108821734</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1619108821734</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Refactor main function\">\n      <created>1619460619299</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1619460619299</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Add exception service to visitor\">\n      <created>1619699285882</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1619699285882</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"Add exception service to visitor\">\n      <created>1619699294252</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1619699294252</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)\">\n      <created>1619775726622</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1619775726622</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"7\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Refactor main logic functions in GraphlyProgram class. Add several test files\" />\n    <MESSAGE value=\"Split program into two runs. Implement canvas initialization check algorithm (first run). Refactor main program into separate files. Remove old java files\" />\n    <MESSAGE value=\"Refactor main function\" />\n    <MESSAGE value=\"Add exception service to visitor\" />\n    <MESSAGE value=\"Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,22 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)">
+-      <change afterPath="$PROJECT_DIR$/tests/move_test.txt" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/tests/place_test.txt" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/tests/rotate_test.txt" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/tests/scale_test.txt" afterDir="false" />
++    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Add transformation methods. Slightly change grammar (remove redundancy, improve scaling)">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Graphly (kopia).g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly (kopia).g4" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Graphly.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.g4" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Graphly.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.interp" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/GraphlyParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyParser.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/GraphlyProgramVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramVisitor.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/tests/basic_test1.txt" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/tests/basic_test2.txt" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/tests/basic_test3.txt" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/tests/basic_test4.txt" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -106,7 +92,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1619775726622</updated>
+     </task>
+-    <option name="localTasksCounter" value="7" />
++    <task id="LOCAL-00007" summary="Add transformation methods. Slightly change grammar (remove redundancy, improve scaling)">
++      <created>1621452635495</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1621452635495</updated>
++    </task>
++    <option name="localTasksCounter" value="8" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -127,6 +120,7 @@
+     <MESSAGE value="Refactor main function" />
+     <MESSAGE value="Add exception service to visitor" />
+     <MESSAGE value="Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Fix bug with canvas. Remove GraphlyProgramListener permanently (final switch to visitor)" />
++    <MESSAGE value="Add transformation methods. Slightly change grammar (remove redundancy, improve scaling)" />
++    <option name="LAST_COMMIT_MESSAGE" value="Add transformation methods. Slightly change grammar (remove redundancy, improve scaling)" />
+   </component>
+ </project>
+\ No newline at end of file

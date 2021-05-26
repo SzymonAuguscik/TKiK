@@ -107,21 +107,30 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GraphlyParser#group.
-    def enterGroup(self, ctx:GraphlyParser.GroupContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#group.
-    def exitGroup(self, ctx:GraphlyParser.GroupContext):
-        pass
-
-
     # Enter a parse tree produced by GraphlyParser#groupMember.
     def enterGroupMember(self, ctx:GraphlyParser.GroupMemberContext):
         pass
 
     # Exit a parse tree produced by GraphlyParser#groupMember.
     def exitGroupMember(self, ctx:GraphlyParser.GroupMemberContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#transformable.
+    def enterTransformable(self, ctx:GraphlyParser.TransformableContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#transformable.
+    def exitTransformable(self, ctx:GraphlyParser.TransformableContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#group.
+    def enterGroup(self, ctx:GraphlyParser.GroupContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#group.
+    def exitGroup(self, ctx:GraphlyParser.GroupContext):
         pass
 
 
