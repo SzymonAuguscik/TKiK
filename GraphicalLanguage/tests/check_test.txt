@@ -5,9 +5,11 @@ point P1: 100, 100
 point P2: 200, 200
 point P3: 300, 300
 
-check -400 = X - 800 then
+num A: 3.14
+
+check  ^2.4=3 & _(A+0.5)=3 & ~A=3 then
     draw P1
-else check !(1 + 10 = -X) then
+else check 2=1 then
     draw P2
 else then
     draw P3

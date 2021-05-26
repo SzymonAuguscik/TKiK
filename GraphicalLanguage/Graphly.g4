@@ -68,6 +68,7 @@ scale : WS* 'scale' WS+ NAME WS* ':' WS* k=expr WS* ',' WS* NAME;
 // expresion
 
 expr  : '(' WS* expr WS* ')'                                         #parenExpr
+      | op=('^'|'_'|'~') WS* expr                                    #roundingOpExpr
       | '-' WS* expr                                                 #minusOpExpr
       | left=expr WS* op=('*'|'/'|'%') WS* right=expr                #arithmeticOpExpr
       | left=expr WS* op=('+'|'-') WS* right=expr                    #arithmeticOpExpr
