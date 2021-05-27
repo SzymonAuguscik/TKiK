@@ -1,0 +1,14 @@
+-- catch typo in code
+
+num X: 100
+
+canvas: X, X, #red
+
+point P1: 10, 30
+point P2: 20, 70
+point P3: 70, 50
+
+group<point> Points: P1, P2, P3
+polygon Triangle: Points
+
+draw Triangle

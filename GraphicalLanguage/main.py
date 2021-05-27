@@ -15,14 +15,14 @@ def check_canvas(argv):  # first run of program
     input_stream = antlr4.FileStream(argv[1])
 
     lexer = GraphlyLexer(input_stream)
-    # lexer.removeErrorListeners()
-    # lexer.addErrorListener(ThrowingErrorListener())
+    lexer.removeErrorListeners()
+    lexer.addErrorListener(ThrowingErrorListener())
 
 
     stream = antlr4.CommonTokenStream(lexer)
     parser = GraphlyParser(stream)
-    # parser.removeErrorListeners()
-    # parser.addErrorListener(ThrowingErrorListener())
+    parser.removeErrorListeners()
+    parser.addErrorListener(ThrowingErrorListener())
 
     tree = parser.program()
     graph = GraphlyCanvasChecker()
@@ -38,13 +38,13 @@ def execute_graphly_script(argv):  # second run of program
     input_stream = antlr4.FileStream(argv[1])
 
     lexer = GraphlyLexer(input_stream)
-    lexer.removeErrorListeners()
-    lexer.addErrorListener(ThrowingErrorListener())
+    # lexer.removeErrorListeners()
+    # lexer.addErrorListener(ThrowingErrorListener())
 
     stream = antlr4.CommonTokenStream(lexer)
     parser = GraphlyParser(stream)
-    parser.removeErrorListeners()
-    parser.addErrorListener(ThrowingErrorListener())
+    # parser.removeErrorListeners()
+    # parser.addErrorListener(ThrowingErrorListener())
 
     tree = parser.program()
     # graph = GraphlyProgramListener()
