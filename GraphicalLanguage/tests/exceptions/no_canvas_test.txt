@@ -1,0 +1,8 @@
+-- canvas is required in GraphLy
+
+num X: 100
+
+point P1: 200, 300
+point P2: 250, 120
+
+segment S: P1, P2
