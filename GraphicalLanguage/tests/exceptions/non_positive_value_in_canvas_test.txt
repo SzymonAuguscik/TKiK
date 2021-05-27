@@ -1,0 +1,5 @@
+num X: -30
+
+canvas: X, X, #red
+
+num Y: 25

@@ -12,6 +12,7 @@ from exceptions.UnknownOperationException import UnknownOperationException
 from exceptions.IncorrectPolygonInitializationException import IncorrectPolygonInitializationException
 from exceptions.NegativeIndexException import NegativeIndexException
 from exceptions.IndexOutOfRangeException import IndexOutOfRangeException
+from exceptions.NonPositiveValueInCanvasException import NonPositiveValueInCanvasException
 
 from math import floor, ceil
 from math import sin, cos, radians
@@ -281,6 +282,11 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
         x = int(self.visit(ctx.x))
         y = int(self.visit(ctx.y))
+
+        if x <= 0:
+            raise NonPositiveValueInCanvasException(ctx.start.line, x)
+        if y <= 0:
+            raise NonPositiveValueInCanvasException(ctx.start.line, y)
 
         self.screen = pygame.display.set_mode((x, y))
 
