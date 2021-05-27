@@ -11,10 +11,13 @@ program : (('\n')* instruction ('\n')+)* canvas (('\n')+ instruction ('\n')*)* E
 instruction : shape | type_definition | draw | transformation | group | loop | check | WS*;
 
 // control statements
+block : (WS* instruction '\n')*;
 
-loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+ 'step' WS+ (itr|NAME) WS+ 'then' '\n' (WS* instruction '\n')* WS* 'end';
+loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+ 'step' WS+ (itr|NAME) WS+ 'then' '\n' block WS* 'end';
 
-check : WS* 'check' WS+ cond WS+ 'then' '\n' WS* (WS* instruction '\n')* ('else' WS+ 'check' WS+ cond WS+ 'then' '\n' WS* (WS* instruction '\n')*)* ('else then' '\n' (WS* instruction '\n')*)? WS* 'end';
+check : WS* 'check' WS+ condition_block ('else' WS+ 'check' WS+ condition_block)* WS* ('else' WS+ 'then' '\n' block)? WS* 'end';
+
+condition_block : cond WS+ 'then' '\n' WS* block;
 
 // shapes
 
@@ -42,7 +45,7 @@ iterator : WS* 'iterator' WS+ NAME WS* ':' WS* (itr|NAME);
 
 // methods
 
-canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* color;
+canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* COLOR;
 
 draw : WS* 'draw' WS+ NAME;
 
@@ -50,7 +53,7 @@ draw : WS* 'draw' WS+ NAME;
 
 transformation : fill | move | place | rotate | scale;
 
-fill : WS* 'fill' WS+ NAME WS* ':' WS* color;
+fill : WS* 'fill' WS+ NAME WS* ':' WS* COLOR;
 
 move : WS* 'move' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME);
 
@@ -96,11 +99,11 @@ cond : WS* ((operation_flt | NAME) WS* logic WS* (operation_flt | NAME)) | ((itr
 
 signed_flt : '-'? (flt|NAME) (arithmetic (signed_flt|NAME))*;
 
-color : '#'('red' | 'green' | 'yellow' | 'black' | 'blue' | 'white' | 'orange' | 'pink');
+COLOR : '#'[a-z]+;
 
 flt : (DIGIT*DOT)?DIGIT+;
 
-operation_flt : (flt|NAME) (arithmetic (flt|NAME))*;
+operation_flt : (flt|NAME) WS* (arithmetic WS* (flt|NAME) WS*)*;
 
 DOT : '.';
 

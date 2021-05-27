@@ -1,0 +1,17 @@
+num X: 600
+canvas: 500+10*10, X, #white
+
+loop I start 1 until 6 step 1 then
+    loop J start 1 until 6 step 1 then
+        point P3: I*100, J*100
+        check (I+J)%2 = 0 then
+            fill P3: #red
+        else then
+            fill P3: #blue
+        end
+        circle C: P3, 5*(I+J)
+        fill C: #green
+        draw C
+        draw P3
+	end
+end

@@ -1,0 +1,48 @@
+-- test several cases of place transformation
+
+num Size: 600
+
+canvas: Size, Size, #white
+
+-- point test
+point S1: 300, 300
+point SS1: 400, 500
+
+draw S1
+place S1: SS1
+draw S1
+
+-- segment test
+point P1: 150, 500
+point P2: 200, 300
+segment S2: P1, P2
+fill S2: #red
+point SS2: 450, 500
+
+draw S2
+place S2: SS2
+draw S2
+
+-- circle test
+point PC: 100, 300
+circle S3: PC, 50
+fill S3: #green
+point SS3: 400, 350
+
+draw S3
+place S3: SS3
+draw S3
+
+-- polygon test
+point PP1: 50, 150
+point PP2: 150, 150
+point PP3: 180, 130
+point PP4: 10, 70
+group<points> Points: PP1, PP2, PP3, PP4
+polygon S4: Points
+fill S4: #blue
+point SS4: 400, 200
+
+draw S4
+place S4: SS4
+draw S4

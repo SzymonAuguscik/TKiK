@@ -1,0 +1,51 @@
+-- illusion of non-parallel lines
+
+num X: 350
+num OffsetFactor: 2
+--num
+canvas: X, X, #white
+
+num Size: 12
+num SqrLen: X/Size
+point P0: 0, 0
+point P1: SqrLen, 0
+point P2: SqrLen, SqrLen
+point P3: 0, SqrLen
+
+group<points> Points: P0, P1, P2, P3
+
+polygon Sqr: Points
+
+fill Sqr: #black
+
+loop I start (- Size - 3) until (Size + 5) step 1 then
+    loop J start (- Size - 3) until (Size + 5) step 1 then
+		check I % 2 = 0 then
+            num Offset: (OffsetFactor - J) * SqrLen/3
+
+		    check (J > 2 & J < 5) | (J > 8 & J < 11) | (J > 14 & J < 17) then
+                point P: I * SqrLen + Offset, J * SqrLen
+                place Sqr: P
+                draw Sqr
+            else then
+                point P: I * SqrLen - Offset, J * SqrLen
+                place Sqr: P
+                draw Sqr
+			end
+		end
+	end
+end
+
+loop K start 0 until Size + 1 step 1 then
+    num Offset: 0.5
+    point F1L: 0, K * SqrLen - Offset
+    point F1R: 0, K * SqrLen + Offset
+    point F2L: X, K * SqrLen - Offset
+    point F2R: X, K * SqrLen + Offset
+
+    group<points> VerGroup: F1L, F1R, F2R, F2L
+    polygon Vertical: VerGroup
+    fill Vertical: #gray
+
+    draw Vertical
+end

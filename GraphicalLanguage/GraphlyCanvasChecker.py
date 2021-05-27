@@ -12,4 +12,4 @@ class GraphlyCanvasChecker(GraphlyListener):
 
     def enterDraw(self, ctx: GraphlyParser.DrawContext):
         if not self.is_canvas_initialized:
-            raise DrawBeforeCanvasException
+            raise DrawBeforeCanvasException(ctx.start.line)

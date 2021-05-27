@@ -1,0 +1,48 @@
+-- test several cases of move transformation
+
+num Size: 600
+
+canvas: Size, Size, #white
+
+-- point test
+point S1: 300, 300
+num X1: 100
+num Y1: 200
+
+draw S1
+move S1: X1, Y1
+draw S1
+
+-- segment test
+point P1: 400, 200
+point P2: 150, 250
+segment S2: P1, P2
+fill S2: #red
+num X2: 50
+num Y2: 150
+
+draw S2
+move S2: X2, Y2
+draw S2
+
+-- circle test
+point PC: 450, 500
+circle S3: PC, 30
+fill S3: #green
+
+draw S3
+move S3: 0, -200
+draw S3
+
+-- polygon test
+point PP1: 20, 100
+point PP2: 150, 150
+point PP3: 180, 130
+point PP4: 10, 70
+group<points> Points: PP1, PP2, PP3, PP4
+polygon S4: Points
+fill S4: #blue
+
+draw S4
+move S4: 200, 0
+draw S4

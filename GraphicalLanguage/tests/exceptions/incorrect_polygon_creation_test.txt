@@ -1,14 +1,14 @@
 -- usage of incorrect points group
 
-num X: 500
-canvas: X, X, #red
+num X: 500      --comment
+canvas: X, X, #red --comment
 
-point P1: 210, 250
+point P1: 210, 250      --comment
 point P2: 130, 480
 point P3: 40, 390
 circle C: P1, 90
 
-group Points: P1, P2, C
+group<shapes> Points: P1, P2, C
 polygon Triangle: Points
 
 draw Triangle

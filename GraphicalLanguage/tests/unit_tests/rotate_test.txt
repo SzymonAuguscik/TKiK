@@ -1,0 +1,84 @@
+-- test several cases of place transformation
+
+-- basic setup
+num X: 600
+
+canvas: X, X, #white
+
+num Offset: 5
+
+point F1L: 0, X/2 - Offset
+point F1R: 0, X/2 + Offset
+point F2L: X, X/2 - Offset
+point F2R: X, X/2 + Offset
+point F3U: X/2 - Offset, 0
+point F3D: X/2 + Offset, 0
+point F4U: X/2 - Offset, X
+point F4D: X/2 + Offset, X
+
+group<points> VerGroup: F1L, F1R, F2R, F2L
+group<points> HorGroup: F3U, F4U, F4D, F3D
+
+polygon Vertical: VerGroup
+polygon Horizontal: HorGroup
+
+draw Vertical
+draw Horizontal
+
+-- point test
+point S1: 100, 100
+
+point SS1: 150, 150
+num Angle1: 90
+fill SS1: #red
+
+draw S1
+draw SS1
+rotate S1: Angle1, SS1
+draw S1
+
+-- segment test
+point P1: 550, 200
+point P2: 500, 250
+segment S2: P1, P2
+
+point SS2: 450, 200
+num Angle2: 220
+fill SS2: #red
+
+draw S2
+draw SS2
+rotate S2: Angle2, SS2
+draw S2
+
+-- circle test
+point PC: 100, 450
+circle S3: PC, 50
+fill S3: #green
+
+point SS3: 150, 500
+num Angle3: -135
+fill SS3: #red
+
+draw S3
+draw SS3
+rotate S3: Angle3, SS3
+draw S3
+
+-- polygon test
+point PP1: 350, 400
+point PP2: 380, 340
+point PP3: 370, 400
+point PP4: 420, 450
+group<points> Points: PP1, PP2, PP3, PP4
+polygon S4: Points
+fill S4: #blue
+
+point SS4: 450, 450
+num Angle4: 180
+fill SS4: #red
+
+draw S4
+draw SS4
+rotate S4: Angle4, SS4
+draw S4

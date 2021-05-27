@@ -1,120 +1,341 @@
 grammar Graphly;
 
-WS : '\n' | ' ' | '\r' | '\t';
+WS 				
+	:
+	'\n' 
+	| ' ' 
+	| '\t'
+	;
 
-COM_SIGN : '--' ~[\r\n]* -> skip;
+CR
+	: 
+	'\r' -> skip;
+
+COM_SIGN 		
+	: 
+	'--' ~[\r\n]* -> skip;
 
 // body of a program
 
-program : (('\n')* instruction ('\n')+)* canvas (('\n')+ instruction ('\n')*)* EOF;
+program
+	:
+	(('\n')* instruction WS* (COM_SIGN)? ('\n')+)* 
+	canvas WS* (COM_SIGN)?
+	(('\n')+ instruction WS* (COM_SIGN)? ('\n')*)* 
+	EOF
+	;
 
-instruction : shape | type_definition | draw | transformation | group | loop | check | WS*;
+instruction 
+	: 
+	shape 
+	| type_definition 
+	| draw 
+	| transformation 
+	| group 
+	| loop 
+	| check
+	| WS*
+	;
 
 // control statements
-block : (WS* instruction '\n')*;
+block 			
+	: 
+	(WS* instruction '\n')*
+	;
 
-loop : 'loop' WS+ NAME WS+ 'start' WS+ (itr|NAME) WS+ 'until' WS+ (itr|NAME) WS+ 'step' WS+ (itr|NAME) WS+ 'then' '\n' block WS* 'end';
+loop
+	: 
+	'loop' WS+
+	name=NAME WS+ 
+	'start' WS+ start=expr WS+ 
+	'until' WS+ until=expr WS+ 
+	'step' WS+ step=expr WS+ 
+	'then' '\n' 
+	block WS* 
+	'end'
+	;
 
-check : WS* 'check' WS+ condition_block ('else' WS+ 'check' WS+ condition_block)* WS* ('else' WS+ 'then' '\n' block)? WS* 'end';
+check 
+	: 
+	WS* 'check' WS+ condition_block 
+	('else' WS+ 'check' WS+ condition_block)* WS* 
+	('else' WS+ 'then' '\n' block)? WS* 
+	'end'
+	;
 
-condition_block : cond WS+ 'then' '\n' WS* block;
+condition_block 
+	: 
+	expr WS+ 
+	'then' '\n' WS* 
+	block
+	;
 
 // shapes
 
-shape : point | segment | circle | polygon;
+shape 
+	: 
+	point 
+	| segment 
+	| circle 
+	| polygon
+	;
 
-point : WS* 'point' WS+ NAME WS* ':' WS* operation_flt WS* ',' WS* operation_flt;
+point 
+	: 
+	WS* 'point' WS+ NAME WS* ':' 
+	WS* x=expr WS* ',' WS* y=expr
+	;
 
-segment : WS* 'segment' WS+ NAME WS* ':' WS* NAME WS* ',' WS+ NAME; 
+segment 
+	: 
+	WS* 'segment' WS+ NAME WS* ':' 
+	WS* NAME WS* ',' WS+ NAME
+	; 
 
-circle : WS*'circle' WS+ NAME WS* ':' WS* NAME WS* ',' WS* operation_flt;
+circle 
+	: 
+	WS*'circle' WS+ NAME WS* ':' 
+	WS* NAME WS* ',' WS* expr
+	;
 
-polygon : WS* 'polygon' WS+ NAME WS* ':' WS* NAME;
+polygon 
+	: 
+	WS* 'polygon' WS+ NAME WS* ':' 
+	WS* NAME
+	;
 
-group : WS* 'group' WS+ NAME WS* ':' WS* NAME WS* (',' WS* NAME WS*)*;
+groupMember 
+	: 
+	WS* NAME WS* '[' WS* expr WS* ']'
+	;
+	
+transformable
+	:
+	NAME 
+	| groupMember
+	;
 
-groupMember : WS* NAME WS* '[' WS* (itr|NAME) WS* ']' WS+;
+group 
+	: 
+	WS* 'group' WS* '<' WS* TYPE WS* '>' WS+ NAME WS* ':' 
+	WS* NAME WS* (',' WS* NAME WS*)*
+	;
 
 // numerical types
 
-type_definition : num | iterator;
+type_definition 
+	: 
+	num 
+	| iterator
+	;
 
-num : WS* 'num' WS+ NAME WS* ':' WS* (operation_flt|NAME);
+num 
+	: 
+	WS* 'num' WS+ NAME WS* ':' 
+	WS* expr
+	;
 
-iterator : WS* 'iterator' WS+ NAME WS* ':' WS* (itr|NAME);
+iterator 
+	: 
+	WS* 'iterator' WS+ NAME WS* ':'
+	WS* expr
+	;
 
 // methods
 
-canvas : WS* 'canvas' WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME) WS* ',' WS* COLOR;
+canvas 
+	: 
+	WS* 'canvas' WS* ':'
+	WS* x=expr WS* ',' WS* y=expr WS* ',' WS* COLOR
+	;
 
-draw : WS* 'draw' WS+ NAME;
+draw 
+	: 
+	WS* 'draw' WS+ arg=transformable
+	;
 
 // transformations
 
-transformation : fill | move | place | rotate | scale;
+transformation 
+	: 
+	fill 
+	| move 
+	| place 
+	| rotate 
+	| scale
+	;
 
-fill : WS* 'fill' WS+ NAME WS* ':' WS* COLOR;
+fill 
+	: 
+	WS* 'fill' WS+ arg=transformable WS* ':'
+	WS* COLOR
+	;
 
-move : WS* 'move' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* (operation_flt|NAME);
+move 
+	: 
+	WS* 'move' WS+ arg=transformable WS* ':' 
+	WS* dx=expr WS* ',' WS* dy=expr
+	;
 
-place : WS* 'place' WS+ NAME WS* ':' WS* NAME;
+place 
+	: 
+	WS* 'place' WS+ arg1=transformable WS* ':' 
+	WS* arg2=transformable
+	;
 
-rotate : WS* 'rotate' WS+ NAME WS* ':' WS* (operation_flt|NAME) WS* ',' WS* NAME;
+rotate 
+	: 
+	WS* 'rotate' WS+ arg1=transformable WS* ':' 
+	WS* angle=expr WS* ',' WS* arg2=transformable
+	;
 
-scale : WS* 'scale' WS+ NAME WS* ':' WS* operation_flt;
+scale 
+	: 
+	WS* 'scale' WS+ arg1=transformable WS* ':' 
+	WS* k=expr WS* ',' WS* arg2=transformable
+	;
+
+// expression
+
+expr  
+	: 
+	'(' WS* expr WS* ')'                                           #parenExpr
+    | op=('^'|'_'|'~') WS* expr                                    #roundingOpExpr
+    | '-' WS* expr                                                 #minusOpExpr
+    | left=expr WS* op=('*'|'/'|'%') WS* right=expr                #arithmeticOpExpr
+    | left=expr WS* op=('+'|'-') WS* right=expr                    #arithmeticOpExpr
+    | left=expr WS* op=('<='|'>'|'>='|'<'|'='|'!=') WS* right=expr #booleanOpExpr
+    | '!' WS* expr                                                 #negationOpExpr
+    | left=expr WS* op='&' WS* right=expr                          #booleanOpExpr
+    | left=expr WS* op='|' WS* right=expr                          #booleanOpExpr
+    | atom                                                         #atomExpr
+    ;
+
+atom 
+	: 
+	itr    #intAtom
+    | flt  #fltAtom
+    | NAME #varAtom
+    ;
 
 // operators
 
-arithmetic : PLUS | MINUS | MULTIPLICATION | DIVISION | MODULO;
+arithmetic 
+	: 
+	PLUS 
+	| MINUS 
+    | MULTIPLICATION 
+	| DIVISION 
+	| MODULO
+	;
 
-PLUS : '+';
+PLUS 
+	: 
+	'+'
+	;
 
-MINUS : '-';
+MINUS 
+	: 
+	'-'
+	;
 
-MULTIPLICATION : '*';
+MULTIPLICATION 
+	: 
+	'*'
+	;
 
-DIVISION : '/';
+DIVISION 
+	: 
+	'/'
+	;
 
-MODULO : '%';
+MODULO 
+	: 
+	'%'
+	;
 
-logic : GREATER | LOWER | GT | LT | EQ | neq;
+logic 
+	: 
+	GREATER 
+	| LOWER 
+	| GT 
+	| LT 
+	| EQ 
+	| neq
+	;
 
-NEG : '!';
+NEG 
+	: 
+	'!'
+	;
 
-neq : NEG EQ;
+neq 
+	: 
+	NEG EQ
+	;
 
-EQ : '=';
+EQ 
+	: 
+	'='
+	;
 
-GREATER : '>';
+GREATER 
+	: 
+	'>'
+	;
 
-LOWER : '<';
+LOWER 
+	: 
+	'<'
+	;
 
-GT : '>=';
+GT 
+	: 
+	'>='
+	;
 
-LT : '<=';
+LT 
+	: 
+	'<='
+	;
 
-cond : WS* ((operation_flt | NAME) WS* logic WS* (operation_flt | NAME)) | ((itr | NAME) WS* logic WS* (itr | NAME));
+// terminal
 
-// nonterminal
+TYPE
+	:
+	'points'
+	| 'segments'
+	| 'circles'
+	| 'shapes'
+	| 'polygons'
+	;
 
-signed_flt : '-'? (flt|NAME) (arithmetic (signed_flt|NAME))*;
+COLOR 
+	:
+	'#'[a-z]+
+	;
 
-COLOR : '#'[a-z]+;
+flt 
+	: 
+	(DIGIT*DOT)?DIGIT+
+	;
 
-flt : (DIGIT*DOT)?DIGIT+;
+DOT 
+	: 
+	'.'
+	;
 
-operation_flt : (flt|NAME) WS* (arithmetic WS* (flt|NAME) WS*)*;
+DIGIT 
+	: 
+	[0-9]
+	;
 
-DOT : '.';
+NAME 
+	: 
+	[A-Z][a-zA-Z0-9_]*
+	;
 
-DIGIT : [0-9];
-
-NAME : [A-Z][a-zA-Z0-9_]*;
-
-itr : DIGIT+;
-
-// TO DO 
-// - deal with lack of 'and' and 'or' binary operators
-// - deal with multiplication and division
-// - problem with loop/check - possibility to draw before canvas
-// - think about transparent color
+itr 
+	: 
+	DIGIT+
+	;

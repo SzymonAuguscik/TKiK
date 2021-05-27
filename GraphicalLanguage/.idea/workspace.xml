@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Add exception service to visitor">
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Add transformation methods. Slightly change grammar (remove redundancy, improve scaling)">
+      <change afterPath="$PROJECT_DIR$/exceptions/BadTypeInGroupException.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exceptions/IncorrectPolygonInitializationException.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exceptions/IndexOutOfRangeException.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exceptions/NegativeIndexException.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/unit_tests/place_group_members_points_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/unit_tests/place_group_members_shapes_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/unit_tests/rotate_group_members_points_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/unit_tests/rotate_group_members_shapes_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/unit_tests/scale_group_members_points_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/unit_tests/scale_group_members_shapes_test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyCanvasChecker.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyCanvasChecker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyListener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyParser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphlyProgramVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramVisitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/basic_test1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/basic_test1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/chessboard_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/chessboard_test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/incorrect_polygon_creation_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/incorrect_polygon_creation_test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/scopes_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/scopes_test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyVisitor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/BadArgumentException.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/BadArgumentException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/BadColorException.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/BadColorException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/DrawBeforeCanvasException.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/DrawBeforeCanvasException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/IncorrectPolygonCreationException.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/UnknownOperationException.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/UnknownOperationException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/UnknownVariableException.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/UnknownVariableException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/VariableAlreadyDeclaredException.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/VariableAlreadyDeclaredException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/bad_argument_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/bad_color_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/check_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/chessboard_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/draw_before_canvas_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/draw_in_check_before_canvas_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/draw_in_loop_before_canvas_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/incorrect_polygon_creation_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/loop_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/m_and_dot_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mouse_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/move_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/nested_draw_before_canvas_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/pikachu_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/place_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/random_shapes_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/rotate_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/scale_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/scopes_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unknown_variable_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/variable_already_declared_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/variable_as_names_or_nums_test.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +67,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -35,7 +83,9 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1qqZU6nqCRLlDeBHEitQScARPF6" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
