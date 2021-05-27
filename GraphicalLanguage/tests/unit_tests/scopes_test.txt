@@ -2,9 +2,12 @@ num X: 600
 canvas: 500+10*10, X, #white
 
 loop I start 1 until 6 step 1 then
+    num A: 1
     loop J start 1 until 6 step 1 then
+        num A: 2
         point P3: I*100, J*100
         check (I+J)%2 = 0 then
+            num A:3
             fill P3: #red
         else then
             fill P3: #blue

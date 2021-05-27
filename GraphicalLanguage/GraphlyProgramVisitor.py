@@ -88,15 +88,9 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         self.drawables = (self.Point, self.Segment, self.Circle, self.Polygon, list)
 
     def variable_exists(self, variable):
-        # Checks if variable exists in any scope
-        # TODO
-        # Alternatively, we can check if variable exists only in the current
-        # scope, allowing to create variables of the same name as in higher
-        # scopes. Also, functionality of this function could be implemented by
-        # get_variable.
-        for scope in reversed(self.scopes):
-            if variable in scope:
-                return True
+        # Checks if variable exists in the current scope
+        if variable in self.scopes[-1]:
+            return True
         return False
 
     def get_variable(self, variable, ctx):
