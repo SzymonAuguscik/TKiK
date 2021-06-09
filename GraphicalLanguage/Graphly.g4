@@ -41,7 +41,7 @@ instruction
 // control statements
 block 			
 	: 
-	(WS* instruction '\n')*
+	(WS* instruction WS* '\n')*
 	;
 
 loop
@@ -51,7 +51,7 @@ loop
 	'start' WS+ start=expr WS+ 
 	'until' WS+ until=expr WS+ 
 	'step' WS+ step=expr WS+ 
-	'then' '\n' 
+	'then' WS* '\n' 
 	block WS* 
 	'end'
 	;

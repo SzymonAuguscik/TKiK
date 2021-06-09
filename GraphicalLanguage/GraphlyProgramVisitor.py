@@ -111,24 +111,26 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         self.scopes[-1][name] = value
 
     
-    def assign_variable(self, name, value,):
+    def assign_variable(self, name, value, ctx):
         for scope in reversed(self.scopes):
             if name in scope:
                 scope[name] = value
                 return
-        print("cos nie dziala")
+
+        raise UnknownVariableException(ctx.start.line, name)
 
 
     def set_group_member(self, name, index, value):
         self.scopes[-1][name][index] = value
 
     
-    def assign_group_member(self, name, index, value):
+    def assign_group_member(self, name, index, value, ctx):
         for scope in reversed(self.scopes):
             if name in scope:
                 scope[name][index] = value
                 return
 
+        raise UnknownVariableException(ctx.start.line, name)
 
     def check_if_group_member(self, name):
         return name[-1] == ']'
@@ -386,9 +388,9 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             if type(variable1) == type(variable2):
                 if self.check_if_group_member(name1):
                     group_name, index = self.visit(ctx.arg1)
-                    self.assign_group_member(group_name, index, copy(variable2))
+                    self.assign_group_member(group_name, index, copy(variable2), ctx)
                 else:
-                    self.assign_variable(name1, copy(variable2))
+                    self.assign_variable(name1, copy(variable2), ctx)
             else:
                 raise BadAssignmentException(ctx.start.line, self.types[type(variable1)], self.types[type(variable2)])
         except UnknownVariableException:
@@ -399,7 +401,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         name = ctx.arg1.getText()
         value = self.visit(ctx.arg2)
         
-        self.assign_variable(name, value)
+        self.assign_variable(name, value, ctx)
 
 
     def visitMinusOpExpr(self, ctx: GraphlyParser.MinusOpExprContext):
