@@ -13,9 +13,11 @@ from exceptions.IncorrectPolygonInitializationException import IncorrectPolygonI
 from exceptions.NegativeIndexException import NegativeIndexException
 from exceptions.IndexOutOfRangeException import IndexOutOfRangeException
 from exceptions.NonPositiveValueInCanvasException import NonPositiveValueInCanvasException
+from exceptions.BadAssignmentExcpetion import BadAssignmentException
 
 from math import floor, ceil
 from math import sin, cos, radians
+from copy import copy
 
 
 class GraphlyProgramVisitor(GraphlyVisitor):
@@ -107,6 +109,26 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def set_variable(self, name, value):
         # Sets/creates variable in the current scope
         self.scopes[-1][name] = value
+
+    
+    def assign_variable(self, name, value,):
+        for scope in reversed(self.scopes):
+            if name in scope:
+                scope[name] = value
+                return
+        print("cos nie dziala")
+
+
+    def set_group_member(self, name, index, value):
+        self.scopes[-1][name][index] = value
+
+    
+    def assign_group_member(self, name, index, value):
+        for scope in reversed(self.scopes):
+            if name in scope:
+                scope[name][index] = value
+                return
+
 
     def check_if_group_member(self, name):
         return name[-1] == ']'
@@ -352,6 +374,33 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             self.fill_single_shape(variable, color, ctx)
         else:
             raise BadArgumentException(ctx.start.line, "fill", name, self.types[type(variable)])
+
+    
+    def visitCopyAssign(self, ctx:GraphlyParser.CopyAssignContext):
+        name1 = ctx.arg1.getText()
+        name2 = ctx.arg2.getText()
+        variable2 = self.try_to_get_member(ctx, ctx.arg2, name2)
+
+        try:
+            variable1 = self.try_to_get_member(ctx, ctx.arg1, name1)
+            if type(variable1) == type(variable2):
+                if self.check_if_group_member(name1):
+                    group_name, index = self.visit(ctx.arg1)
+                    self.assign_group_member(group_name, index, copy(variable2))
+                else:
+                    self.assign_variable(name1, copy(variable2))
+            else:
+                raise BadAssignmentException(ctx.start.line, self.types[type(variable1)], self.types[type(variable2)])
+        except UnknownVariableException:
+            self.set_variable(name1, copy(variable2))
+
+
+    def visitNumAssign(self, ctx:GraphlyParser.NumAssignContext):
+        name = ctx.arg1.getText()
+        value = self.visit(ctx.arg2)
+        
+        self.assign_variable(name, value)
+
 
     def visitMinusOpExpr(self, ctx: GraphlyParser.MinusOpExprContext):
         return -self.visit(ctx.expr())

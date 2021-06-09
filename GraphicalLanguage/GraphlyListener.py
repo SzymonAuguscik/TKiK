@@ -233,6 +233,24 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GraphlyParser#copyAssign.
+    def enterCopyAssign(self, ctx:GraphlyParser.CopyAssignContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#copyAssign.
+    def exitCopyAssign(self, ctx:GraphlyParser.CopyAssignContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#numAssign.
+    def enterNumAssign(self, ctx:GraphlyParser.NumAssignContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#numAssign.
+    def exitNumAssign(self, ctx:GraphlyParser.NumAssignContext):
+        pass
+
+
     # Enter a parse tree produced by GraphlyParser#minusOpExpr.
     def enterMinusOpExpr(self, ctx:GraphlyParser.MinusOpExprContext):
         pass

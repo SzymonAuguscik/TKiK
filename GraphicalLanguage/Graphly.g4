@@ -34,6 +34,7 @@ instruction
 	| group 
 	| loop 
 	| check
+	| assign
 	| WS*
 	;
 
@@ -193,6 +194,12 @@ scale
 	: 
 	WS* 'scale' WS+ arg1=transformable WS* ':' 
 	WS* k=expr WS* ',' WS* arg2=transformable
+	;
+
+assign
+	:
+	WS* 'assign' WS+ arg1=transformable WS* ':' WS* arg2=transformable #copyAssign
+	| WS* 'assign' WS+ arg1=transformable WS* ':' WS* arg2=expr        #numAssign
 	;
 
 // expression
