@@ -134,6 +134,16 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by GraphlyParser#copyAssign.
+    def visitCopyAssign(self, ctx:GraphlyParser.CopyAssignContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#numAssign.
+    def visitNumAssign(self, ctx:GraphlyParser.NumAssignContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by GraphlyParser#minusOpExpr.
     def visitMinusOpExpr(self, ctx:GraphlyParser.MinusOpExprContext):
         return self.visitChildren(ctx)

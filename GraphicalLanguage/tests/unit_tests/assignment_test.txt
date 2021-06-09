@@ -1,0 +1,41 @@
+canvas: 200, 200, #white
+
+num A: 0
+num B: 25
+
+assign A: B
+assign B: 50
+
+point P0: A, A
+fill P0: #black
+
+point P1: 0, 0
+point P2: 0, 0
+point P3: 0, 0
+point P4: 0, 0
+
+group<points> Points: P1, P2, P3, P4
+
+assign P: P0
+loop I start 0 until 4 step 1 then
+    assign Points[I]: P
+    move P: B, B
+end
+
+move P0: 0, 10
+fill P0: #red
+
+assign P1: P0
+move P0: B, B
+assign P2: P0
+move P0: B, B
+assign P3: P0
+move P0: B, B
+assign P4: P0
+
+draw P1
+draw P2
+draw P3
+draw P4
+
+draw Points

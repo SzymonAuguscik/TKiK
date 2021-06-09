@@ -34,13 +34,14 @@ instruction
 	| group 
 	| loop 
 	| check
+	| assign
 	| WS*
 	;
 
 // control statements
 block 			
 	: 
-	(WS* instruction '\n')*
+	(WS* instruction WS* '\n')*
 	;
 
 loop
@@ -50,7 +51,7 @@ loop
 	'start' WS+ start=expr WS+ 
 	'until' WS+ until=expr WS+ 
 	'step' WS+ step=expr WS+ 
-	'then' '\n' 
+	'then' WS* '\n' 
 	block WS* 
 	'end'
 	;
@@ -193,6 +194,12 @@ scale
 	: 
 	WS* 'scale' WS+ arg1=transformable WS* ':' 
 	WS* k=expr WS* ',' WS* arg2=transformable
+	;
+
+assign
+	:
+	WS* 'assign' WS+ arg1=transformable WS* ':' WS* arg2=transformable #copyAssign
+	| WS* 'assign' WS+ arg1=transformable WS* ':' WS* arg2=expr        #numAssign
 	;
 
 // expression
