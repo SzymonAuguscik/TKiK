@@ -22,20 +22,6 @@ loop I start 0 until 4 step 1 then
     move P: B, B
 end
 
-move P0: 0, 10
-fill P0: #red
-
-assign P1: P0
-move P0: B, B
-assign P2: P0
-move P0: B, B
-assign P3: P0
-move P0: B, B
-assign P4: P0
-
-draw P1
-draw P2
-draw P3
-draw P4
+fill P1: #red
 
 draw Points

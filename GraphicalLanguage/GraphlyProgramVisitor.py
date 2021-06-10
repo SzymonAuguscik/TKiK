@@ -18,7 +18,7 @@ from exceptions.UnknownGroupTypeException import UnknownGroupTypeException
 
 from math import floor, ceil
 from math import sin, cos, radians
-from copy import copy
+from copy import deepcopy
 
 
 class GraphlyProgramVisitor(GraphlyVisitor):
@@ -350,6 +350,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def draw_single_shape(self, variable):
         if type(variable) == self.Point:
             pygame.draw.circle(self.screen, variable.color, (variable.x, variable.y), self.POINT_RADIUS)
+            print(variable.color, (variable.x, variable.y))
         elif type(variable) == self.Segment:
             start_point = variable.start_point.get_coordination_tuple()
             end_point = variable.end_point.get_coordination_tuple()
@@ -442,15 +443,17 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         try:
             variable1 = self.try_to_get_member(ctx, ctx.arg1, name1)
             if type(variable1) == type(variable2):
-                if self.check_if_group_member(name1):
-                    group_name, index = self.visit(ctx.arg1)
-                    self.assign_group_member(group_name, index, copy(variable2), ctx)
+                if type(variable1) not in (int, float, list):
+                    variable1.__dict__ = deepcopy(variable2.__dict__)
                 else:
-                    self.assign_variable(name1, copy(variable2), ctx)
+                    self.assign_variable(name1, variable2, ctx)
             else:
                 raise BadAssignmentException(ctx.start.line, self.types[type(variable1)], self.types[type(variable2)])
+            print(name1, self.get_variable(name1, ctx), variable1, name2, variable2)
         except UnknownVariableException:
-            self.set_variable(name1, copy(variable2))
+            self.set_variable(name1, deepcopy(variable2))
+            print(name1, self.get_variable(name1, ctx), name2, variable2)
+        
 
 
     def visitNumAssign(self, ctx:GraphlyParser.NumAssignContext):
@@ -458,6 +461,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         value = self.visit(ctx.arg2)
         
         self.assign_variable(name, value, ctx)
+        print(name, value, self.get_variable(name, ctx))
 
 
     def visitMinusOpExpr(self, ctx: GraphlyParser.MinusOpExprContext):
