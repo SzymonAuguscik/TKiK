@@ -26,6 +26,7 @@ loop I start 0 until 3 step 2 then
     draw Shapes[I]
 end
 
-loop I start 0 until 3 step 2 then
-    draw Shapes[I]
+-- used to be I, but got error variable I already declared!
+loop J start 0 until 3 step 2 then
+    draw Shapes[J]
 end

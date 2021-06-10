@@ -46,7 +46,7 @@ class Group(Drawable):
         self.members = members
     
     def __str__(self):
-        ret = f'<group, {self.name} [\n'
+        ret = f'<group<{self.type}>, {self.name}, [\n'
         for m in self.members:
             ret += '  ' + str(m) + ','
         return ret[:-2] + f'\n]>'
