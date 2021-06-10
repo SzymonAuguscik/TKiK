@@ -449,10 +449,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
                     self.assign_variable(name1, variable2, ctx)
             else:
                 raise BadAssignmentException(ctx.start.line, self.types[type(variable1)], self.types[type(variable2)])
-            print(name1, self.get_variable(name1, ctx), variable1, name2, variable2)
         except UnknownVariableException:
             self.set_variable(name1, deepcopy(variable2))
-            print(name1, self.get_variable(name1, ctx), name2, variable2)
         
 
 
@@ -461,7 +459,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         value = self.visit(ctx.arg2)
         
         self.assign_variable(name, value, ctx)
-        print(name, value, self.get_variable(name, ctx))
 
 
     def visitMinusOpExpr(self, ctx: GraphlyParser.MinusOpExprContext):
