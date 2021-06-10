@@ -18,6 +18,8 @@ point P3: 10, 30
 group<points> G: P1, P2, P3
 log G
 
+log G[0]
+
 polygon Poly: G
 log Poly
 
