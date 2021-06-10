@@ -322,11 +322,7 @@ TEXT
 
 TYPE
 	:
-	'points'
-	| 'segments'
-	| 'circles'
-	| 'shapes'
-	| 'polygons'
+	[a-z]+
 	;
 
 COLOR 

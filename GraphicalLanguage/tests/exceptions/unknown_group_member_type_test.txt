@@ -1,0 +1,14 @@
+-- incorrect parameter in group definition
+
+num X: 1000
+
+canvas: X, X, #red
+
+point P1: 100, 200
+point P2: 150, 120
+point P3: 150, 200
+segment S: P1, P2
+
+group<szapes> Shapes: P1, P2, P3, S
+
+draw Shapes
