@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Add some test examples. Fix bug with BadArgumentException in rotating and scaling">
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Fix bug with loops exception">
+      <change afterPath="$PROJECT_DIR$/exceptions/UnknownGroupTypeException.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/exceptions/unknown_group_member_type_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/unit_tests/drawables_type_in_group_test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit_tests/draw_group_members_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit_tests/draw_group_members_test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphly.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Graphly.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyErrorListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyErrorListener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyLexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyLexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphlyProgramVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramVisitor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623321358032</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fix bug with loops exception">
+      <created>1623323901638</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1623323901638</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -135,6 +149,7 @@
     <MESSAGE value="Add groupMember. Add transformation on groups. Refactor grammar layout" />
     <MESSAGE value="Change ErrorListener usage (first, not second run). Add few more tests" />
     <MESSAGE value="Add some test examples. Fix bug with BadArgumentException in rotating and scaling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add some test examples. Fix bug with BadArgumentException in rotating and scaling" />
+    <MESSAGE value="Fix bug with loops exception" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug with loops exception" />
   </component>
 </project>
