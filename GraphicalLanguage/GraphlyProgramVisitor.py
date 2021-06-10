@@ -35,6 +35,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         def get_coordination_tuple(self):
             return self.x, self.y
 
+        def __str__(self):
+            return f'<point, {self.name}, ({self.x}, {self.y}), #{self.color}>'
+
+
     class Segment:
         SEGMENT_WIDTH = 1
 
@@ -44,6 +48,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             self.end_point = end_point
             self.color = (0, 0, 0)
             self.width = self.SEGMENT_WIDTH
+        
+        def __str__(self):
+            return f'<segment, {self.name}, {self.start_point}, {self.end_point}, #{self.color}>'
+
 
     class Circle:
         CIRCLE_WIDTH = 1
@@ -55,6 +63,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             self.color = (0, 0, 0)
             self.width = self.CIRCLE_WIDTH
 
+        def __str__(self):
+            return f'<circle, {self.name}, {self.center_point}, {self.radius}, #{self.color}>'
+
+
     class Polygon:
         POLYGON_WIDTH = 0
 
@@ -63,6 +75,13 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             self.points = points
             self.color = (0, 0, 0)
             self.width = self.POLYGON_WIDTH
+
+        def __str__(self):
+            ret = f'<polygon, {self.name}, ['
+            for p in self.points:
+                ret += str(p) + ', '
+            return ret[:-2] + f'], #{self.color}>'
+
 
     def __init__(self):
         self.scopes = []
@@ -358,6 +377,28 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise BadArgumentException(ctx.start.line, "draw", name, self.types[type(variable)])
 
+    
+    def visitShapeLog(self, ctx:GraphlyParser.ShapeLogContext):
+        name = ctx.arg.getText()
+        variable = self.try_to_get_member(ctx, ctx.arg, name)
+
+        if type(variable) is list:
+            print('<group, [')
+            for e in variable:
+                print(f'  {e}')
+            print(']>')
+        else:
+            print(variable)
+
+
+    def visitExprLog(self, ctx:GraphlyParser.ExprLogContext):
+        print(self.visit(ctx.arg))
+
+
+    def visitTextLog(self, ctx:GraphlyParser.TextLogContext):
+        print(ctx.TEXT().getText())
+
+    
     def fill_single_shape(self, variable, color, ctx):
         if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
             if color in self.colors:
