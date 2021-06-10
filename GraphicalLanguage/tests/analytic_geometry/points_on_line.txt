@@ -1,0 +1,16 @@
+-- proof that points A, B, C, D declared below are on one straight line
+
+num X: 400
+
+canvas: X, X, #white
+
+point A: 10, 30
+point B: 30, 110
+point C: 50, 190
+point D: 80, 310
+
+segment S: A, D
+
+group<shapes> Drawables: A, B, C, D, S
+
+draw Drawables

@@ -615,8 +615,16 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         shape = self.try_to_get_member(ctx, ctx.arg1, shape_name)
         pivot_point = self.try_to_get_member(ctx, ctx.arg2, pivot_point_name)
 
+        if type(pivot_point) != self.Point:
+            raise BadArgumentException(ctx.start.line, "rotate", "pivot_point", self.types[type(pivot_point)])
+
         angle = self.visit(ctx.angle)
+
+        if type(angle) not in (int, float):
+            raise BadArgumentException(ctx.start.line, "rotate", "angle", self.types[type(angle)])
+
         angle *= -1  # counterclockwise
+
 
         if type(shape) in self.drawables:
             self.rotate_single_shape(shape, pivot_point, angle)
@@ -668,7 +676,13 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         shape = self.try_to_get_member(ctx, ctx.arg1, shape_name)
         pivot_point = self.try_to_get_member(ctx, ctx.arg2, pivot_point_name)
 
+        if type(pivot_point) != self.Point:
+            raise BadArgumentException(ctx.start.line, "scale", "pivot_point", self.types[type(pivot_point)])
+
         factor = self.visit(ctx.k)
+
+        if type(factor) not in (int, float):
+            raise BadArgumentException(ctx.start.line, "scale", "factor", self.types[type(factor)])
 
         if type(shape) in self.drawables:
             self.scale_single_shape(shape, pivot_point, factor)

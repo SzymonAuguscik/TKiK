@@ -1,0 +1,32 @@
+-- program to draw simple spirals
+
+num X: 600
+
+canvas: X, X, #white
+
+point Center: X/2, X/2
+num Radius: 20
+circle C: Center, Radius
+
+num Arms: 50
+num Smoothness: 50
+num Deflection: 3
+
+draw C
+
+assign P1: Center
+
+loop Angle start 0 until 360 step 360/Arms then
+    loop I start 0 until Smoothness step 1 then
+        num Coord: (X/2 + Radius) * (1 + I / Smoothness)
+        point Point: Coord, Coord
+        rotate Point: Angle + Deflection * I, Center
+        segment S: Point, P1
+
+        draw S
+
+        assign P1: Point
+    end
+
+    assign P1: Center
+end

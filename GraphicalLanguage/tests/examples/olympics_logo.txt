@@ -1,0 +1,41 @@
+-- 5 olympics circles
+
+num X: 500
+
+canvas: X, X, #white
+
+num Offset: X/10
+num BigRadius: X/10
+num SmallRadius: X/11
+
+point C1: X/2, X/2 - Offset
+circle BigCircle1: C1, BigRadius
+circle SmallCircle1: C1, SmallRadius
+fill BigCircle1: #black
+
+point C2: X/2 - 2 * Offset, X/2 - Offset
+circle BigCircle2: C2, BigRadius
+circle SmallCircle2: C2, SmallRadius
+fill BigCircle2: #blue
+
+point C3: X/2 + 2 * Offset, X/2 - Offset
+circle BigCircle3: C3, BigRadius
+circle SmallCircle3: C3, SmallRadius
+fill BigCircle3: #red
+
+point C4: X/2 + Offset, X/2 + Offset
+circle BigCircle4: C4, BigRadius
+circle SmallCircle4: C4, SmallRadius
+fill BigCircle4: #green
+
+point C5: X/2 - Offset, X/2 + Offset
+circle BigCircle5: C5, BigRadius
+circle SmallCircle5: C5, SmallRadius
+fill BigCircle5: #yellow
+
+group<shapes> SmallCircles: SmallCircle1, SmallCircle2, SmallCircle3, SmallCircle4, SmallCircle5
+group<shapes> BigCircles: BigCircle1, BigCircle2, BigCircle3, BigCircle4, BigCircle5
+fill SmallCircles: #white
+
+draw BigCircles
+draw SmallCircles
