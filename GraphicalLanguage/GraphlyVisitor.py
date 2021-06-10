@@ -104,6 +104,21 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by GraphlyParser#shapeLog.
+    def visitShapeLog(self, ctx:GraphlyParser.ShapeLogContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#exprLog.
+    def visitExprLog(self, ctx:GraphlyParser.ExprLogContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by GraphlyParser#textLog.
+    def visitTextLog(self, ctx:GraphlyParser.TextLogContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by GraphlyParser#transformation.
     def visitTransformation(self, ctx:GraphlyParser.TransformationContext):
         return self.visitChildren(ctx)
