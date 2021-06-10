@@ -35,6 +35,7 @@ instruction
 	| loop 
 	| check
 	| assign
+	| log
 	| WS*
 	;
 
@@ -153,6 +154,13 @@ canvas
 draw 
 	: 
 	WS* 'draw' WS+ arg=transformable
+	;
+
+log
+	:
+	WS* 'log' WS+ arg=transformable #shapeLog
+	| WS* 'log' WS+ arg=expr		#exprLog
+	| WS* 'log' WS+ TEXT            #textLog
 	;
 
 // transformations
@@ -308,13 +316,13 @@ LT
 
 // terminal
 
+TEXT
+ : '"' (~[\r\n"] | '""')* '"'
+ ;
+
 TYPE
 	:
-	'points'
-	| 'segments'
-	| 'circles'
-	| 'shapes'
-	| 'polygons'
+	[a-z]+
 	;
 
 COLOR 

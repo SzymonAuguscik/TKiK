@@ -179,6 +179,33 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GraphlyParser#shapeLog.
+    def enterShapeLog(self, ctx:GraphlyParser.ShapeLogContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#shapeLog.
+    def exitShapeLog(self, ctx:GraphlyParser.ShapeLogContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#exprLog.
+    def enterExprLog(self, ctx:GraphlyParser.ExprLogContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#exprLog.
+    def exitExprLog(self, ctx:GraphlyParser.ExprLogContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#textLog.
+    def enterTextLog(self, ctx:GraphlyParser.TextLogContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#textLog.
+    def exitTextLog(self, ctx:GraphlyParser.TextLogContext):
+        pass
+
+
     # Enter a parse tree produced by GraphlyParser#transformation.
     def enterTransformation(self, ctx:GraphlyParser.TransformationContext):
         pass

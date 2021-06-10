@@ -1,0 +1,27 @@
+canvas: 200, 200, #white
+
+log "Hello World!"
+
+num X: 10
+log X
+
+log X + 10
+
+point P1: X, X
+log P1
+
+point P2: 20, 20
+segment S: P1, P2
+log S
+
+point P3: 10, 30
+group<points> G: P1, P2, P3
+log G
+
+log G[0]
+
+polygon Poly: G
+log Poly
+
+circle C: P3, 10
+log C

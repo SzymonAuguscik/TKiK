@@ -14,6 +14,7 @@ from exceptions.NegativeIndexException import NegativeIndexException
 from exceptions.IndexOutOfRangeException import IndexOutOfRangeException
 from exceptions.NonPositiveValueInCanvasException import NonPositiveValueInCanvasException
 from exceptions.BadAssignmentExcpetion import BadAssignmentException
+from exceptions.UnknownGroupTypeException import UnknownGroupTypeException
 
 from math import floor, ceil
 from math import sin, cos, radians
@@ -35,6 +36,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         def get_coordination_tuple(self):
             return self.x, self.y
 
+        def __str__(self):
+            return f'<point, {self.name}, ({self.x}, {self.y}), #{self.color}>'
+
+
     class Segment:
         SEGMENT_WIDTH = 1
 
@@ -44,6 +49,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             self.end_point = end_point
             self.color = (0, 0, 0)
             self.width = self.SEGMENT_WIDTH
+        
+        def __str__(self):
+            return f'<segment, {self.name}, {self.start_point}, {self.end_point}, #{self.color}>'
+
 
     class Circle:
         CIRCLE_WIDTH = 1
@@ -55,6 +64,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             self.color = (0, 0, 0)
             self.width = self.CIRCLE_WIDTH
 
+        def __str__(self):
+            return f'<circle, {self.name}, {self.center_point}, {self.radius}, #{self.color}>'
+
+
     class Polygon:
         POLYGON_WIDTH = 0
 
@@ -64,8 +77,16 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             self.color = (0, 0, 0)
             self.width = self.POLYGON_WIDTH
 
+        def __str__(self):
+            ret = f'<polygon, {self.name}, ['
+            for p in self.points:
+                ret += str(p) + ', '
+            return ret[:-2] + f'], #{self.color}>'
+
+
     def __init__(self):
         self.scopes = []
+
         self.colors = {
             "#red": (255, 0, 0),
             "#green": (0, 255, 0),
@@ -77,18 +98,22 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             "#pink": (255, 100, 203),
             "#gray": (105, 105, 105)
         }
+
         self.types = {
-            int: "num/iterator",
+            int: "num",
             float: "num",
             self.Point: "point",
             self.Segment: "segment",
             self.Circle: "circle",
             self.Polygon: "polygon",
             list: "group",
-            "shape": "shape"
+            "shape": "shape",
+            "drawable": "drawable"
         }
+
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.drawables = (self.Point, self.Segment, self.Circle, self.Polygon, list)
+        self.group_member_types = ("shapes", "circles", "points", "polygons", "segments", "drawables")
 
     def variable_exists(self, variable):
         # Checks if variable exists in the current scope
@@ -266,18 +291,26 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         name = name_tokens[0].getText()
 
         if not self.variable_exists(name):
-            correct_type = list(self.types.keys())[list(self.types.values()).index(ctx.TYPE().getText()[:-1])]
+            group_type = ctx.TYPE().getText()
+
+            if group_type not in self.group_member_types:
+                raise UnknownGroupTypeException(ctx.start.line, group_type)
+
+            correct_type = list(self.types.keys())[list(self.types.values()).index(group_type[:-1])]
+
             arguments = name_tokens[1:]
             group_members = []
 
             for arg in arguments:
                 arg_name = arg.getText()
-
                 member = self.get_variable(arg_name, ctx)
-
-                if correct_type == "shape" and type(member) not in (self.Point, self.Segment, self.Circle, self.Polygon):
+                if correct_type == self.types["shape"] and type(member) not in (self.Point, self.Segment, self.Circle, self.Polygon):
                     raise BadTypeInGroupException(ctx.start.line, name, self.types[correct_type], self.types[type(member)])
-                elif correct_type != "shape" and type(member) != correct_type:
+
+                if correct_type == self.types["drawable"] and type(member) not in (self.Point, self.Segment, self.Circle, self.Polygon, list):
+                    raise BadTypeInGroupException(ctx.start.line, name, self.types[correct_type],self.types[type(member)])
+
+                if correct_type not in (self.types["shape"], self.types["drawable"]) and type(member) != correct_type:
                     raise BadTypeInGroupException(ctx.start.line, name, self.types[correct_type], self.types[type(member)])
 
                 group_members.append(member)
@@ -359,6 +392,28 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise BadArgumentException(ctx.start.line, "draw", name, self.types[type(variable)])
 
+    
+    def visitShapeLog(self, ctx:GraphlyParser.ShapeLogContext):
+        name = ctx.arg.getText()
+        variable = self.try_to_get_member(ctx, ctx.arg, name)
+
+        if type(variable) is list:
+            print('<group, [')
+            for e in variable:
+                print(f'  {e}')
+            print(']>')
+        else:
+            print(variable)
+
+
+    def visitExprLog(self, ctx:GraphlyParser.ExprLogContext):
+        print(self.visit(ctx.arg))
+
+
+    def visitTextLog(self, ctx:GraphlyParser.TextLogContext):
+        print(ctx.TEXT().getText())
+
+    
     def fill_single_shape(self, variable, color, ctx):
         if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
             if color in self.colors:
@@ -629,7 +684,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             raise BadArgumentException(ctx.start.line, "rotate", "angle", self.types[type(angle)])
 
         angle *= -1  # counterclockwise
-
 
         if type(shape) in self.drawables:
             self.rotate_single_shape(shape, pivot_point, angle)

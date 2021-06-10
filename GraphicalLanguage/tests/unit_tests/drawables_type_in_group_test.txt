@@ -1,0 +1,36 @@
+-- example of usage nested groups
+
+num X: 600
+
+canvas: X, X, #white
+
+point Center: X/2, X/2
+
+point P1: 150, 200
+point P2: 260, 300
+point P3: 500, 510
+point P4: 60, 200
+point P5: 70, 400
+point P6: 150, 230
+point P7: 230, 300
+point P8: 300, 300
+
+segment S1: P1, P2
+circle C1: P3, 40
+
+segment S2: P4, P5
+group<points> Points: P6, P7, P8
+polygon T1: Points
+
+group<shapes> Group1: S1, C1
+group<shapes> Group2: S2, T1
+
+group<drawables> Draws: Group1, Group2
+
+draw Draws
+
+move Group1: 50, -50
+fill Group2: #green
+rotate Group2: 30, Center
+
+draw Draws
