@@ -149,7 +149,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def visitLoop(self, ctx: GraphlyParser.LoopContext):
         name = ctx.name.text
 
-        iterator = int(self.visit(ctx.start))
+        # mismatch - "start" is a keyword in Antlr, need to rename "start" to "starting"
+        iterator = int(self.visit(ctx.starting))
         until = int(self.visit(ctx.until))
         step = int(self.visit(ctx.step))
 

@@ -25,3 +25,7 @@ fill C: #yellow
 loop I start 0 until 3 step 2 then
     draw Shapes[I]
 end
+
+loop I start 0 until 3 step 2 then
+    draw Shapes[I]
+end

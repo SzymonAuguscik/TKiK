@@ -48,7 +48,7 @@ loop
 	: 
 	'loop' WS+
 	name=NAME WS+ 
-	'start' WS+ start=expr WS+ 
+	'start' WS+ starting=expr WS+ 
 	'until' WS+ until=expr WS+ 
 	'step' WS+ step=expr WS+ 
 	'then' WS* '\n' 

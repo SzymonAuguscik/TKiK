@@ -1185,7 +1185,7 @@ class GraphlyParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
             self.name = None # Token
-            self.start = None # ExprContext
+            self.starting = None # ExprContext
             self.until = None # ExprContext
             self.step = None # ExprContext
 
@@ -1279,7 +1279,7 @@ class GraphlyParser ( Parser ):
                     break
 
             self.state = 184
-            localctx.start = self.expr(0)
+            localctx.starting = self.expr(0)
             self.state = 186 
             self._errHandler.sync(self)
             _la = self._input.LA(1)

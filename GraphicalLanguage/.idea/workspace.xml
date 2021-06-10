@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Add new exception with non positive value in canvas">
-      <change afterPath="$PROJECT_DIR$/tests/analytic_geometry/points_on_line.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/examples/olympics_logo.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/examples/spirals.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_05_2021,_12_29_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_05_2021__12_29__Default_Changelist_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_05_2021,_12_54_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_05_2021__12_54__Default_Changelist_.xml" beforeDir="false" />
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Add some test examples. Fix bug with BadArgumentException in rotating and scaling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyProgramVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramVisitor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit_tests/draw_group_members_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit_tests/draw_group_members_test.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622111402163</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add some test examples. Fix bug with BadArgumentException in rotating and scaling">
+      <created>1623321358032</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1623321358032</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -134,6 +134,7 @@
     <MESSAGE value="Add exception service to visitor" />
     <MESSAGE value="Add groupMember. Add transformation on groups. Refactor grammar layout" />
     <MESSAGE value="Change ErrorListener usage (first, not second run). Add few more tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change ErrorListener usage (first, not second run). Add few more tests" />
+    <MESSAGE value="Add some test examples. Fix bug with BadArgumentException in rotating and scaling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add some test examples. Fix bug with BadArgumentException in rotating and scaling" />
   </component>
 </project>
