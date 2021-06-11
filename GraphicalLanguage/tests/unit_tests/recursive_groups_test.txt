@@ -1,0 +1,33 @@
+-- recursive definition of groups
+
+num X: 600
+
+canvas: X, X, #white
+
+point Center: X/2, X/2
+
+point P1: 200, 200
+point P2: 300, 200
+
+point P3: 500, 300
+point P4: 150, 150
+
+point P5: 300, 500
+point P6: 150, 500
+
+group<points> A: P1, P2, P3
+group<drawables> B: A, P4, P5
+group<drawables> C: B, P6
+group<drawables> D: C, P1, P2, P3
+
+log A
+log B
+log C
+
+--fill A: #red
+--draw A
+
+assign A: D
+fill A: #blue
+scale A: 0.5, Center
+draw A
