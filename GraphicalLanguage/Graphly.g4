@@ -23,8 +23,6 @@ MULTILINE_COM
 
 program
 	:
-	// (('\n')* instruction WS* ('\n')+)* 
-	// canvas WS*
 	(WS* instruction ('\n')+)*
 	(WS* instruction WS*)
 	(('\n')+ instruction WS*)* 
