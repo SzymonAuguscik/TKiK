@@ -13,8 +13,10 @@ from exceptions.IncorrectPolygonInitializationException import IncorrectPolygonI
 from exceptions.NegativeIndexException import NegativeIndexException
 from exceptions.IndexOutOfRangeException import IndexOutOfRangeException
 from exceptions.NonPositiveValueInCanvasException import NonPositiveValueInCanvasException
-from exceptions.BadAssignmentExcpetion import BadAssignmentException
+from exceptions.BadAssignmentException import BadAssignmentException
 from exceptions.UnknownGroupTypeException import UnknownGroupTypeException
+from exceptions.BadTypeInExpressionException import BadTypeInExpressionException
+from exceptions.IllegalCharacterException import IllegalCharacterException
 
 from drawables import *
 
@@ -22,12 +24,17 @@ from math import floor, ceil
 from math import sin, cos, radians
 from copy import deepcopy
 
+from os.path import dirname, splitext
+
 
 class GraphlyProgramVisitor(GraphlyVisitor):
     SCREEN_WIDTH = 640
     SCREEN_HEIGHT = 480
 
-    def __init__(self):
+    
+    def __init__(self, filename):
+        self.filename = filename
+        
         self.scopes = []
 
         self.colors = {
@@ -125,10 +132,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
         block = ctx.block()
 
-        if not self.variable_exists(name):
-            self.set_variable(name, iterator)
-        else:
-            raise VariableAlreadyDeclaredException(ctx.start.line, name)
+        self.set_variable(name, iterator)
         
         while iterator < until:
             self.visit(block)
@@ -333,6 +337,33 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         print(ctx.TEXT().getText())
 
 
+    def visitSimpleSave(self, ctx:GraphlyParser.SimpleSaveContext):
+        try:
+            pygame.image.save(self.screen, self.filename + '.png')
+        except:
+            print(f'Failed to save canvas to {self.filename}.png!')
+
+
+    def visitNamedSave(self, ctx:GraphlyParser.NamedSaveContext):
+        name = ctx.TEXT().getText().replace('"', '')
+
+        forbidden = '#%&\{\}\\<>*?/ $!\'":@+`|='
+        if any(c in forbidden for c in name):
+            raise IllegalCharacterException(ctx.start.line, name)
+        
+        if splitext(name)[1] not in ('.png', '.jpeg', '.bmp', '.tga'):
+            name += '.png'
+
+        direcotry = dirname(self.filename)
+        if direcotry != '':
+            name = direcotry + '/' + name
+
+        try:
+            pygame.image.save(self.screen, name)
+        except:
+            print(f'Failed to save canvas to {name}!')
+
+    
     def visitFill(self, ctx: GraphlyParser.FillContext):
         name = ctx.arg.getText()
         color = ctx.COLOR().getText()
@@ -450,8 +481,12 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
 
     def visitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
-        #TODO: check if variable is the right type!
-        return self.get_variable(ctx.getText(), ctx)
+        variable = self.get_variable(ctx.getText(), ctx)
+
+        if type(variable) not in (int, float):
+            raise BadTypeInExpressionException(ctx.start.line, self.types[type(variable)])
+
+        return variable
 
 
     def visitMove(self, ctx: GraphlyParser.MoveContext):

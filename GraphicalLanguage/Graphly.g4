@@ -36,6 +36,7 @@ instruction
 	| check
 	| assign
 	| log
+	| save
 	| WS*
 	;
 
@@ -161,6 +162,12 @@ log
 	WS* 'log' WS+ arg=transformable #shapeLog
 	| WS* 'log' WS+ arg=expr		#exprLog
 	| WS* 'log' WS+ TEXT            #textLog
+	;
+
+save
+	:
+	'save'	#simpleSave
+	| 'save' WS+ TEXT #namedSave
 	;
 
 // transformations

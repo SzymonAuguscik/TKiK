@@ -1,0 +1,31 @@
+-- main program to draw chess board
+num X: 200
+
+canvas: X, X, #white
+
+num Size: 8
+num SqrLen: X/Size
+point P0: 0, 0
+point P1: SqrLen, 0
+point P2: SqrLen, SqrLen
+point P3: 0, SqrLen
+
+group<points> Points: P0, P1, P2, P3
+
+polygon Sqr: Points
+
+fill Sqr: #black
+
+loop I start 0 until Size step 1 then
+    loop J start 0 until Size step 1 then
+		check (I + J) % 2 = 1 then
+			point P: I * SqrLen, J * SqrLen
+			place Sqr: P
+			draw Sqr
+		end
+	end
+end
+
+save
+save "test"
+save "with_extension.jpeg"
