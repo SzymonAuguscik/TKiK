@@ -15,6 +15,10 @@ COM_SIGN
 	: 
 	'--' ~[\r\n]* -> skip;
 
+MULTILINE_COM
+	: '-*' .*? '*-' -> skip
+	;
+
 // body of a program
 
 program
