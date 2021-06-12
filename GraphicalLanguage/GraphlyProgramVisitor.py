@@ -13,8 +13,9 @@ from exceptions.IncorrectPolygonInitializationException import IncorrectPolygonI
 from exceptions.NegativeIndexException import NegativeIndexException
 from exceptions.IndexOutOfRangeException import IndexOutOfRangeException
 from exceptions.NonPositiveValueInCanvasException import NonPositiveValueInCanvasException
-from exceptions.BadAssignmentExcpetion import BadAssignmentException
+from exceptions.BadAssignmentException import BadAssignmentException
 from exceptions.UnknownGroupTypeException import UnknownGroupTypeException
+from exceptions.BadTypeInExpressionException import BadTypeInExpressionException
 
 from math import floor, ceil
 from math import sin, cos, radians
@@ -541,7 +542,12 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
 
     def visitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
-        return self.get_variable(ctx.getText(), ctx)
+        variable = self.get_variable(ctx.getText(), ctx)
+
+        if type(variable) not in (int, float):
+            raise BadTypeInExpressionException(ctx.start.line, self.types[type(variable)])
+
+        return variable
 
     def move_single_shape(self, variable, x, y):
         if type(variable) == self.Point:
