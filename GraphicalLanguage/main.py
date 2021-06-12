@@ -8,7 +8,7 @@ from GraphlyCanvasChecker import GraphlyCanvasChecker
 from GraphlyProgramVisitor import GraphlyProgramVisitor
 from GraphlyErrorListener import ThrowingErrorListener
 
-from os.path import isdir
+from os.path import isdir, splitext
 
 from exceptions.DirectoryPassedException import DirectoryPassedException
 from exceptions.EmptyPathException import EmptyPathException
@@ -57,7 +57,9 @@ def execute_graphly_script(argv):  # second run of program
     # tree_walker = antlr4.ParseTreeWalker()
     # tree_walker.walk(graph, tree)
 
-    GraphlyProgramVisitor().visit(tree)
+    filename = splitext(argv[1])[0]
+
+    GraphlyProgramVisitor(filename).visit(tree)
 
     run = True
 

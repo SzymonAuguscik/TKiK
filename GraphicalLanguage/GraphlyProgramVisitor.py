@@ -85,7 +85,9 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             return ret[:-2] + f'], #{self.color}>'
 
 
-    def __init__(self):
+    def __init__(self, filename):
+        self.filename = filename
+
         self.scopes = []
 
         self.colors = {
@@ -413,6 +415,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
     def visitTextLog(self, ctx:GraphlyParser.TextLogContext):
         print(ctx.TEXT().getText())
+
+
+    def visitSave(self, ctx:GraphlyParser.SaveContext):
+        pygame.image.save(self.screen, self.filename + '.png')
 
     
     def fill_single_shape(self, variable, color, ctx):

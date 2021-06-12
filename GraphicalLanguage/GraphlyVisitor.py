@@ -119,6 +119,11 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by GraphlyParser#save.
+    def visitSave(self, ctx:GraphlyParser.SaveContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by GraphlyParser#transformation.
     def visitTransformation(self, ctx:GraphlyParser.TransformationContext):
         return self.visitChildren(ctx)
