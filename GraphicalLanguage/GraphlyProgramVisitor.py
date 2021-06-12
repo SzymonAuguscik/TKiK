@@ -353,7 +353,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def draw_single_shape(self, variable):
         if type(variable) == self.Point:
             pygame.draw.circle(self.screen, variable.color, (variable.x, variable.y), self.POINT_RADIUS)
-            print(variable.color, (variable.x, variable.y))
         elif type(variable) == self.Segment:
             start_point = variable.start_point.get_coordination_tuple()
             end_point = variable.end_point.get_coordination_tuple()
@@ -441,7 +440,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         try:
             pygame.image.save(self.screen, name)
         except:
-            print(f'Failed to save canvas to {name} failed!')
+            print(f'Failed to save canvas to {name}!')
 
     
     def fill_single_shape(self, variable, color, ctx):
