@@ -18,6 +18,8 @@ from exceptions.UnknownGroupTypeException import UnknownGroupTypeException
 from exceptions.BadTypeInExpressionException import BadTypeInExpressionException
 from exceptions.IllegalCharacterException import IllegalCharacterException
 
+from drawables import *
+
 from math import floor, ceil
 from math import sin, cos, radians
 from copy import deepcopy
@@ -26,71 +28,13 @@ from os.path import dirname, splitext
 
 
 class GraphlyProgramVisitor(GraphlyVisitor):
-    POINT_RADIUS = 3
     SCREEN_WIDTH = 640
     SCREEN_HEIGHT = 480
 
-    class Point:
-        def __init__(self, name, x, y):
-            self.x = x
-            self.y = y
-            self.name = name
-            self.color = (0, 0, 0)
-
-        def get_coordination_tuple(self):
-            return self.x, self.y
-
-        def __str__(self):
-            return f'<point, {self.name}, ({self.x}, {self.y}), #{self.color}>'
-
-
-    class Segment:
-        SEGMENT_WIDTH = 1
-
-        def __init__(self, name, start_point, end_point):
-            self.name = name
-            self.start_point = start_point
-            self.end_point = end_point
-            self.color = (0, 0, 0)
-            self.width = self.SEGMENT_WIDTH
-        
-        def __str__(self):
-            return f'<segment, {self.name}, {self.start_point}, {self.end_point}, #{self.color}>'
-
-
-    class Circle:
-        CIRCLE_WIDTH = 1
-
-        def __init__(self, name, center_point, radius):
-            self.name = name
-            self.center_point = center_point
-            self.radius = radius
-            self.color = (0, 0, 0)
-            self.width = self.CIRCLE_WIDTH
-
-        def __str__(self):
-            return f'<circle, {self.name}, {self.center_point}, {self.radius}, #{self.color}>'
-
-
-    class Polygon:
-        POLYGON_WIDTH = 0
-
-        def __init__(self, name, points):
-            self.name = name
-            self.points = points
-            self.color = (0, 0, 0)
-            self.width = self.POLYGON_WIDTH
-
-        def __str__(self):
-            ret = f'<polygon, {self.name}, ['
-            for p in self.points:
-                ret += str(p) + ', '
-            return ret[:-2] + f'], #{self.color}>'
-
-
+    
     def __init__(self, filename):
         self.filename = filename
-
+        
         self.scopes = []
 
         self.colors = {
@@ -108,17 +52,17 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         self.types = {
             int: "num",
             float: "num",
-            self.Point: "point",
-            self.Segment: "segment",
-            self.Circle: "circle",
-            self.Polygon: "polygon",
-            list: "group",
+            Point: "point",
+            Segment: "segment",
+            Circle: "circle",
+            Polygon: "polygon",
+            Group: "group",
             "shape": "shape",
-            "drawable": "drawable"
+            "drawable": "drawable",
+            Drawable: "drawable"
         }
 
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.drawables = (self.Point, self.Segment, self.Circle, self.Polygon, list)
         self.group_member_types = ("shapes", "circles", "points", "polygons", "segments", "drawables")
 
     def variable_exists(self, variable):
@@ -152,13 +96,13 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
 
     def set_group_member(self, name, index, value):
-        self.scopes[-1][name][index] = value
+        self.scopes[-1][name].members[index] = value
 
     
     def assign_group_member(self, name, index, value, ctx):
         for scope in reversed(self.scopes):
             if name in scope:
-                scope[name][index] = value
+                scope[name].members[index] = value
                 return
 
         raise UnknownVariableException(ctx.start.line, name)
@@ -178,6 +122,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         self.scopes.pop()
 
     def visitLoop(self, ctx: GraphlyParser.LoopContext):
+        #TODO: should we allow to use the same name for iterator?
         name = ctx.name.text
 
         # mismatch - "start" is a keyword in Antlr, need to rename "start" to "starting"
@@ -207,8 +152,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         if do_else and not ctx.block() is None:
             self.visit(ctx.block())
 
-    # TODO
-    # add exceptions after providing full variables service
 
     def visitPoint(self, ctx: GraphlyParser.PointContext):
         name = ctx.NAME().getText()
@@ -217,7 +160,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             x_cord = self.visit(ctx.x)
             y_cord = self.visit(ctx.y)
 
-            point = self.Point(name, x_cord, y_cord)
+            point = Point(name, x_cord, y_cord)
 
             self.set_variable(name, point)
         else:
@@ -233,11 +176,11 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             p1 = self.get_variable(point1_name, ctx)
             p2 = self.get_variable(point2_name, ctx)
 
-            if type(p1) == self.Point and type(p2) == self.Point:
-                segment = self.Segment(name, p1, p2)
+            if type(p1) == Point and type(p2) == Point:
+                segment = Segment(name, p1, p2)
                 self.set_variable(name, segment)
             else:
-                if type(p1) != self.Point:
+                if type(p1) != Point:
                     raise BadArgumentException(
                         ctx.start.line, "segment", point1_name, self.types[type(p1)])
                 raise BadArgumentException(
@@ -254,9 +197,9 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
             point = self.get_variable(point_name, ctx)
 
-            if type(point) == self.Point:
+            if type(point) == Point:
                 radius = self.visit(ctx.expr())
-                circle = self.Circle(name, point, radius)
+                circle = Circle(name, point, radius)
                 self.set_variable(name, circle)
 
             else:
@@ -273,13 +216,13 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
             group = self.get_variable(group_name, ctx)
 
-            if type(group) == list:
-                for member in group:
-                    if type(member) != self.Point:
+            if type(group) == Group:
+                for member in group.members:
+                    if type(member) != Point:
                         raise IncorrectPolygonInitializationException(
                             ctx.start.line, group_name, name, self.types[type(member)])
 
-                polygon = self.Polygon(name, group)
+                polygon = Polygon(name, group.members)
 
                 self.set_variable(name, polygon)
             else:
@@ -307,10 +250,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             for arg in arguments:
                 arg_name = arg.getText()
                 member = self.get_variable(arg_name, ctx)
-                if correct_type == self.types["shape"] and type(member) not in (self.Point, self.Segment, self.Circle, self.Polygon):
+                if correct_type == self.types["shape"] and type(member) not in (Point, Segment, Circle, Polygon):
                     raise BadTypeInGroupException(ctx.start.line, name, self.types[correct_type], self.types[type(member)])
 
-                if correct_type == self.types["drawable"] and type(member) not in (self.Point, self.Segment, self.Circle, self.Polygon, list):
+                if correct_type == self.types["drawable"] and type(member) not in (Point, Segment, Circle, Polygon, Group):
                     raise BadTypeInGroupException(ctx.start.line, name, self.types[correct_type],self.types[type(member)])
 
                 if correct_type not in (self.types["shape"], self.types["drawable"]) and type(member) != correct_type:
@@ -318,9 +261,10 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
                 group_members.append(member)
 
-            self.set_variable(name, group_members)
+            self.set_variable(name, Group(name, group_type, group_members))
         else:
             raise VariableAlreadyDeclaredException(ctx.start.line, name)
+
 
     def visitNum(self, ctx: GraphlyParser.NumContext):
         name = ctx.NAME().getText()
@@ -350,22 +294,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         else:
             raise BadColorException(ctx.start.line, color)
 
-    def draw_single_shape(self, variable):
-        if type(variable) == self.Point:
-            pygame.draw.circle(self.screen, variable.color, (variable.x, variable.y), self.POINT_RADIUS)
-        elif type(variable) == self.Segment:
-            start_point = variable.start_point.get_coordination_tuple()
-            end_point = variable.end_point.get_coordination_tuple()
-            pygame.draw.line(self.screen, variable.color, start_point, end_point, variable.width)
-        elif type(variable) == self.Circle:
-            center_point = variable.center_point.get_coordination_tuple()
-            pygame.draw.circle(self.screen, variable.color, center_point, variable.radius)
-        elif type(variable) == self.Polygon:
-            coordination_tuples_list = [point.get_coordination_tuple() for point in variable.points]
-            pygame.draw.polygon(self.screen, variable.color, coordination_tuples_list, variable.width)
-        elif type(variable) == list:
-            for member in variable:
-                self.draw_single_shape(member)
 
     def visitGroupMember(self, ctx: GraphlyParser.GroupMemberContext):
         return ctx.NAME().getText(), self.visitChildren(ctx.expr())
@@ -379,7 +307,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
                 raise NegativeIndexException(ctx.start.line, group_name, index)
 
             try:
-                return group[index]
+                return group.members[index]
             except IndexError:
                 raise IndexOutOfRangeException(ctx.start.line, group_name, index)
         else:
@@ -389,8 +317,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         name = ctx.arg.getText()
         variable = self.try_to_get_member(ctx, ctx.arg, name)
 
-        if type(variable) in self.drawables:
-            self.draw_single_shape(variable)
+        if issubclass(type(variable), Drawable):
+            variable.draw(self.screen)
         else:
             raise BadArgumentException(ctx.start.line, "draw", name, self.types[type(variable)])
 
@@ -398,14 +326,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     def visitShapeLog(self, ctx:GraphlyParser.ShapeLogContext):
         name = ctx.arg.getText()
         variable = self.try_to_get_member(ctx, ctx.arg, name)
-
-        if type(variable) is list:
-            print('<group, [')
-            for e in variable:
-                print(f'  {e}')
-            print(']>')
-        else:
-            print(variable)
+        print(variable)
 
 
     def visitExprLog(self, ctx:GraphlyParser.ExprLogContext):
@@ -443,23 +364,16 @@ class GraphlyProgramVisitor(GraphlyVisitor):
             print(f'Failed to save canvas to {name}!')
 
     
-    def fill_single_shape(self, variable, color, ctx):
-        if type(variable) in (self.Point, self.Segment, self.Circle, self.Polygon):
-            if color in self.colors:
-                variable.color = self.colors[color]
-            else:
-                raise BadColorException(ctx.start.line, color)
-        elif type(variable) == list:
-            for member in variable:
-                self.fill_single_shape(member, color, ctx)
-
     def visitFill(self, ctx: GraphlyParser.FillContext):
         name = ctx.arg.getText()
         color = ctx.COLOR().getText()
         variable = self.try_to_get_member(ctx, ctx.arg, name)
 
-        if type(variable) in self.drawables:
-            self.fill_single_shape(variable, color, ctx)
+        if issubclass(type(variable), Drawable):
+            if color in self.colors:
+                variable.fill(self.colors[color])
+            else:
+                raise BadColorException(ctx.start.line, color)
         else:
             raise BadArgumentException(ctx.start.line, "fill", name, self.types[type(variable)])
 
@@ -472,16 +386,14 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         try:
             variable1 = self.try_to_get_member(ctx, ctx.arg1, name1)
             if type(variable1) == type(variable2):
-                if type(variable1) not in (int, float, list):
+                if type(variable1) not in (int, float):
                     variable1.__dict__ = deepcopy(variable2.__dict__)
                 else:
                     self.assign_variable(name1, variable2, ctx)
             else:
                 raise BadAssignmentException(ctx.start.line, self.types[type(variable1)], self.types[type(variable2)])
-            print(name1, self.get_variable(name1, ctx), variable1, name2, variable2)
         except UnknownVariableException:
             self.set_variable(name1, deepcopy(variable2))
-            print(name1, self.get_variable(name1, ctx), name2, variable2)
         
 
 
@@ -490,7 +402,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         value = self.visit(ctx.arg2)
         
         self.assign_variable(name, value, ctx)
-        print(name, value, self.get_variable(name, ctx))
 
 
     def visitMinusOpExpr(self, ctx: GraphlyParser.MinusOpExprContext):
@@ -577,25 +488,6 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
         return variable
 
-    def move_single_shape(self, variable, x, y):
-        if type(variable) == self.Point:
-            variable.x += x
-            variable.y += y
-        elif type(variable) == self.Segment:
-            variable.start_point.x += x
-            variable.start_point.y += y
-            variable.end_point.x += x
-            variable.end_point.y += y
-        elif type(variable) == self.Circle:
-            variable.center_point.x += x
-            variable.center_point.y += y
-        elif type(variable) == self.Polygon:
-            for i in range(len(variable.points)):
-                variable.points[i].x += x
-                variable.points[i].y += y
-        elif type(variable) == list:
-            for member in variable:
-                self.move_single_shape(member, x, y)
 
     def visitMove(self, ctx: GraphlyParser.MoveContext):
         name = ctx.arg.getText()
@@ -603,46 +495,11 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         y = self.visit(ctx.dy)
         variable = self.try_to_get_member(ctx, ctx.arg, name)
 
-        if type(variable) in self.drawables:
-            self.move_single_shape(variable, x, y)
+        if issubclass(type(variable), Drawable):
+            variable.move(x, y)
         else:
             raise BadArgumentException(ctx.start.line, "move", name, self.types[type(variable)])
 
-        return self.visitChildren(ctx)
-
-    def place_single_shape(self, shape, place_point):
-        if type(place_point) == self.Point:
-            if type(shape) == self.Point:
-                x = place_point.x - shape.x
-                y = place_point.y - shape.y
-
-                shape.x += x
-                shape.y += y
-            elif type(shape) == self.Segment:
-                x = place_point.x - shape.start_point.x
-                y = place_point.y - shape.start_point.y
-
-                shape.start_point.x += x
-                shape.start_point.y += y
-
-                shape.end_point.x += x
-                shape.end_point.y += y
-            elif type(shape) == self.Circle:
-                x = place_point.x - shape.center_point.x
-                y = place_point.y - shape.center_point.y
-
-                shape.center_point.x += x
-                shape.center_point.y += y
-            elif type(shape) == self.Polygon:
-                x = place_point.x - shape.points[0].x
-                y = place_point.y - shape.points[0].y
-
-                for i in range(len(shape.points)):
-                    shape.points[i].x += x
-                    shape.points[i].y += y
-            elif type(shape) == list:
-                for member in shape:
-                    self.place_single_shape(member, place_point)
 
     def visitPlace(self, ctx: GraphlyParser.PlaceContext):
         shape_name = ctx.arg1.getText()
@@ -651,56 +508,14 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         shape = self.try_to_get_member(ctx, ctx.arg1, shape_name)
         place_point = self.try_to_get_member(ctx, ctx.arg2, place_point_name)
 
-        if type(place_point) == self.Point:
-            if type(shape) in self.drawables:
-                self.place_single_shape(shape, place_point)
+        if type(place_point) == Point:
+            if issubclass(type(shape), Drawable):
+                shape.place(place_point)
             else:
                 raise BadArgumentException(ctx.start.line, "place", shape_name, self.types[type(shape)])
         else:
             raise BadArgumentException(ctx.start.line, "place", place_point_name, self.types[type(place_point)])
 
-        return self.visitChildren(ctx)
-
-    def rotate_single_point(self, point, pivot, angle):
-        s = sin(radians(angle))
-        c = cos(radians(angle))
-
-        origin_x = point.x - pivot.x
-        origin_y = point.y - pivot.y
-
-        new_x = origin_x * c - origin_y * s
-        new_y = origin_x * s + origin_y * c
-
-        return new_x + pivot.x, new_y + pivot.y
-
-    def rotate_single_shape(self, shape, pivot_point, angle):
-        if type(shape) == self.Point:
-            x, y = self.rotate_single_point(shape, pivot_point, angle)
-
-            shape.x = x
-            shape.y = y
-        elif type(shape) == self.Segment:
-            start_x, start_y = self.rotate_single_point(shape.start_point, pivot_point, angle)
-            end_x, end_y = self.rotate_single_point(shape.end_point, pivot_point, angle)
-
-            shape.start_point.x = start_x
-            shape.start_point.y = start_y
-            shape.end_point.x = end_x
-            shape.end_point.y = end_y
-        elif type(shape) == self.Circle:
-            x, y = self.rotate_single_point(shape.center_point, pivot_point, angle)
-
-            shape.center_point.x = x
-            shape.center_point.y = y
-        elif type(shape) == self.Polygon:
-            for i in range(len(shape.points)):
-                x, y = self.rotate_single_point(shape.points[i], pivot_point, angle)
-
-                shape.points[i].x = x
-                shape.points[i].y = y
-        elif type(shape) == list:
-            for member in shape:
-                self.rotate_single_shape(member, pivot_point, angle)
 
     def visitRotate(self, ctx: GraphlyParser.RotateContext):
         shape_name = ctx.arg1.getText()
@@ -709,7 +524,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         shape = self.try_to_get_member(ctx, ctx.arg1, shape_name)
         pivot_point = self.try_to_get_member(ctx, ctx.arg2, pivot_point_name)
 
-        if type(pivot_point) != self.Point:
+        if type(pivot_point) != Point:
             raise BadArgumentException(ctx.start.line, "rotate", "pivot_point", self.types[type(pivot_point)])
 
         angle = self.visit(ctx.angle)
@@ -719,48 +534,11 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
         angle *= -1  # counterclockwise
 
-        if type(shape) in self.drawables:
-            self.rotate_single_shape(shape, pivot_point, angle)
+        if issubclass(type(shape), Drawable):
+            shape.rotate(pivot_point, angle)
         else:
             raise BadArgumentException(ctx.start.line, "rotate", shape_name, self.types[type(shape)])
 
-        return self.visitChildren(ctx)
-
-    def scale_single_point(self, point, pivot, factor):
-        vector_x = factor * (point.x - pivot.x)
-        vector_y = factor * (point.y - pivot.y)
-
-        return pivot.x + vector_x, pivot.y + vector_y
-
-    def scale_single_shape(self, shape, pivot_point, factor):
-        if type(shape) == self.Point:
-            x, y = self.scale_single_point(shape, pivot_point, factor)
-
-            shape.x = x
-            shape.y = y
-        elif type(shape) == self.Segment:
-            start_x, start_y = self.scale_single_point(shape.start_point, pivot_point, factor)
-            end_x, end_y = self.scale_single_point(shape.end_point, pivot_point, factor)
-
-            shape.start_point.x = start_x
-            shape.start_point.y = start_y
-            shape.end_point.x = end_x
-            shape.end_point.y = end_y
-        elif type(shape) == self.Circle:
-            x, y = self.scale_single_point(shape.center_point, pivot_point, factor)
-
-            shape.center_point.x = x
-            shape.center_point.y = y
-            shape.radius *= abs(factor)
-        elif type(shape) == self.Polygon:
-            for i in range(len(shape.points)):
-                x, y = self.scale_single_point(shape.points[i], pivot_point, factor)
-
-                shape.points[i].x = x
-                shape.points[i].y = y
-        elif type(shape) == list:
-            for member in shape:
-                self.scale_single_shape(member, pivot_point, factor)
 
     def visitScale(self, ctx: GraphlyParser.ScaleContext):
         shape_name = ctx.arg1.getText()
@@ -769,7 +547,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         shape = self.try_to_get_member(ctx, ctx.arg1, shape_name)
         pivot_point = self.try_to_get_member(ctx, ctx.arg2, pivot_point_name)
 
-        if type(pivot_point) != self.Point:
+        if type(pivot_point) != Point:
             raise BadArgumentException(ctx.start.line, "scale", "pivot_point", self.types[type(pivot_point)])
 
         factor = self.visit(ctx.k)
@@ -777,10 +555,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         if type(factor) not in (int, float):
             raise BadArgumentException(ctx.start.line, "scale", "factor", self.types[type(factor)])
 
-        if type(shape) in self.drawables:
-            self.scale_single_shape(shape, pivot_point, factor)
+        if issubclass(type(shape), Drawable):
+            shape.scale(pivot_point, factor)
         else:
             raise BadArgumentException(ctx.start.line, "scale", shape_name, self.types[type(shape)])
-
-        return self.visitChildren(ctx)
-
