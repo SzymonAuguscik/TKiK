@@ -166,7 +166,8 @@ log
 
 save
 	:
-	'save'
+	'save'	#simpleSave
+	| 'save' WS+ TEXT #namedSave
 	;
 
 // transformations
