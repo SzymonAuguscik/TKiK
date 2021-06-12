@@ -19,4 +19,4 @@ source ~/.bashrc
 ```
 Graphly path_to_file
 ```
-path_to_file is path to a Graphly script
+`path_to_file` is path to a Graphly script
