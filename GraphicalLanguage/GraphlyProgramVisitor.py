@@ -17,6 +17,7 @@ from exceptions.BadAssignmentException import BadAssignmentException
 from exceptions.UnknownGroupTypeException import UnknownGroupTypeException
 from exceptions.BadTypeInExpressionException import BadTypeInExpressionException
 from exceptions.IllegalCharacterException import IllegalCharacterException
+from exceptions.FailedSaveException import FailedSaveException
 
 from drawables import *
 
@@ -122,10 +123,8 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         self.scopes.pop()
 
     def visitLoop(self, ctx: GraphlyParser.LoopContext):
-        #TODO: should we allow to use the same name for iterator?
         name = ctx.name.text
 
-        # mismatch - "start" is a keyword in Antlr, need to rename "start" to "starting"
         iterator = int(self.visit(ctx.starting))
         until = int(self.visit(ctx.until))
         step = int(self.visit(ctx.step))
@@ -341,7 +340,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         try:
             pygame.image.save(self.screen, self.filename + '.png')
         except:
-            print(f'Failed to save canvas to {self.filename}.png!')
+            raise FailedSaveException(ctx.start.line, self.filename + '.png')
 
 
     def visitNamedSave(self, ctx:GraphlyParser.NamedSaveContext):
@@ -361,7 +360,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         try:
             pygame.image.save(self.screen, name)
         except:
-            print(f'Failed to save canvas to {name}!')
+            raise FailedSaveException(ctx.start.line, name)
 
     
     def visitFill(self, ctx: GraphlyParser.FillContext):
