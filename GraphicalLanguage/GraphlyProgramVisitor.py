@@ -16,10 +16,13 @@ from exceptions.NonPositiveValueInCanvasException import NonPositiveValueInCanva
 from exceptions.BadAssignmentException import BadAssignmentException
 from exceptions.UnknownGroupTypeException import UnknownGroupTypeException
 from exceptions.BadTypeInExpressionException import BadTypeInExpressionException
+from exceptions.IllegalCharacterException import IllegalCharacterException
 
 from math import floor, ceil
 from math import sin, cos, radians
 from copy import deepcopy
+
+from os.path import dirname, splitext
 
 
 class GraphlyProgramVisitor(GraphlyVisitor):
@@ -417,8 +420,31 @@ class GraphlyProgramVisitor(GraphlyVisitor):
         print(ctx.TEXT().getText())
 
 
-    def visitSave(self, ctx:GraphlyParser.SaveContext):
-        pygame.image.save(self.screen, self.filename + '.png')
+    def visitSimpleSave(self, ctx:GraphlyParser.SimpleSaveContext):
+        try:
+            pygame.image.save(self.screen, self.filename + '.png')
+        except:
+            print(f'Failed to save canvas to {self.filename}.png!')
+
+
+    def visitNamedSave(self, ctx:GraphlyParser.NamedSaveContext):
+        name = ctx.TEXT().getText().replace('"', '')
+
+        forbidden = '#%&\{\}\\<>*?/ $!\'":@+`|='
+        if any(c in forbidden for c in name):
+            raise IllegalCharacterException(ctx.start.line, name)
+        
+        if splitext(name)[1] not in ('.png', '.jpeg', '.bmp', '.tga'):
+            name += '.png'
+
+        direcotry = dirname(self.filename)
+        if direcotry != '':
+            name = direcotry + '/' + name
+
+        try:
+            pygame.image.save(self.screen, name)
+        except:
+            print(f'Failed to save canvas to {name} failed!')
 
     
     def fill_single_shape(self, variable, color, ctx):

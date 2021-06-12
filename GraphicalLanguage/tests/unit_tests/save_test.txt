@@ -27,3 +27,5 @@ loop I start 0 until Size step 1 then
 end
 
 save
+save "test"
+save "with_extension.jpeg"

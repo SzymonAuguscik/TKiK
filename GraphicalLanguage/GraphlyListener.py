@@ -206,12 +206,21 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GraphlyParser#save.
-    def enterSave(self, ctx:GraphlyParser.SaveContext):
+    # Enter a parse tree produced by GraphlyParser#simpleSave.
+    def enterSimpleSave(self, ctx:GraphlyParser.SimpleSaveContext):
         pass
 
-    # Exit a parse tree produced by GraphlyParser#save.
-    def exitSave(self, ctx:GraphlyParser.SaveContext):
+    # Exit a parse tree produced by GraphlyParser#simpleSave.
+    def exitSimpleSave(self, ctx:GraphlyParser.SimpleSaveContext):
+        pass
+
+
+    # Enter a parse tree produced by GraphlyParser#namedSave.
+    def enterNamedSave(self, ctx:GraphlyParser.NamedSaveContext):
+        pass
+
+    # Exit a parse tree produced by GraphlyParser#namedSave.
+    def exitNamedSave(self, ctx:GraphlyParser.NamedSaveContext):
         pass
 
 
