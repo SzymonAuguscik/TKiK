@@ -23,15 +23,17 @@ MULTILINE_COM
 
 program
 	:
-	(('\n')* instruction WS* ('\n')+)* 
-	canvas WS*
-	(('\n')+ instruction WS* ('\n')*)* 
+	// (('\n')* instruction WS* ('\n')+)* 
+	// canvas WS*
+	(WS* instruction ('\n')+)*
+	(WS* instruction WS*)
+	(('\n')+ instruction WS*)* 
 	EOF
 	;
 
 instruction 
-	: 
-	shape 
+	: canvas
+	| shape 
 	| num
 	| draw 
 	| transformation 
