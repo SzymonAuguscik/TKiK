@@ -187,10 +187,7 @@ class GraphlyProgramVisitor(GraphlyVisitor):
 
         block = ctx.block()
 
-        if not self.variable_exists(name):
-            self.set_variable(name, iterator)
-        else:
-            raise VariableAlreadyDeclaredException(ctx.start.line, name)
+        self.set_variable(name, iterator)
         
         while iterator < until:
             self.visit(block)
