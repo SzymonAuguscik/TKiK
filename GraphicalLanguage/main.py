@@ -12,6 +12,7 @@ from os.path import isdir, splitext
 
 from exceptions.DirectoryPassedException import DirectoryPassedException
 from exceptions.EmptyPathException import EmptyPathException
+from exceptions.BadFlagException import BadFlagException
 
 
 def check_canvas(argv):  # first run of program
@@ -58,8 +59,9 @@ def execute_graphly_script(argv):  # second run of program
     # tree_walker.walk(graph, tree)
 
     filename = splitext(argv[1])[0]
+    option = argv[2] if len(argv) == 3 else ""
 
-    GraphlyProgramVisitor(filename).visit(tree)
+    GraphlyProgramVisitor(filename, option).visit(tree)
 
     run = True
 
@@ -74,6 +76,9 @@ def execute_graphly_script(argv):  # second run of program
 def main(argv):
     if len(argv) < 2:
         raise EmptyPathException()
+
+    if len(argv) == 3 and argv[2] != "-e":
+        raise BadFlagException(argv[2])
 
     if isdir(argv[1]):
         raise DirectoryPassedException(argv[1])
