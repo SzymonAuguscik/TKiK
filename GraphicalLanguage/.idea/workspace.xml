@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Fix small bug">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphlyProgramVisitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphlyProgramVisitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/installGraphly.sh" beforeDir="false" afterPath="$PROJECT_DIR$/installGraphly.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Fix small bug" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -128,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623348220844</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fix bug with bash. Add optional stacktrace printing and exception service">
+      <created>1623756271636</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1623756271636</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -153,6 +155,7 @@
     <MESSAGE value="Add some test examples. Fix bug with BadArgumentException in rotating and scaling" />
     <MESSAGE value="Fix bug with loops exception" />
     <MESSAGE value="Fix small bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix small bug" />
+    <MESSAGE value="Fix bug with bash. Add optional stacktrace printing and exception service" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug with bash. Add optional stacktrace printing and exception service" />
   </component>
 </project>
