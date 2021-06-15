@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Fix small bug" />
+    <list default="true" id="819dd511-2bdf-42e1-8d9e-96f8f70afd7c" name="Default Changelist" comment="Fix small bug">
+      <change beforePath="$PROJECT_DIR$/exceptions/DirectoryPassedException.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/DirectoryPassedException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="main" />
+        <entry key="$PROJECT_DIR$/.." value="advance_bash" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />

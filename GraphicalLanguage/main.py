@@ -8,9 +8,9 @@ from GraphlyCanvasChecker import GraphlyCanvasChecker
 from GraphlyProgramVisitor import GraphlyProgramVisitor
 from GraphlyErrorListener import ThrowingErrorListener
 
-from os.path import isdir, splitext
+from os.path import isfile, splitext, exists
 
-from exceptions.DirectoryPassedException import DirectoryPassedException
+from exceptions.BadFileException import BadFileException
 from exceptions.EmptyPathException import EmptyPathException
 from exceptions.BadFlagException import BadFlagException
 
@@ -80,8 +80,8 @@ def main(argv):
     if len(argv) == 3 and argv[2] != "-e":
         raise BadFlagException(argv[2])
 
-    if isdir(argv[1]):
-        raise DirectoryPassedException(argv[1])
+    if not (isfile(argv[1]) and exists(argv[1])):
+        raise BadFileException(argv[1])
 
     check_canvas(argv)
     execute_graphly_script(argv)
