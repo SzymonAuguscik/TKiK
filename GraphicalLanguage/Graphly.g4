@@ -15,20 +15,24 @@ COM_SIGN
 	: 
 	'--' ~[\r\n]* -> skip;
 
+MULTILINE_COM
+	: '-*' .*? '*-' -> skip
+	;
+
 // body of a program
 
 program
 	:
-	(('\n')* instruction WS* (COM_SIGN)? ('\n')+)* 
-	canvas WS* (COM_SIGN)?
-	(('\n')+ instruction WS* (COM_SIGN)? ('\n')*)* 
+	(WS* instruction ('\n')+)*
+	(WS* instruction WS*)
+	(('\n')+ instruction WS*)* 
 	EOF
 	;
 
 instruction 
-	: 
-	shape 
-	| type_definition 
+	: canvas
+	| shape 
+	| num
 	| draw 
 	| transformation 
 	| group 
@@ -124,13 +128,7 @@ group
 	WS* NAME WS* (',' WS* NAME WS*)*
 	;
 
-// numerical types
-
-type_definition 
-	: 
-	num 
-	| iterator
-	;
+// numerical type
 
 num 
 	: 
@@ -138,11 +136,6 @@ num
 	WS* expr
 	;
 
-iterator 
-	: 
-	WS* 'iterator' WS+ NAME WS* ':'
-	WS* expr
-	;
 
 // methods
 
@@ -235,96 +228,25 @@ expr
 
 atom 
 	: 
-	itr    #intAtom
-    | flt  #fltAtom
+	ITR    #intAtom
+    | FLT  #fltAtom
     | NAME #varAtom
     ;
 
-// operators
-
-arithmetic 
-	: 
-	PLUS 
-	| MINUS 
-    | MULTIPLICATION 
-	| DIVISION 
-	| MODULO
-	;
-
-PLUS 
-	: 
-	'+'
-	;
-
-MINUS 
-	: 
-	'-'
-	;
-
-MULTIPLICATION 
-	: 
-	'*'
-	;
-
-DIVISION 
-	: 
-	'/'
-	;
-
-MODULO 
-	: 
-	'%'
-	;
-
-logic 
-	: 
-	GREATER 
-	| LOWER 
-	| GT 
-	| LT 
-	| EQ 
-	| neq
-	;
-
-NEG 
-	: 
-	'!'
-	;
-
-neq 
-	: 
-	NEG EQ
-	;
-
-EQ 
-	: 
-	'='
-	;
-
-GREATER 
-	: 
-	'>'
-	;
-
-LOWER 
-	: 
-	'<'
-	;
-
-GT 
-	: 
-	'>='
-	;
-
-LT 
-	: 
-	'<='
-	;
-
 // terminal
 
+ITR
+	: 
+	(NONZERO+ DIGIT* | '0')
+	;
+
+FLT
+	: 
+	(NONZERO+ | '0') DOT DIGIT+
+	;
+
 TEXT
- : '"' (~[\r\n"] | '""')* '"'
+ : '"' (~[\r\n"])* '"'
  ;
 
 TYPE
@@ -337,11 +259,6 @@ COLOR
 	'#'[a-z]+
 	;
 
-flt 
-	: 
-	(DIGIT*DOT)?DIGIT+
-	;
-
 DOT 
 	: 
 	'.'
@@ -352,12 +269,12 @@ DIGIT
 	[0-9]
 	;
 
+NONZERO
+	:
+	[1-9]
+	;
+
 NAME 
 	: 
 	[A-Z][a-zA-Z0-9_]*
-	;
-
-itr 
-	: 
-	DIGIT+
 	;

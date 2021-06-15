@@ -79,18 +79,8 @@ class GraphlyVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GraphlyParser#type_definition.
-    def visitType_definition(self, ctx:GraphlyParser.Type_definitionContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by GraphlyParser#num.
     def visitNum(self, ctx:GraphlyParser.NumContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#iterator.
-    def visitIterator(self, ctx:GraphlyParser.IteratorContext):
         return self.visitChildren(ctx)
 
 
@@ -216,31 +206,6 @@ class GraphlyVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by GraphlyParser#varAtom.
     def visitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#arithmetic.
-    def visitArithmetic(self, ctx:GraphlyParser.ArithmeticContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#logic.
-    def visitLogic(self, ctx:GraphlyParser.LogicContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#neq.
-    def visitNeq(self, ctx:GraphlyParser.NeqContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#flt.
-    def visitFlt(self, ctx:GraphlyParser.FltContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GraphlyParser#itr.
-    def visitItr(self, ctx:GraphlyParser.ItrContext):
         return self.visitChildren(ctx)
 
 

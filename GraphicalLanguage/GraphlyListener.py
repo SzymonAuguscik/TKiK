@@ -134,30 +134,12 @@ class GraphlyListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GraphlyParser#type_definition.
-    def enterType_definition(self, ctx:GraphlyParser.Type_definitionContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#type_definition.
-    def exitType_definition(self, ctx:GraphlyParser.Type_definitionContext):
-        pass
-
-
     # Enter a parse tree produced by GraphlyParser#num.
     def enterNum(self, ctx:GraphlyParser.NumContext):
         pass
 
     # Exit a parse tree produced by GraphlyParser#num.
     def exitNum(self, ctx:GraphlyParser.NumContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#iterator.
-    def enterIterator(self, ctx:GraphlyParser.IteratorContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#iterator.
-    def exitIterator(self, ctx:GraphlyParser.IteratorContext):
         pass
 
 
@@ -383,51 +365,6 @@ class GraphlyListener(ParseTreeListener):
 
     # Exit a parse tree produced by GraphlyParser#varAtom.
     def exitVarAtom(self, ctx:GraphlyParser.VarAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#arithmetic.
-    def enterArithmetic(self, ctx:GraphlyParser.ArithmeticContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#arithmetic.
-    def exitArithmetic(self, ctx:GraphlyParser.ArithmeticContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#logic.
-    def enterLogic(self, ctx:GraphlyParser.LogicContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#logic.
-    def exitLogic(self, ctx:GraphlyParser.LogicContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#neq.
-    def enterNeq(self, ctx:GraphlyParser.NeqContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#neq.
-    def exitNeq(self, ctx:GraphlyParser.NeqContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#flt.
-    def enterFlt(self, ctx:GraphlyParser.FltContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#flt.
-    def exitFlt(self, ctx:GraphlyParser.FltContext):
-        pass
-
-
-    # Enter a parse tree produced by GraphlyParser#itr.
-    def enterItr(self, ctx:GraphlyParser.ItrContext):
-        pass
-
-    # Exit a parse tree produced by GraphlyParser#itr.
-    def exitItr(self, ctx:GraphlyParser.ItrContext):
         pass
 
 
