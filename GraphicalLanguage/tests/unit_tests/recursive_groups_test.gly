@@ -20,14 +20,15 @@ group<drawables> B: A, P4, P5
 group<drawables> C: B, P6
 group<drawables> D: C, P1, P2, P3
 
-log A
-log B
-log C
-
 --fill A: #red
 --draw A
 
 assign A: D
+
+log A
+log B
+log C
+
 fill A: #blue
 scale A: 0.5, Center
 draw A

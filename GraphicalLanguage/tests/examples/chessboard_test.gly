@@ -1,6 +1,14 @@
 -- main program to draw chess board
 num X: 800
 
+-*
+comment
+multiline
+multiline comment
+skip this part
+take no action
+*-
+
 canvas: X, X, #white
 
 num Size: 8
