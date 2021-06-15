@@ -1,5 +1,8 @@
 import antlr4
 import sys
+
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
 from GraphlyLexer import GraphlyLexer
@@ -59,9 +62,8 @@ def execute_graphly_script(argv):  # second run of program
     # tree_walker.walk(graph, tree)
 
     filename = splitext(argv[1])[0]
-    option = argv[2] if len(argv) == 3 else ""
 
-    GraphlyProgramVisitor(filename, option).visit(tree)
+    GraphlyProgramVisitor(filename).visit(tree)
 
     run = True
 
@@ -74,6 +76,10 @@ def execute_graphly_script(argv):  # second run of program
 
 
 def main(argv):
+    option = argv[2] if len(argv) >= 3 else ""
+    if option != "-e":
+        sys.tracebacklimit = 0
+
     if len(argv) < 2:
         raise EmptyPathException()
 
