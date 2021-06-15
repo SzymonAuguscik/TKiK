@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 from GraphlyVisitor import GraphlyVisitor
 from GraphlyParser import GraphlyParser
@@ -32,10 +33,12 @@ class GraphlyProgramVisitor(GraphlyVisitor):
     SCREEN_WIDTH = 640
     SCREEN_HEIGHT = 480
 
-    
-    def __init__(self, filename):
+    def __init__(self, filename, option):
         self.filename = filename
-        
+
+        if option != "-e":
+            sys.tracebacklimit = 0
+            
         self.scopes = []
 
         self.colors = {
