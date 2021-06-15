@@ -14,7 +14,7 @@ sudo ./installGraphly.sh path_to_main path_to_bashrc
 source ~/.bashrc
 ```
 
-`path_to_main` is path to a directory which contains main.py and `path_to_bashrc` is path to a .bashrc file (usually in /home/user directory)
+`path_to_main` is path to a directory which contains main.py and `path_to_bashrc` is path to a directory which .bashrc file (usually in /home/user or ~)
 
 ## Example of usage
 ```
