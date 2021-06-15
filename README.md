@@ -4,6 +4,7 @@ A 2D graphical language project in cooperation with [Oskar Kocjan](https://githu
 ## Table of contents
 * [Setup](#setup)
 * [Example of usage](#example-of-usage)
+* [Details](#details)
 
 ## Setup
 
@@ -27,3 +28,6 @@ Using `-e` option:
  Graphly path_to_file -e
  ```
  allows to see whole stacktrace in case of exception.
+ 
+ ## Details
+For more information see "Dokumentacja_języka_Graphly.pdf"
